@@ -7,6 +7,10 @@
 
 Using docker to set up the project with containers that include laravel-sail, mysql and phpmyadmin to view mysql data tables and get a better GUI feel.
 
+Pre-requisites:
+- WSL 2
+- Docker Desktop
+
 Uses the following docker containers:
 - sail/app
 - phpmyadmin
@@ -23,3 +27,38 @@ Killing laravel docker.
 ```bash
 ./vendor/bin/sail stop
 ```
+# Windows Project Setup
+
+Use the following steps to set up the project repository.
+
+1. Make sure to install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">**WSL**</a> and <a href="https://www.docker.com/">**Docker Desktop**</a>.
+2. Clone the project repository into the **/etc/home/[username]** directory after you open up wsl.
+3. To make it easier you can run vscode in that repository by opening WSL and running the command ```code .```
+4. Open up docker desktop and make sure that these are enabled. <p><img src="https://i.ibb.co/ckJpCtf/Docker-Desktop-hi-Dg-Tax0-WD.png"/></p> <img src="https://i.ibb.co/9GmZT73/Docker-Desktop-k-BB1ud-Hh-W6.png"/>
+5. Run the following command to install the composer dependencies. 
+``` bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs 
+```
+6. Then try to run sail.
+``` bash
+./vendor/bin/sail up
+```
+7. Migrate the artisan database tables.
+``` bash
+./vendor/bin/sail php artisan migrate
+```
+8. Run the npm modules initialisation by doing the following command.
+``` bash
+./vendor/bin/sail npm install
+```
+9. Run the npm nodes in another terminal.
+``` bash
+./vendor/bin/sail npm run dev.
+```
+
+Congratulations, the application should now be running.
