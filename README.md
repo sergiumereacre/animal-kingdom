@@ -29,7 +29,7 @@ Killing laravel docker.
 ```
 # Windows Project Setup
 
-Use the following steps to set up the project repository.
+Use the following steps to set up the project repository. Run all of these commands inside the project folder in WSL. You can also set up an alias so that you don't need to do ```./vendor/bin/sail``` every time.
 
 1. Make sure to install <a href="https://learn.microsoft.com/en-us/windows/wsl/install">**WSL**</a> and <a href="https://www.docker.com/">**Docker Desktop**</a>.
 2. Clone the project repository into the **/etc/home/[username]** directory after you open up wsl.
@@ -58,7 +58,7 @@ docker run --rm \
 ```
 9. Run the npm nodes in another terminal.
 ``` bash
-./vendor/bin/sail npm run dev.
+./vendor/bin/sail npm run dev
 ```
 
 Congratulations, the application should now be running.
