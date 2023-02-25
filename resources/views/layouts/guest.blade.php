@@ -20,8 +20,8 @@
                 <div class="justify-center px-6">
                     <!-- The welcome message.-->
                     <div>
-                        <p class="mt-4 font-thin text-4xl">Welcome to</p>
-                        <p class="font-black text-5xl">Animal Kingdom</p>
+                        <p class="mt-4 font-thin text-4xl lg:text-6xl">Welcome to</p>
+                        <p class="font-black text-5xl lg:text-6xl">Animal Kingdom</p>
                     </div>
                 
                     <!-- Any content here.-->
