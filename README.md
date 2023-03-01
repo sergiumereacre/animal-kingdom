@@ -27,6 +27,14 @@ Killing laravel docker.
 ```bash
 ./vendor/bin/sail stop
 ```
+
+You can set up an alias by running this command:
+```
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+```
+
+Now, you don't need to type any of the vendor/bin stuff. You can just type something like `sail up`
+
 # Windows Project Setup
 
 Use the following steps to set up the project repository. Run all of these commands inside the project folder in WSL. You can also set up an alias so that you don't need to do ```./vendor/bin/sail``` every time.
@@ -62,3 +70,17 @@ docker run --rm \
 ```
 
 Congratulations, the application should now be running.
+
+## Working With The Database
+
+To set up the database, run this:
+```
+./vendor/bin/sail artisan migrate
+```
+
+Go to the self-hosted phpmyadmin page by going to [here](http://localhost:8080)
+
+You can find the details in the .env file:
+- Server: {DB_HOST}:{DB_PORT}
+- Username: {DB_USERNAME}
+- Password: {DB_PASSWORD}
