@@ -17,9 +17,10 @@ class CreateQualificationsVacanciesTable extends Migration
 
         Schema::create('qualifications_vacancies', function (Blueprint $table) {
             $table->increments('qualifications_vacancies_id');
-            $table->integer('qualification_id');
+
+            $table->integer('qualification_id')->unsigned();
             $table->foreign('qualification_id')->references('qualification_id')->on('qualifications');
-            $table->integer('vacancy_id');
+            $table->integer('vacancy_id')->unsigned();
             $table->foreign('vacancy_id')->references('vacancy_id')->on('vacancies');
         });
 

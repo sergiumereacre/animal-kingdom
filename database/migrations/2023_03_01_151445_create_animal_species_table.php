@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAnimalSpeciesTable extends Migration
 {
+
+
     /**
      * Run the migrations.
      *
@@ -13,15 +15,20 @@ class CreateAnimalSpeciesTable extends Migration
      */
     public function up()
     {
+
+
         Schema::disableForeignKeyConstraints();
 
         Schema::create('animal_species', function (Blueprint $table) {
+            $category = array('MAMMAL', 'REPTILE', 'AMPHIBIAN', 'AVIAN', 'FISH');
+            $eating_style = array('HERBIVORE', 'CARNIVORE', 'OMNIVORE');
+
             $table->integer('species_id')->primary();
             $table->string('species_name');
-            $table->enum('category');
+            $table->enum('category', $category);
             $table->boolean('can_fly');
             $table->boolean('can_swim');
-            $table->enum('eating_style');
+            $table->enum('eating_style', $eating_style);
         });
 
         Schema::enableForeignKeyConstraints();
