@@ -16,12 +16,15 @@ class CreateSkillsVacanciesTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('skills_vacancies', function (Blueprint $table) {
-            $table->integer('skills_vacancies_id')->primary();
-            $table->increments('skill_id')->nullable();
+            $skill_level = array('BEGINNER', 'INTERMEDIATE', 'EXPERT');
+
+            $table->increments('skills_vacancies_id');
+            // $table->increments('skill_id')->nullable();
+            $table->integer('skill_id')->unsigned();
             $table->foreign('skill_id')->references('skill_id')->on('skills');
-            $table->integer('vacancy_id');
+            $table->integer('vacancy_id')->unsigned();
             $table->foreign('vacancy_id')->references('vacancy_id')->on('vacancies');
-            $table->enum('skill_level')->nullable();
+            $table->enum('skill_level', $skill_level)->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

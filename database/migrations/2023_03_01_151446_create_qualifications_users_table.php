@@ -17,9 +17,9 @@ class CreateQualificationsUsersTable extends Migration
 
         Schema::create('qualifications_users', function (Blueprint $table) {
             $table->increments('qualifications_users_id');
-            $table->integer('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('user_id')->on('users');
-            $table->integer('qualification_id');
+            $table->integer('qualification_id')->unsigned();
             $table->foreign('qualification_id')->references('qualification_id')->on('qualifications');
             $table->date('date_obtained');
         });

@@ -17,9 +17,13 @@ class CreateConnectionsTable extends Migration
 
         Schema::create('connections', function (Blueprint $table) {
             $table->integer('connection_id')->primary();
-            $table->integer('first_user_id');
+            // $table->integer('first_user_id');
+            $table->bigInteger('first_user_id')->unsigned();
+
             $table->foreign('first_user_id')->references('user_id')->on('users');
-            $table->integer('second_user_id');
+            // $table->integer('second_user_id');
+            $table->bigInteger('second_user_id')->unsigned();
+
             $table->foreign('second_user_id')->references('user_id')->on('users');
             $table->dateTime('time_created');
         });
