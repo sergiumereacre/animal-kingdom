@@ -23,7 +23,7 @@ class CreateAnimalSpeciesTable extends Migration
             $category = array('MAMMAL', 'REPTILE', 'AMPHIBIAN', 'AVIAN', 'FISH');
             $eating_style = array('HERBIVORE', 'CARNIVORE', 'OMNIVORE');
 
-            $table->integer('species_id')->primary();
+            $table->increments('species_id');
             $table->string('species_name');
             $table->enum('category', $category);
             $table->boolean('can_fly');
