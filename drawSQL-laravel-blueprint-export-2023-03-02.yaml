@@ -1,0 +1,89 @@
+models:
+    Connection:
+        id: false
+        connection_id: integer primary
+        first_user_id: integer foreign:users.user_id
+        second_user_id: integer foreign:users.user_id
+        time_created: dateTime
+    QualificationsVacancy:
+        id: false
+        qualifications_vacancies_id: increments
+        qualification_id: integer foreign:qualifications.qualification_id
+        vacancy_id: integer foreign:vacancies.vacancy_id
+    AnimalSpecy:
+        id: false
+        species_id: integer primary
+        species_name: string
+        category: enum
+        can_fly: boolean
+        can_swim: boolean
+        eating_style: enum
+    QualificationsUser:
+        id: false
+        qualifications_users_id: increments
+        user_id: integer foreign:users.user_id
+        qualification_id: integer foreign:qualifications.qualification_id
+        date_obtained: date
+    SkillsUser:
+        id: false
+        skills_users_id: increments
+        user_id: integer foreign:users.user_id
+        skill_id: integer foreign:skills.skill_id
+        skill_level: enum nullable
+    SkillsVacancy:
+        id: false
+        skills_vacancies_id: integer primary
+        skill_id: increments nullable foreign:skills.skill_id
+        vacancy_id: integer foreign:vacancies.vacancy_id
+        skill_level: enum nullable
+    Qualification:
+        id: false
+        qualification_id: increments
+        qualification_name: string
+        qualification_description: text nullable
+    Organisation:
+        id: false
+        organisation_id: increments
+        organisation_name: string
+        owner_id: integer foreign:users.user_id
+        time_created: dateTime
+        address: string nullable
+        email: string nullable
+        contact_number: string nullable
+        description: text nullable
+    User:
+        id: false
+        user_id: increments
+        is_admin: boolean default:false
+        species_id: integer foreign:animal_species.species_id
+        username: string
+        password: string
+        email: string
+        address: string nullable
+        date_of_birth: date
+        organisation_id: integer foreign:organisations.organisation_id
+        contact_number: string nullable
+        is_banned: boolean default:false
+        bio: text nullable
+    UsersVacancy:
+        id: false
+        users_vacancies_id: increments
+        user_id: integer foreign:users.user_id
+        vacancy_id: integer foreign:vacancies.vacancy_id
+        time_joined: dateTime
+    Vacancy:
+        id: false
+        vacancy_id: increments
+        time_created: dateTime
+        organisation_id: integer foreign:organisations.organisation_id
+        vacancy_title: string
+        vacancy_description: text nullable
+        category_requirement: enum nullable
+        can_fly_requirement: boolean nullable
+        can_swim_requirement: boolean nullable
+        eating_style_requirement: enum nullable
+    Skill:
+        id: false
+        skill_id: increments
+        skill_name: string
+        skill_description: text nullable

@@ -78,6 +78,8 @@ To set up the database, run this:
 ./vendor/bin/sail artisan migrate
 ```
 
+IF YOU ARE HAVING TROUBLE WITH THE MIGRATE COMMAND, 
+
 Go to the self-hosted phpmyadmin page by going to [here](http://localhost:8080)
 
 You can find the details in the .env file:
