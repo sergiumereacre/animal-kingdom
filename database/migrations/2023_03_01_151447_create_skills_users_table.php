@@ -20,7 +20,7 @@ class CreateSkillsUsersTable extends Migration
 
             $table->increments('skills_users_id');
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('skill_id')->unsigned();
             $table->foreign('skill_id')->references('skill_id')->on('skills');
             $table->enum('skill_level', $skill_level)->nullable();

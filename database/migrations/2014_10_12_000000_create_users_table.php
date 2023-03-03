@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id($column = 'user_id');
+            $table->id();
             $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -24,8 +25,8 @@ return new class extends Migration
             $table->integer('species_id')->unsigned();
             $table->foreign('species_id')->references('species_id')->on('animal_species');
             $table->string('address')->nullable();
-            $table->date('date_of_birth');
-            $table->integer('organisation_id')->unsigned();
+            $table->date('date_of_birth')->default( Carbon::now()->toDateTimeString());
+            $table->integer('organisation_id')->unsigned()->nullable();
             $table->foreign('organisation_id')->references('organisation_id')->on('organisations');
             $table->string('contact_number')->nullable();
             $table->boolean('is_banned')->default(false);

@@ -19,7 +19,7 @@ class CreateOrganisationsTable extends Migration
             $table->increments('organisation_id');
             $table->string('organisation_name');
             $table->unsignedBigInteger('owner_id');
-            $table->foreign('owner_id')->references('user_id')->on('users');
+            $table->foreign('owner_id')->references('id')->on('users');
             $table->dateTime('time_created');
             $table->string('address')->nullable();
             $table->string('email')->nullable();

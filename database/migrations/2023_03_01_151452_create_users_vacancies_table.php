@@ -18,7 +18,7 @@ class CreateUsersVacanciesTable extends Migration
         Schema::create('users_vacancies', function (Blueprint $table) {
             $table->increments('users_vacancies_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('vacancy_id')->unsigned();
             $table->foreign('vacancy_id')->references('vacancy_id')->on('vacancies');
             $table->dateTime('time_joined');
