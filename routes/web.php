@@ -32,9 +32,9 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // Choose Controller class along with whatever method
-Route::get('/vacancies/index', [ListingController::class, 'index']);
+Route::get('/vacancies/index', [VacancyController::class, 'index']);
 
-// The convention is that if you want to do ANYTHING with stuff, prefix the path with 'listings'
+// The convention is that if you want to do ANYTHING with stuff, prefix the path with 'vacancies'
 // Using the auth middleware, you'll be sent to a login page if you want to get to certain paths
 Route::get('/vacancies/create', [VacancyController::class, 'create'])->middleware('auth');
 

@@ -86,3 +86,12 @@ You can find the details in the .env file:
 - Server: {DB_HOST}:{DB_PORT}
 - Username: {DB_USERNAME}
 - Password: {DB_PASSWORD}
+
+
+## WORKING ON THIS PROJECT
+
+- Visuals, views
+    - All views can be found in the resources folder
+    - Components are dynamic reusable elements, you can pass parameters to a template and it will render the same structure but with different data
+    - Partials are static reusable elements. If you want, you can only focus on making components.
+    - Layouts acts as a sort of HTML wrapper, a starting point where you can stick your components, partials, etc.
