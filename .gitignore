@@ -17,3 +17,5 @@ yarn-error.log
 /.idea
 /.vscode
 *:Zone.identifier
+/draft.yaml
+/.blueprint

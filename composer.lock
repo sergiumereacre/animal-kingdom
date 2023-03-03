@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "354c3385f84e4ff4dae0b269d0dada3a",
+    "content-hash": "20143da7941639ba20a1f29a3c43d88a",
     "packages": [
         {
             "name": "brick/math",
@@ -5937,6 +5937,46 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "jasonmccreary/laravel-test-assertions",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jasonmccreary/laravel-test-assertions.git",
+                "reference": "4bb1c078e39d5acb46b104c0347373b9623c6904"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jasonmccreary/laravel-test-assertions/zipball/4bb1c078e39d5acb46b104c0347373b9623c6904",
+                "reference": "4bb1c078e39d5acb46b104c0347373b9623c6904",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JMac\\Testing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jason McCreary",
+                    "email": "jason@pureconcepts.net"
+                }
+            ],
+            "description": "A set of helpful assertions when testing Laravel applications.",
+            "support": {
+                "issues": "https://github.com/jasonmccreary/laravel-test-assertions/issues",
+                "source": "https://github.com/jasonmccreary/laravel-test-assertions/tree/master"
+            },
+            "time": "2019-06-25T15:44:18+00:00"
         },
         {
             "name": "laravel-shift/blueprint",
