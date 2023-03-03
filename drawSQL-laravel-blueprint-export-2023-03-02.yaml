@@ -61,7 +61,7 @@ models:
         email: string
         address: string nullable
         date_of_birth: date
-        organisation_id: integer foreign:organisations.organisation_id
+        organisation_id: integer nullable foreign:organisations.organisation_id
         contact_number: string nullable
         is_banned: boolean default:false
         bio: text nullable
