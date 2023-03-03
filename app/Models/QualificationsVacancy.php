@@ -10,6 +10,9 @@ class QualificationsVacancy extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'qualifications_vacancies_id';
+
+
     /**
      * The attributes that are mass assignable.
      *

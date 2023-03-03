@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
+    
     use HasFactory;
+
+    protected $primaryKey = 'skill_id';
+
 
     /**
      * The attributes that are mass assignable.

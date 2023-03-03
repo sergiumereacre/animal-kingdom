@@ -9,6 +9,9 @@ class AnimalSpecies extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'species_id';
+
+
     /**
      * The attributes that are mass assignable.
      *
