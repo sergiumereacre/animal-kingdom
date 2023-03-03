@@ -90,8 +90,16 @@ You can find the details in the .env file:
 
 ## WORKING ON THIS PROJECT
 
+### AESTHETICS
 - Visuals, views
     - All views can be found in the resources folder
     - Components are dynamic reusable elements, you can pass parameters to a template and it will render the same structure but with different data
     - Partials are static reusable elements. If you want, you can only focus on making components.
     - Layouts acts as a sort of HTML wrapper, a starting point where you can stick your components, partials, etc.
+
+### ROUTING
+- All routes can be found in routes/web.php
+    - If you want to work on a certain page, check what sort of view is returned. Usually, these can be found in the Controller classes specified by the different routes such as VacancyController.
+    - All controllers can be found in Http/Controllers/
+    - For example, `return view('vacancies.manage')` will automagically return the view defined in resources/views/vacancies/manage.blade.php. Notice how the "vacancies" folder and "manage.blade.php" maps to "vacancies." and "manage" in the string.
+    - Say you want to check your work on the vacancies.create view. This view is returned by the `vacancies/create` route in web.php You can navigate to `localhost/vacancies/create` to get the corresponding page.
