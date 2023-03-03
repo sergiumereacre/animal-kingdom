@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +31,30 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Choose Controller class along with whatever method
+Route::get('/vacancies/index', [ListingController::class, 'index']);
+
+// The convention is that if you want to do ANYTHING with stuff, prefix the path with 'listings'
+// Using the auth middleware, you'll be sent to a login page if you want to get to certain paths
+Route::get('/vacancies/create', [VacancyController::class, 'create'])->middleware('auth');
+
+// Post
+Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth');
+
+// Show Edit Form
+Route::get('/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->middleware('auth');
+
+// Updating Vacancy, Edit Submit to Update
+// Edit shows the form, update does the actual updating
+Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->middleware('auth');
+
+// Deletes vacancies
+Route::delete('/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->middleware('auth');
+
+// Manage vacancies
+Route::get('/vacancies/manage', [VacancyController::class, 'manage'])->middleware('auth');
+
+// Make sure {vacancy} and Vacancy $vacancy match up
+// Make sure to put this towards the bottom if you plan to do other stuff with vacancies
+Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show']);
 
