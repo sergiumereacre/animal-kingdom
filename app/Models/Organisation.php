@@ -10,6 +10,9 @@ class Organisation extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'organisation_id';
+
+
     /**
      * The attributes that are mass assignable.
      *

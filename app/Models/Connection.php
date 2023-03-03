@@ -10,6 +10,9 @@ class Connection extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'connection_id';
+
+
     /**
      * The attributes that are mass assignable.
      *
