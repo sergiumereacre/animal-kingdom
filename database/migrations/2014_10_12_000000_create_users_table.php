@@ -24,6 +24,8 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->integer('species_id')->unsigned();
             $table->foreign('species_id')->references('species_id')->on('animal_species');
+            $table->string('first_name');
+            $table->string('second_name');
             $table->string('address')->nullable();
             $table->date('date_of_birth')->default( Carbon::now()->toDateTimeString());
             $table->integer('organisation_id')->unsigned()->nullable();
@@ -31,21 +33,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->boolean('is_banned')->default(false);
             $table->text('bio')->nullable();
-
-            // $table->increments('user_id');
-            // $table->boolean('is_admin')->default(false);
-            // $table->integer('species_id');
-            // $table->foreign('species_id')->references('species_id')->on('animal_species');
-            // $table->string('username');
-            // $table->string('password');
-            // $table->string('email');
-            // $table->string('address')->nullable();
-            // $table->date('date_of_birth');
-            // $table->integer('organisation_id');
-            // $table->foreign('organisation_id')->references('organisation_id')->on('organisations');
-            // $table->string('contact_number')->nullable();
-            // $table->boolean('is_banned')->default(false);
-            // $table->text('bio')->nullable();
+            $table->text('profile_pic')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();
