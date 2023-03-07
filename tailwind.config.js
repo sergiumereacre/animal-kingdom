@@ -8,6 +8,8 @@ module.exports = {
         './resources/views/**/*.blade.php',
     ],
 
+    plugins: [require("daisyui")],
+
     theme: {
         extend: {
             fontFamily: {
