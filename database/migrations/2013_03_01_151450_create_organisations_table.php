@@ -25,6 +25,8 @@ class CreateOrganisationsTable extends Migration
             $table->string('email')->nullable();
             $table->string('contact_number')->nullable();
             $table->text('description')->nullable();
+            $table->text('picture')->nullable();
+            $table->bigInteger('size')->nullable();
         });
 
         Schema::enableForeignKeyConstraints();

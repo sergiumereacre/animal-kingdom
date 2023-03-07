@@ -11,6 +11,8 @@ class AnimalSpecies extends Model
 
     protected $primaryKey = 'species_id';
 
+    public $timestamps = false;
+
 
     /**
      * The attributes that are mass assignable.
