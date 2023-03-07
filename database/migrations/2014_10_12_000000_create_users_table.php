@@ -24,8 +24,8 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->integer('species_id')->unsigned();
             $table->foreign('species_id')->references('species_id')->on('animal_species');
-            $table->string('first_name');
-            $table->string('second_name');
+            $table->string('first_name')->default('test');
+            $table->string('second_name')->default('test');
             $table->string('address')->nullable();
             $table->date('date_of_birth')->default( Carbon::now()->toDateTimeString());
             $table->integer('organisation_id')->unsigned()->nullable();
