@@ -45,6 +45,19 @@
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
+        
+        <!-- Species -->
+        <div class="mt-4">
+            <select class="select w-full max-w-xs" for="species" :value="__('Species')">
+                <option disabled selected>Species?</option>
+                <option>Fish</option>
+                <option>Mammal</option>
+                <option>Reptile</option>
+                <option>Bird</option>
+                <option>Amphibian</option>
+              </select>
+              <x-input-error :messages="$errors->get('species')" class="mt-2" />
+        </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="text-sm text-greenButtons hover:text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-greenButtons" href="{{ route('login') }}">
