@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <!-- Application Logo-->
-                <div class="hidden lg:inline">
+                <div class="hidden lg:inline-flex pt-40">
                     <a>
                         <img class="w-500" src="{{ asset('img/logo.png')}}">
                     </a>
