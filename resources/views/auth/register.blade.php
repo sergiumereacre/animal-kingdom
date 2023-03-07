@@ -48,8 +48,9 @@
         
         <!-- Species -->
         <div class="mt-4">
-            <select class="select w-full max-w-xs" for="species" :value="__('Species')">
-                <option disabled selected>Species?</option>
+            <x-input-label for="species" :value="__('Species')" />
+            <select class="select w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-md shadow-lg">
+                <option disabled selected>What type of species?</option>
                 <option>Fish</option>
                 <option>Mammal</option>
                 <option>Reptile</option>
