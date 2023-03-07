@@ -58,7 +58,12 @@ docker run --rm \
 ```
 7. Migrate the artisan database tables.
 ``` bash
-./vendor/bin/sail php artisan migrate
+./vendor/bin/sail artisan migrate
+```
+
+If you want to set up a clean database with some pre-made entries, run the following command:
+``` bash
+./vendor/bin/sail artisan migrate:fresh --seed
 ```
 8. Run the npm modules initialisation by doing the following command.
 ``` bash
@@ -87,6 +92,9 @@ You can find the details in the .env file:
 - Username: {DB_USERNAME}
 - Password: {DB_PASSWORD}
 
+Seeding after refreshing database: sail artisan migrate:fresh --seed
+
+Just seeding: sail artisan db:seed
 
 ## WORKING ON THIS PROJECT
 
