@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
+use App\Models\Organisation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +29,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/users/index', [ProfileController::class, 'index']);
+
+    Route::get('/users/{organisation}/edit', [ProfileController::class, 'edit'])->middleware('auth');
+
+    Route::put('/users/{organisation}', [ProfileController::class, 'update'])->middleware('auth');
+
+    Route::delete('/users/{organisation}', [ProfileController::class, 'destroy'])->middleware('auth');
+
+    Route::get('/users/manage', [ProfileController::class, 'manage'])->middleware('auth');
+
+    Route::get('/organisations/{organisation}', [ProfileController::class, 'show']);
+
 });
 
 require __DIR__.'/auth.php';
@@ -58,3 +73,22 @@ Route::get('/vacancies/manage', [VacancyController::class, 'manage'])->middlewar
 // Make sure to put this towards the bottom if you plan to do other stuff with vacancies
 Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show']);
 
+// ========== ORGANISATIONS ================
+
+Route::get('/organisations/index', [OrganisationController::class, 'index']);
+
+Route::get('/organisations/create', [OrganisationController::class, 'create'])->middleware('auth');
+
+Route::post('/organisations', [OrganisationController::class, 'store'])->middleware('auth');
+
+Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->middleware('auth');
+
+Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth');
+
+Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
+
+Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
+
+Route::get('/organisations/{organisation}', [OrganisationController::class, 'show']);
+
+// ========== ORGANISATIONS ================
