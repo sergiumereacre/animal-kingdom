@@ -12,6 +12,7 @@ class SkillsUser extends Model
 
     protected $primaryKey = 'skills_users_id';
 
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

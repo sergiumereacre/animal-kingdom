@@ -12,6 +12,7 @@ class SkillsVacancy extends Model
 
     protected $primaryKey = 'skills_vacancies_id';
 
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
