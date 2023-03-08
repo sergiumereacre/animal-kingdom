@@ -11,6 +11,7 @@ class Qualification extends Model
 
     protected $primaryKey = 'qualification_id';
 
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

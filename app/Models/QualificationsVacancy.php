@@ -11,6 +11,7 @@ class QualificationsVacancy extends Model
     use HasFactory;
 
     protected $primaryKey = 'qualifications_vacancies_id';
+    public $timestamps = false;
 
 
     /**
