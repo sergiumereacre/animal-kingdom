@@ -30,6 +30,8 @@ class OrganisationFactory extends Factory
             'email' => $this->faker->safeEmail,
             'contact_number' => $this->faker->word,
             'description' => $this->faker->text,
+            'picture' => $this->faker->word,
+            'size' => $this->faker->numberBetween(-100000, 100000),
         ];
     }
 }

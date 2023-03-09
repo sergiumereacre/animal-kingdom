@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -18,13 +21,21 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        // 'name',
-        'firstname',
-        'lastname',
+        'user_id',
+        'first_name',
+        'last_name',
+        'is_admin',
+        'species_id',
         'username',
-        'email',
         'password',
-        'species_id'
+        'email',
+        'address',
+        'date_of_birth',
+        'organisation_id',
+        'contact_number',
+        'is_banned',
+        'bio',
+        'profile_pic',
     ];
 
     /**
@@ -38,11 +49,24 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
+        'date_of_birth' => 'date',
+        'is_banned' => 'boolean',
     ];
+
+    public function animalSpecies(): BelongsTo
+    {
+        return $this->belongsTo(AnimalSpecies::class, 'species_id', 'species_id');
+    }
+
+    public function organisation(): BelongsTo
+    {
+        return $this->belongsTo(Organisation::class, 'organisation_id', 'organisation_id');
+    }
 }

@@ -27,6 +27,8 @@ class Organisation extends Model
         'email',
         'contact_number',
         'description',
+        'picture',
+        'size',
     ];
 
     /**
@@ -36,6 +38,7 @@ class Organisation extends Model
      */
     protected $casts = [
         'time_created' => 'datetime',
+        'size' => 'integer',
     ];
 
     public function user(): BelongsTo
