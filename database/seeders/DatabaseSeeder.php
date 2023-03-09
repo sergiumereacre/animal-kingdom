@@ -24,7 +24,12 @@ class DatabaseSeeder extends Seeder
             'category' => 'AMPHIBIAN',
             'can_fly' => false,
             'can_swim' => true,
-            'eating_style' => 'CARNIVORE'
+            'can_climb' => false,
+            'eating_style' => 'CARNIVORE',
+            'produces_toxins' => false,
+            'size' => 'SMALL',
+            'speed' => 'MEDIUM',
+            'num_appendages' => 'FEW'
         ]);
 
         // \App\Models\User::factory()->create([

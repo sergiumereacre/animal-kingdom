@@ -18,6 +18,9 @@ class CreateVacanciesTable extends Migration
         Schema::create('vacancies', function (Blueprint $table) {
             $category = array('MAMMAL', 'REPTILE', 'AMPHIBIAN', 'AVIAN', 'FISH');
             $eating_style = array('HERBIVORE', 'CARNIVORE', 'OMNIVORE');
+            $size = array('SMALL', 'MEDIUM', 'LARGE');
+            $speed = array('SLOW', 'MEDIUM', 'FAST');
+            $num_appendages = array('NONE', 'FEW', 'MANY');
 
             $table->increments('vacancy_id');
             $table->dateTime('time_created');
@@ -28,7 +31,13 @@ class CreateVacanciesTable extends Migration
             $table->enum('category_requirement', $category)->nullable();
             $table->boolean('can_fly_requirement')->nullable();
             $table->boolean('can_swim_requirement')->nullable();
+            $table->boolean('can_climb_requirement')->nullable();
             $table->enum('eating_style_requirement', $eating_style)->nullable();
+
+            $table->boolean('produces_toxins_requirement');
+            $table->enum('size_requirement', $size);
+            $table->enum('speed_requirement', $speed);
+            $table->enum('num_appendages_requirement', $num_appendages);
         });
 
         Schema::enableForeignKeyConstraints();
