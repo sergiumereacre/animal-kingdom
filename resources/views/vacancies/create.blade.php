@@ -142,6 +142,16 @@
 
             <a href="/dashboard">Go Back</a>
         </div>
+            <label for="category_requirement">Category Requirement</label>
+            <select name="category_requirement" id="category_requirement">
+                <option value="MAMMAL"></option>
+            </select>
+        </div>
+
+        @error('category_requirement')
+            <p>{{$message}}</p>
+        @enderror
+
     </form>
 
 
