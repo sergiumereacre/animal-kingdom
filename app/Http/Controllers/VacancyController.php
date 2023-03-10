@@ -36,6 +36,8 @@ class VacancyController extends Controller
     public function store(Request $request)
     {
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
+
+        return redirect('/dashboard');
     }
 
     public function edit(Request $request)
