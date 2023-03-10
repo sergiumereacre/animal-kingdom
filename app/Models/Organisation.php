@@ -11,6 +11,7 @@ class Organisation extends Model
     use HasFactory;
 
     protected $primaryKey = 'organisation_id';
+    public $timestamps = false;
 
 
     /**

@@ -35,6 +35,20 @@ class OrganisationController extends Controller
         // Store organisation data with dependency injection
         public function store(Request $request)
         {
+            $formFields = $request->validate([
+                'organisation_name' => 'required'
+            ]);
+    
+            if($request->hasFile('picture')) {
+                $formFields['picture'] = $request->file('picture')->store('logos', 'public');
+            }
+    
+            $formFields['owner_id'] = auth()->id();
+    
+            Organisation::create($formFields);
+    
+            return redirect('/dashboard');
+
             // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
         }
     
