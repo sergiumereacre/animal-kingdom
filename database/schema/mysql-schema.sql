@@ -252,6 +252,8 @@ CREATE TABLE `vacancies` (
   `size_requirement` enum('SMALL','MEDIUM','LARGE') COLLATE utf8mb4_unicode_ci NOT NULL,
   `speed_requirement` enum('SLOW','MEDIUM','FAST') COLLATE utf8mb4_unicode_ci NOT NULL,
   `num_appendages_requirement` enum('NONE','FEW','MANY') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salary_range_lower` bigint unsigned NOT NULL,
+  `salary_range_upper` bigint unsigned NOT NULL,
   PRIMARY KEY (`vacancy_id`),
   KEY `vacancies_organisation_id_foreign` (`organisation_id`),
   CONSTRAINT `vacancies_organisation_id_foreign` FOREIGN KEY (`organisation_id`) REFERENCES `organisations` (`organisation_id`)
