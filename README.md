@@ -76,6 +76,14 @@ If you want to set up a clean database with some pre-made entries, run the follo
 
 Congratulations, the application should now be running.
 
+---
+
+## Logging In
+
+After running `sail migrate:fresh --seed`, a test user should be created for dev purposes. Just login with email - `test@test.com` and password `test`
+
+---
+
 ## Working With The Database
 
 To set up the database, run this:
