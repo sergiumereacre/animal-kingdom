@@ -44,6 +44,8 @@ class Organisation extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'owner_id', 'user_id');
+        return $this->belongsTo(User::class, 'owner_id', 'id');
+        // return $this->belongsTo(User::class);
+
     }
 }

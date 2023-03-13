@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -21,7 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
+        'id',
         'first_name',
         'last_name',
         'is_admin',
@@ -68,5 +69,10 @@ class User extends Authenticatable
     public function organisation(): BelongsTo
     {
         return $this->belongsTo(Organisation::class, 'organisation_id', 'organisation_id');
+    }
+
+    public function organisations(): HasMany{
+        // return $this->hasMany(Organisation::class, 'id', 'owner_id');
+        return $this->hasMany(Organisation::class, 'owner_id');
     }
 }
