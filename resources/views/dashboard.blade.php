@@ -7,4 +7,21 @@
         <x-user-card>
         </x-user-card>
     </div>
+
+    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+
+        @unless(count($organisations) == 0)
+    
+        @foreach($organisations as $organisation)
+            <div>
+                <a href=""></a>
+                {{$organisation->organisation_name}}
+            </div>
+        @endforeach
+    
+        @else
+        <p>No listings found</p>
+        @endunless
+    
+      </div>
 </x-app-layout>

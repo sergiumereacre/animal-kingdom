@@ -29,7 +29,7 @@ class OrganisationFactory extends Factory
 
             'time_created' => $this->faker->dateTime(),
             'address' => $this->faker->address(),
-            'email' => $this->faker->safeEmail,
+            'email' => $this->faker->companyEmail(),
             'contact_number' => $this->faker->phoneNumber(),
             'description' => $this->faker->text,
             'picture' => null,
