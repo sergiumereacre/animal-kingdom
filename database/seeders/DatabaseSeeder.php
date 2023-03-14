@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\SkillsUser;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +23,9 @@ class DatabaseSeeder extends Seeder
 
         // Calling all seeders
         $this->call([
+            SkillsSeeder::class,
+            QualificationsSeeder::class,
+            // SkillsUserSeeder::class,
             AnimalSpeciesSeeder::class,
             UsersSeeder::class,
         ]);

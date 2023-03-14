@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Organisation;
+use App\Models\SkillsUser;
 use App\Models\Vacancy;
 use Database\Factories\OrganisationFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -32,6 +33,7 @@ class UsersSeeder extends Seeder
         ->has(Organisation::factory()->count(1)
         ->has(Vacancy::factory()->count(1), 'vacancies')
         , 'organisations')
+        ->has(SkillsUser::factory()->count(3), 'skillsUsers')
         ->create();
 
         \App\Models\User::factory(10)

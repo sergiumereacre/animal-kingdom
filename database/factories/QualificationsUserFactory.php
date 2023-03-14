@@ -23,7 +23,7 @@ class QualificationsUserFactory extends Factory
     public function definition(): array
     {
         return [
-            'qualifications_users_id' => $this->faker->word,
+            // 'qualifications_users_id' => $this->faker->word,
             'user_id' => User::factory()->create()->user_id,
             'qualification_id' => Qualification::factory()->create()->qualification_id,
             'date_obtained' => $this->faker->date(),

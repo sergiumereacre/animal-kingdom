@@ -23,10 +23,10 @@ class SkillsUserFactory extends Factory
     public function definition(): array
     {
         return [
-            'skills_users_id' => $this->faker->word,
-            'user_id' => User::factory()->create()->id,
+            // 'skills_users_id' => $this->faker->word,
+            // 'user_id' => User::factory()->create()->id,
             'skill_id' => Skill::factory()->create()->skill_id,
-            'skill_level' => $this->faker->randomElement(/** enum_attributes **/),
+            'skill_level' => $this->faker->randomElement(['BEGINNER', 'INTERMEDIATE', 'EXPERT']),
         ];
     }
 }

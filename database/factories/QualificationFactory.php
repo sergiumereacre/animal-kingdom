@@ -21,7 +21,7 @@ class QualificationFactory extends Factory
     public function definition(): array
     {
         return [
-            'qualification_id' => $this->faker->word,
+            // 'qualification_id' => $this->faker->word,
             'qualification_name' => $this->faker->word,
             'qualification_description' => $this->faker->text,
         ];
