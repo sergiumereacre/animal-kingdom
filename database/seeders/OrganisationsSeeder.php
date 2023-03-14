@@ -15,6 +15,5 @@ class OrganisationsSeeder extends Seeder
     public function run(): void
     {
 
-        Organisation::factory()->create();
     }
 }
