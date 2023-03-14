@@ -23,7 +23,7 @@ class OrganisationFactory extends Factory
     {
         return [
             // 'organisation_id' => $this->faker->word,
-            'organisation_name' => $this->faker->word,
+            'organisation_name' => $this->faker->company(),
             // 'owner_id' => User::factory()->create()->id,
             'owner_id' => 1,
 

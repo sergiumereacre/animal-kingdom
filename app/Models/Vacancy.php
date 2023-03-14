@@ -11,6 +11,7 @@ class Vacancy extends Model
     use HasFactory;
 
     protected $primaryKey = 'vacancy_id';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

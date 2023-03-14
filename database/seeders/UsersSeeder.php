@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Organisation;
+use App\Models\Vacancy;
 use Database\Factories\OrganisationFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,9 +29,14 @@ class UsersSeeder extends Seeder
         ]);
 
         \App\Models\User::factory(20)
-        ->has(Organisation::factory()->count(3), 'organisations')
+        ->has(Organisation::factory()->count(1)
+        ->has(Vacancy::factory()->count(1), 'vacancies')
+        , 'organisations')
         ->create();
 
-        // Organisation::factory()->create();
+        \App\Models\User::factory(10)
+        ->has(Organisation::factory()->count(2)
+        ->has(Vacancy::factory()->count(1), 'vacancies'), 'organisations')
+        ->create();
     }
 }
