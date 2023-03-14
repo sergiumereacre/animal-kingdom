@@ -34,11 +34,15 @@ class UsersSeeder extends Seeder
         ->has(Vacancy::factory()->count(1), 'vacancies')
         , 'organisations')
         ->has(SkillsUser::factory()->count(3), 'skillsUsers')
-        ->create();
+        ->create([
+            'password' => Hash::make('test'),
+        ]);
 
         \App\Models\User::factory(10)
         ->has(Organisation::factory()->count(2)
         ->has(Vacancy::factory()->count(1), 'vacancies'), 'organisations')
-        ->create();
+        ->create([
+            'password' => Hash::make('test'),
+        ]);
     }
 }
