@@ -75,4 +75,9 @@ class User extends Authenticatable
         // return $this->hasMany(Organisation::class, 'id', 'owner_id');
         return $this->hasMany(Organisation::class, 'owner_id');
     }
+
+    public function skillsUsers(): HasMany{
+        return $this->hasMany(SkillsUser::class, 'user_id');
+
+    }
 }
