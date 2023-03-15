@@ -56,10 +56,21 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('test'),
         ]);
 
+        $third_group = User::factory(5)->create([
+            'password' => Hash::make('test'),
+        ]);
+
         foreach($first_group as $key=>$member){
             Connection::factory()->create([
                 'first_user_id' => $member->id,
                 'second_user_id' => $second_group[$key]->id,
+            ]);
+        }
+
+        foreach($third_group as $key=>$member){
+            Connection::factory()->create([
+                'first_user_id' => $first_group[0]->id,
+                'second_user_id' => $third_group[$key]->id,
             ]);
         }
     }

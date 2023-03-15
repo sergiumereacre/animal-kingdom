@@ -6,6 +6,7 @@ use App\Http\Controllers\VacancyController;
 use App\Models\Connection;
 use App\Models\Organisation;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,11 +31,13 @@ Route::get('/dashboard', function () {
         'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
         // All users with their ids available in second_user_id
         // of the connections table
-        'users' => User::all()->whereIn('id', (function ($query){
-            $query->from('connections')
-            ->select('second_user_id')
-            ->where(auth()->id(),'=','first_user_id');
-        }))
+        // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
+        //     'first_user_id', '=', auth()->id()
+        // )->value('second_user_id'))
+        
+        'users' => User::all()->whereIn('id', DB::table('connections')->where(
+            'first_user_id', '=', auth()->id()
+        )->pluck('second_user_id'))
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

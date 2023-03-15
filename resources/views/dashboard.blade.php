@@ -31,10 +31,8 @@
 
         @foreach($connections as $connection)
         <div>
-            {{$connected_user = User::all()->where('id', '=', $connection->second_user_id)}}
 
-            <a href="/users/{{$connected_user->id}}">{{$connected_user->id}}
-            {{$connected_user->username}}</a>
+            <a href="/users/{{$connection->id}}">{{$connection->id}}</a>
         </div>
         @endforeach
 
@@ -43,4 +41,22 @@
         @endunless
 
       </div> --}}
+
+      <div>
+
+        @unless(count($users) == 0)
+
+
+        @foreach($users as $user)
+        <div>
+            <a href="/users/{{$user->id}}">{{$user->id}}
+            {{$user->username}}</a>
+        </div>
+        @endforeach
+
+        @else
+        <p>No users found</p>
+        @endunless
+
+      </div>
 </x-app-layout>
