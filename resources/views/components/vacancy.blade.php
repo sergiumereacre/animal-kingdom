@@ -1,4 +1,4 @@
-<div class="w-full max-w-sm md:max-w-3xl bg-white rounded-lg shadow-lg md:flex md:flex-row">
+<x-card-base class="md:flex md:flex-row">
     <div class="flex flex-col items-center py-5 md:px-5 md:pt-11">
         <img class="w-24 md:w-auto md:h-auto h-24 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png')}}" alt="Company Logo"/>
         <span class="text-sm text-black">Company Name</span>
@@ -19,13 +19,13 @@
                 <x-skill>Skill3</x-skill>
             </div>
             <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
-                <x-primary-button class="bg-redButtons hover:bg-red-900">
+                <x-remove-button>
                     Remove
-                </x-primary-button>
+                </x-remove-button>
                 <x-primary-button>
                     Apply
                 </x-primary-button>
             </div>
         </div>
     </div>
-</div>
+</x-card-base>
