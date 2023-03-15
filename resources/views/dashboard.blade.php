@@ -11,17 +11,16 @@
     <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
 
         @unless(count($organisations) == 0)
-    
+
         @foreach($organisations as $organisation)
-            <div>
-                <a href=""></a>
-                {{$organisation->organisation_name}}
-            </div>
+        <div>
+            <a href="/organisations/{{$organisation->organisation_id}}">{{$organisation->organisation_name}}</a>
+        </div>
         @endforeach
-    
+
         @else
-        <p>No listings found</p>
+        <p>No organisations found</p>
         @endunless
-    
+
       </div>
 </x-app-layout>
