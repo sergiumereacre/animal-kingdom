@@ -11,6 +11,7 @@ class Connection extends Model
     use HasFactory;
 
     protected $primaryKey = 'connection_id';
+    public $timestamps = false;
 
 
     /**
@@ -39,7 +40,7 @@ class Connection extends Model
         return $this->belongsTo(User::class, 'first_user_id', 'user_id');
     }
 
-    public function user(): BelongsTo
+    public function userSecond(): BelongsTo
     {
         return $this->belongsTo(User::class, 'second_user_id', 'user_id');
     }

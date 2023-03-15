@@ -8,7 +8,7 @@
         </x-user-card>
     </div>
 
-    <div class="lg:grid lg:grid-cols-2 gap-4 space-y-4 md:space-y-0 mx-4">
+    <div>
 
         @unless(count($organisations) == 0)
 
@@ -23,4 +23,24 @@
         @endunless
 
       </div>
+
+      {{-- <div>
+
+        @unless(count($connections) == 0)
+
+
+        @foreach($connections as $connection)
+        <div>
+            {{$connected_user = User::all()->where('id', '=', $connection->second_user_id)}}
+
+            <a href="/users/{{$connected_user->id}}">{{$connected_user->id}}
+            {{$connected_user->username}}</a>
+        </div>
+        @endforeach
+
+        @else
+        <p>No connections found</p>
+        @endunless
+
+      </div> --}}
 </x-app-layout>

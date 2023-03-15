@@ -22,7 +22,7 @@ class ConnectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'connection_id' => $this->faker->numberBetween(-10000, 10000),
+            // 'connection_id' => $this->faker->numberBetween(-10000, 10000),
             'first_user_id' => User::factory()->create()->user_id,
             'second_user_id' => User::factory()->create()->user_id,
             'time_created' => $this->faker->dateTime(),
