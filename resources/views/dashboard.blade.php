@@ -1,11 +1,6 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+    <div class="overflow-hidden sm:rounded-lg py-12 px-5 items-center flex flex-col">
+        <x-vacancy> 
+        </x-vacancy>
     </div>
 </x-app-layout>
