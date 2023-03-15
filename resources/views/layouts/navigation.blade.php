@@ -21,7 +21,7 @@
                         </x-slot>
                         <x-slot name="content">
                             <div class="flex flex-row items-center gap-5">
-                                <x-text-input class="border border-greenButtons shadow-none w-64 h-8 rounded-2xl"></x-text-input>
+                                <x-text-input class="border border-greenButtons shadow-none w-64 h-8 rounded-2xl focus:outline-none focus:ring-0 pl-2"></x-text-input>
                                 <x-primary-button @click="open = false">Search</x-primary-button>
                             </div>
                         </x-slot>
