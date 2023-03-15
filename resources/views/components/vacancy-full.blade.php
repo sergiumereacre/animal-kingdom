@@ -21,7 +21,9 @@
                 <div class="flex gap-3">
                     <x-skill>Skill1</x-skill>
                     <x-skill>Skill2</x-skill>
-                    <x-skill>Skill3</x-skill>
+                    <x-skill>...</x-skill>
+                    <x-skill class="hidden">Skill3</x-skill>
+                    <x-skill class="hidden">Skill3</x-skill>
                 </div>
             </div>
             <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
