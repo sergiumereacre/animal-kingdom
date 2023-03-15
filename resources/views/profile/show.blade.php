@@ -1,10 +1,10 @@
 <x-app-layout>
-    This page will show individuals organisations
-    <div>
+    This page will show individuals
+    {{-- <div>
         <p>{{$organisation->organisation_name}}</p>
-    </div>
+    </div> --}}
 
-    {{-- @unless(count($vacancies) == 0)
+    @unless(count($vacancies) == 0)
 
     @foreach($vacancies as $vacancy)
     <div>
@@ -14,5 +14,5 @@
 
     @else
     <p>No vacancies found</p>
-    @endunless --}}
+    @endunless
 </x-app-layout>

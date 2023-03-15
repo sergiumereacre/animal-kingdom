@@ -39,7 +39,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -110,9 +111,13 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 
 // ========== USERS ================
 
-Route::get('/users/index', [User::class, 'index']);
+Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
 
-Route::get('/users/{organisation}', [User::class, 'show']);
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user');
 
 
 // ========== USERS ================
+
+Route::get('/settings', function () {
+    return view('settings');
+})->name('settings');

@@ -14,14 +14,14 @@
                 <div class="flex items-center pl-2">
                     <x-search-dropdown>
                         <x-slot name="trigger">
-                            <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-greenButtons hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-300 rounded-lg text-sm p-2.5 mr-1" >
+                            <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-greenButtons hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-300 rounded-lg text-sm p-2.5 mr-1">
                                 <svg class="w-7 h-7" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                                 <span class="sr-only">Search</span>
                             </button>
                         </x-slot>
                         <x-slot name="content">
                             <div class="flex flex-row items-center gap-5">
-                                <x-text-input class="border border-greenButtons shadow-none w-64 h-8 rounded-2xl"></x-text-input>
+                                <x-text-input class="border border-greenButtons shadow-none w-64 h-8 rounded-2xl focus:outline-none focus:ring-0 pl-2"></x-text-input>
                                 <x-primary-button @click="open = false">Search</x-primary-button>
                             </div>
                         </x-slot>
@@ -36,16 +36,17 @@
                 </div>
             </div>
 
+            
             <div class="flex gap-2">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-5 sm:-my-px sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">work</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('profile')">
+                    <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">group</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('profile')">
+                    <x-nav-link :href="route('settings')" :active="request()->routeIs('settings')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">settings</span>
                     </x-nav-link>
                 </div>

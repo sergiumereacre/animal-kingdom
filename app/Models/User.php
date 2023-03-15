@@ -88,6 +88,6 @@ class User extends Authenticatable
 
     public function users(): BelongsToMany{
         return $this->belongsToMany(User::class, 'connections', 'id', 'first_user_id');
-        User::all()->where()
+        // User::all()->where()
     }
 }
