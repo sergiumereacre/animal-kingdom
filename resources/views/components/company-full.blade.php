@@ -1,5 +1,4 @@
 <x-card-base>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
     <div class="flex flex-col items-center py-5 md:px-5">
         <img class="w-36 h-36 mb-5 rounded-full shadow-lg" src="{{ asset('img/logo.png')}}" alt="Company Logo"/>
         <span class="text-3xl font-bold text-black px-10 text-center">Some Company Name Ltd.</span>
