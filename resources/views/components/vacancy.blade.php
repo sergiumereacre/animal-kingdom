@@ -14,9 +14,9 @@
         <div class="pb-5 flex flex-col items-center md:flex-row">
             <div class="flex items-center pb-5 gap-3 flex-row md:pb-0">
                 <p class="font-medium text-black">Skills Needed: </p>
-                <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-300 border border-gray-400 rounded-lg">Skill1</kbd>
-                <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-300 border border-gray-400 rounded-lg">Skill2</kbd>
-                <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-300 border border-gray-400 rounded-lg">Skill3</kbd>
+                <x-skill>Skill1</x-skill>
+                <x-skill>Skill2</x-skill>
+                <x-skill>Skill3</x-skill>
             </div>
             <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
                 <x-primary-button class="bg-redButtons hover:bg-red-900">
