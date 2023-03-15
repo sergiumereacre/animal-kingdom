@@ -109,9 +109,9 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 
 // ========== USERS ================
 
-Route::get('/users/index', [User::class, 'index'])->name('users.index');
+Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
 
-Route::get('/users/{user}', [User::class, 'show'])->name('user');
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user');
 
 
 // ========== USERS ================
