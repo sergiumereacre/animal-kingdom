@@ -31,6 +31,12 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function profile(Request $request){
+        return view('profile.show', [
+            'user' => auth(),
+                'vacancies' => UsersVacancy::all()->where('user_id', '=', auth()->id())
+        ]);
+    }
 
     /**
      * Update the user's profile information.

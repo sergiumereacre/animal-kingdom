@@ -41,6 +41,8 @@ class VacancyFactory extends Factory
             'size_requirement' => $this->faker->randomElement(['SMALL', 'MEDIUM', 'LARGE']),
             'speed_requirement' => $this->faker->randomElement(['SLOW', 'MEDIUM', 'FAST']),
             'num_appendages_requirement' => $this->faker->randomElement(['NONE', 'FEW', 'MANY']),
+            'salary_range_lower' => $this->faker->numberBetween(0, 20000),
+            'salary_range_upper' => $this->faker->numberBetween(40000, 80000),
         ];
     }
 }
