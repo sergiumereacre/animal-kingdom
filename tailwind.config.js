@@ -1,3 +1,4 @@
+const plugin = require('@tailwindcss/forms');
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
@@ -6,9 +7,13 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        "./node_modules/flowbite/**/*.js",
     ],
 
-    plugins: [require("daisyui")],
+    plugins: [
+        require("daisyui"),
+        require("flowbite/plugin"),
+    ],
 
     theme: {
         extend: {
