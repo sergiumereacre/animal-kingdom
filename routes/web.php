@@ -22,11 +22,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    // return view('dashboard');
     return view('dashboard', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id())
-        // 'organisations' => Organisation::all()
     ]);
-
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

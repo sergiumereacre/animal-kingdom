@@ -26,7 +26,7 @@ class VacancyFactory extends Factory
             'time_created' => $this->faker->dateTime(),
             // 'organisation_id' => Organisation::factory()->create()->organisation_id,
             'organisation_id' => 1,
-            'vacancy_title' => $this->faker->word,
+            'vacancy_title' => $this->faker->jobTitle(),
             'vacancy_description' => $this->faker->text,
             'category_requirement' => $this->faker->randomElement(
                 ['MAMMAL', 'AVIAN', 'AMPHIBIAN', 'FISH', 'REPTILE']

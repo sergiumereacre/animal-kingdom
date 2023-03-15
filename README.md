@@ -30,7 +30,7 @@ Killing laravel docker.
 
 You can set up an alias by running this command:
 ```
-alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+`alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`
 ```
 
 Now, you don't need to type any of the vendor/bin stuff. You can just type something like `sail up`
