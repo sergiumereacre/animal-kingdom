@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organisation;
+use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class OrganisationController extends Controller
         public function show(Organisation $organisation){
                     return view('organisations.show', [
                         'organisation' => $organisation,
-                            'vacancies' => Vacancy::all()->where('organisation_id', '=', $organisation->organisation_id)
+                        'vacancies' => Vacancy::all()->where('organisation_id', '=', $organisation->organisation_id),
+                        'owner' => User::all()->find($organisation->owner_id)
                     ]);
         }
 

@@ -26,6 +26,13 @@
         @unless(count($organisations) == 0)
 
         @foreach($organisations as $organisation)
+
+
+        @unless(count($vacancies) == 0)
+
+        <div>All vacancies</div>
+
+        @foreach($vacancies as $vacancy)
         <div>
             <a href="/organisations/{{$organisation->organisation_id}}">{{$organisation->organisation_name}}</a>
             <x-company-full :organisation="$organisation"></x-company-full>

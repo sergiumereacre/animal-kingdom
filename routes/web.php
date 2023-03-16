@@ -34,7 +34,7 @@ Route::get('/home', function () {
         // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
         //     'first_user_id', '=', auth()->id()
         // )->value('second_user_id'))
-        
+
         'users' => User::all()->whereIn('id', DB::table('connections')->where(
             'first_user_id', '=', auth()->id()
         )->pluck('second_user_id'))
