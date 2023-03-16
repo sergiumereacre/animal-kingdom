@@ -36,12 +36,6 @@
                 </div>
             </div>
 
-            <div>
-                <a href="/organisations/index">organisations</a>
-                <a href="/users/index">organisations</a>
-                <a href="/vacancies/index">organisations</a>
-            </div>
-
             
             <div class="flex gap-2">
                 <!-- Navigation Links -->

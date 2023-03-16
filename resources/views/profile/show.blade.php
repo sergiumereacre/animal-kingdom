@@ -15,4 +15,16 @@
     @else
     <p>No vacancies found</p>
     @endunless
+
+    @unless(count($organisations) == 0)
+
+    @foreach($organisations as $organisation)
+    <div>
+        <a href="/organisations/{{$organisation->organisation_id}}">{{$organisation->organisation_name}}</a>
+    </div>
+    @endforeach
+
+    @else
+    <p>No organisations found</p>
+    @endunless
 </x-app-layout>

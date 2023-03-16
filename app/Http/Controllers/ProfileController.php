@@ -38,9 +38,7 @@ class ProfileController extends Controller
         return view('profile.show', [
             'user' => $user,
             'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id),
-            'organisations' => Organisation::all()->whereIn('id', DB::table('organisations')->where(
-                'first_user_id', '=', auth()->id()
-            )->pluck('second_user_id'))
+            'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
         ]);
     }
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Connection;
+use App\Models\Vacancy;
 use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -28,16 +29,14 @@ Route::get('/home', function () {
     // return view('home');
     return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
-        // 'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
         // All users with their ids available in second_user_id
         // of the connections table
+        
         // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
         //     'first_user_id', '=', auth()->id()
-        // )->value('second_user_id'))
-        
-        'users' => User::all()->whereIn('id', DB::table('connections')->where(
-            'first_user_id', '=', auth()->id()
-        )->pluck('second_user_id'))
+        // )->pluck('second_user_id'))
+        'vacancies' => Vacancy::all()
+
     ]);
 })->middleware(['auth', 'verified'])->name('home');
 

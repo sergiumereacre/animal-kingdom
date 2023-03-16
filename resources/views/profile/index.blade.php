@@ -3,8 +3,9 @@
 
     @foreach ($users as $user)
     <div>
-        {{$user->username}}
-
+        <div>
+            <a href="/users/{{$user->id}}">{{$user->username}}</a>
+        </div>
     </div>
     @endforeach
 </x-app-layout>

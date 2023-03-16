@@ -23,8 +23,10 @@ class VacancyController extends Controller
 
     // REMEMBER TO SWITCH ALL REQUESTS TO VACANCIES FOR DEPENDENCY INJECTION
 
-    public function show(Request $request){
-                return view('vacancies.show');
+    public function show(Vacancy $vacancy){
+                return view('vacancies.show', [
+                    'organisation' => Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id);
+                ]);
     }
 
     public function create()
