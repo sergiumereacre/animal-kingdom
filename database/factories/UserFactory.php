@@ -44,7 +44,7 @@ class UserFactory extends Factory
             // 'organisation_id' => Organisation::factory()->create()->organisation_id,
             'contact_number' => $this->faker->phoneNumber(),
             // 'is_banned' => $this->faker->boolean,
-            // 'bio' => $this->faker->text,
+            'bio' => $this->faker->paragraph(),
             // 'profile_pic' => $this->faker->word,
         ];
     }
