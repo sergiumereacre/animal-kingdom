@@ -140,7 +140,7 @@
                 Create Vacancy
             </button>
 
-            <a href="/dashboard">Go Back</a>
+            <a href="/home">Go Back</a>
         </div>
             <label for="category_requirement">Category Requirement</label>
             <select name="category_requirement" id="category_requirement">
@@ -267,7 +267,7 @@
                 Create Vacancy
             </button>
 
-            <a href="/dashboard">Go Back</a>
+            <a href="/home">Go Back</a>
         </div>
     </form>
 

@@ -24,9 +24,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    // return view('dashboard');
-    return view('dashboard', [
+Route::get('/home', function () {
+    // return view('home');
+    return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
         'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
         // All users with their ids available in second_user_id
@@ -39,7 +39,7 @@ Route::get('/dashboard', function () {
             'first_user_id', '=', auth()->id()
         )->pluck('second_user_id'))
     ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
