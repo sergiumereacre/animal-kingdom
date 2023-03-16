@@ -7,12 +7,6 @@
         <x-user-card>
         </x-user-card> --}}
 
-        <div>
-
-@php
-    $test = 1;
-@endphp
-
             @unless(count($users) == 0)
     
     
@@ -26,15 +20,13 @@
             @else
             <p>No users found</p>
             @endunless
-    
-          </div>
     </div>
 
     
                 {{-- <a href="/users/{{$user->id}}">{{$user->id}}
                 {{$user->username}}</a> --}}
 
-    <div>
+    <div class="">
 
         @unless(count($organisations) == 0)
 
