@@ -36,6 +36,12 @@
                 </div>
             </div>
 
+            <div>
+                <a href="/organisations/index">organisations</a>
+                <a href="/users/index">organisations</a>
+                <a href="/vacancies/index">organisations</a>
+            </div>
+
             
             <div class="flex gap-2">
                 <!-- Navigation Links -->
@@ -43,10 +49,10 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">work</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">group</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('settings')" :active="request()->routeIs('settings')">
+                    <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">settings</span>
                     </x-nav-link>
                 </div>
@@ -61,7 +67,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
+                            <x-dropdown-link href='/users/{{auth()->id()}}'>
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 

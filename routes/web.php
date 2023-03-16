@@ -28,7 +28,7 @@ Route::get('/home', function () {
     // return view('home');
     return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
-        'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
+        // 'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
         // All users with their ids available in second_user_id
         // of the connections table
         // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
