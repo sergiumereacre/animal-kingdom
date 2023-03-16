@@ -52,7 +52,7 @@ class OrganisationController extends Controller
 
             Organisation::create($formFields);
 
-            return redirect('/dashboard');
+            return redirect('/home');
 
             // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
         }
