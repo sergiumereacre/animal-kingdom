@@ -21,12 +21,18 @@ class AnimalSpeciesFactory extends Factory
     public function definition(): array
     {
         return [
-            'species_id' => $this->faker->numberBetween(-10000, 10000),
+            // 'species_id' => $this->faker->numberBetween(1, 2),
             'species_name' => $this->faker->word,
-            'category' => $this->faker->randomElement(/** enum_attributes **/),
+            'category' => $this->faker->randomElement(['MAMMAL', 'AVIAN', 'AMPHIBIAN', 'FISH', 'REPTILE']),
             'can_fly' => $this->faker->boolean,
             'can_swim' => $this->faker->boolean,
-            'eating_style' => $this->faker->randomElement(/** enum_attributes **/),
+            'can_climb' => $this->faker->boolean,
+            'eating_style' => $this->faker->randomElement(['HERBIVORE', 'CARNIVORE', 'OMNIVORE']),
+            'produces_toxins' => $this->faker->boolean,
+            'size' => $this->faker->randomElement(['SMALL', 'MEDIUM', 'LARGE']),
+            'speed' => $this->faker->randomElement(['SLOW', 'MEDIUM', 'FAST']),
+            'num_appendages' => $this->faker->randomElement(['NONE', 'FEW', 'MANY']),
+
         ];
     }
 }

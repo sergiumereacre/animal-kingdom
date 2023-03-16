@@ -30,7 +30,7 @@ Killing laravel docker.
 
 You can set up an alias by running this command:
 ```
-alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+`alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`
 ```
 
 Now, you don't need to type any of the vendor/bin stuff. You can just type something like `sail up`
@@ -75,6 +75,14 @@ If you want to set up a clean database with some pre-made entries, run the follo
 ```
 
 Congratulations, the application should now be running.
+
+---
+
+## Logging In
+
+After running `sail migrate:fresh --seed`, a test user should be created for dev purposes. Just login with email - `test@test.com` and password `test`
+
+---
 
 ## Working With The Database
 

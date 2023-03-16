@@ -25,26 +25,26 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            // 'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            // 'email_verified_at' => now(),
+            // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
 
-            // 'user_id' => $this->faker->word,
-            // 'first_name' => $this->faker->firstName,
-            // 'last_name' => $this->faker->lastName,
-            // 'is_admin' => $this->faker->boolean,
+            // 'id' => $this->faker->word,
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'is_admin' => $this->faker->boolean,
+            'species_id' => 1,
             // 'species_id' => AnimalSpecies::factory()->create()->species_id,
-            // 'username' => $this->faker->userName,
-            // 'password' => $this->faker->password,
-            // 'email' => $this->faker->safeEmail,
-            // 'address' => $this->faker->word,
-            // 'date_of_birth' => $this->faker->date(),
+            'username' => $this->faker->userName,
+            'password' => $this->faker->password,
+            'address' => $this->faker->address(),
+            'date_of_birth' => $this->faker->date(),
             // 'organisation_id' => Organisation::factory()->create()->organisation_id,
-            // 'contact_number' => $this->faker->word,
+            'contact_number' => $this->faker->phoneNumber(),
             // 'is_banned' => $this->faker->boolean,
-            // 'bio' => $this->faker->text,
+            'bio' => $this->faker->paragraph(),
             // 'profile_pic' => $this->faker->word,
         ];
     }

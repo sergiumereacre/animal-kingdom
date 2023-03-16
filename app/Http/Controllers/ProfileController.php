@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
+use App\Models\UsersVacancy;
+use App\Models\Vacancy;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +21,20 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+        ]);
+    }
+
+    public function show(User $user){
+        return view('profile.show', [
+            'user' => $user,
+                'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id)
+        ]);
+    }
+
+    public function profile(Request $request){
+        return view('profile.show', [
+            'user' => auth(),
+                'vacancies' => UsersVacancy::all()->where('user_id', '=', auth()->id())
         ]);
     }
 

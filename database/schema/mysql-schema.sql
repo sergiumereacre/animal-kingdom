@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `connections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `connections` (
-  `connection_id` int NOT NULL,
+  `connection_id` int NOT NULL AUTO_INCREMENT,
   `first_user_id` bigint unsigned NOT NULL,
   `second_user_id` bigint unsigned NOT NULL,
   `time_created` datetime NOT NULL,

@@ -3,7 +3,10 @@
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
+use App\Models\Connection;
 use App\Models\Organisation;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +25,25 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    // return view('dashboard');
+    return view('dashboard', [
+        'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
+        'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
+        // All users with their ids available in second_user_id
+        // of the connections table
+        // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
+        //     'first_user_id', '=', auth()->id()
+        // )->value('second_user_id'))
+        
+        'users' => User::all()->whereIn('id', DB::table('connections')->where(
+            'first_user_id', '=', auth()->id()
+        )->pluck('second_user_id'))
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -94,3 +111,16 @@ Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->
 Route::get('/organisations/{organisation}', [OrganisationController::class, 'show']);
 
 // ========== ORGANISATIONS ================
+
+// ========== USERS ================
+
+Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
+
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user');
+
+
+// ========== USERS ================
+
+Route::get('/settings', function () {
+    return view('settings');
+})->name('settings');

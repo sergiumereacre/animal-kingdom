@@ -22,16 +22,18 @@ class OrganisationFactory extends Factory
     public function definition(): array
     {
         return [
-            'organisation_id' => $this->faker->word,
-            'organisation_name' => $this->faker->word,
-            'owner_id' => User::factory()->create()->user_id,
+            // 'organisation_id' => $this->faker->word,
+            'organisation_name' => $this->faker->company(),
+            // 'owner_id' => User::factory()->create()->id,
+            'owner_id' => 1,
+
             'time_created' => $this->faker->dateTime(),
-            'address' => $this->faker->word,
-            'email' => $this->faker->safeEmail,
-            'contact_number' => $this->faker->word,
+            'address' => $this->faker->address(),
+            'email' => $this->faker->companyEmail(),
+            'contact_number' => $this->faker->phoneNumber(),
             'description' => $this->faker->text,
-            'picture' => $this->faker->word,
-            'size' => $this->faker->numberBetween(-100000, 100000),
+            'picture' => null,
+            'size' => $this->faker->numberBetween(0, 100000),
         ];
     }
 }

@@ -1,8 +1,8 @@
 <x-app-layout>
-    This page will show individual organisations
-    <div>
+    This page will show individuals
+    {{-- <div>
         <p>{{$organisation->organisation_name}}</p>
-    </div>
+    </div> --}}
 
     @unless(count($vacancies) == 0)
 
