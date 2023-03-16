@@ -78,7 +78,7 @@ CREATE TABLE `organisations` (
   `size` bigint DEFAULT NULL,
   PRIMARY KEY (`organisation_id`),
   KEY `organisations_owner_id_foreign` (`owner_id`),
-  CONSTRAINT `organisations_owner_id_foreign` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `organisations_owner_id_foreign` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `password_reset_tokens`;
