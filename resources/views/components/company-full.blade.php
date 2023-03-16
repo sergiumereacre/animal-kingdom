@@ -1,8 +1,11 @@
+{{-- Receives an organisation variable --}}
+@props(['organisation'])
+
 <x-card-base>
     <!-- Avatar and Company Name -->
     <div class="flex flex-col items-center py-5 md:px-5">
         <img class="w-36 h-36 mb-5 rounded-full shadow-lg" src="{{ asset('img/logo.png')}}" alt="Company Logo"/>
-        <span class="text-3xl font-bold text-black px-10 text-center">Some Company Name Ltd.</span>
+        <span class="text-3xl font-bold text-black px-10 text-center">{{$organisation->organisation_name}}</span>
     </div>
     <!-- Main Section -->
     <div>
@@ -18,12 +21,12 @@
                 <!-- Phone -->
                 <div class="flex flex-row items-center p-2">
                     <span class="material-symbols-rounded">call</span>
-                    <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">(555) 555-1234</p>
+                    <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">{{$organisation->contact_number}}</p>
                 </div>
                 <!-- Email -->
                 <div class="flex flex-row items-center p-2">
                     <span class="material-symbols-rounded">mail</span>
-                    <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">example@example.com</p>
+                    <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">{{$organisation->email}}</p>
                 </div>
                 <!-- Website -->
                 <div class="flex flex-row items-center p-2">
@@ -35,7 +38,7 @@
         <!-- Location -->
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:px-5 md:w-44 md:text-right">Location:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">Los Angelos, California</p>
+            <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">{{$organisation->address}}</p>
         </div>
         <!-- Industry -->
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">

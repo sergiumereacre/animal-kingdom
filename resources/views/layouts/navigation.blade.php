@@ -46,7 +46,7 @@
                     <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">group</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('settings')" :active="request()->routeIs('settings')">
+                    <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">settings</span>
                     </x-nav-link>
                 </div>
