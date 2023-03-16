@@ -32,8 +32,6 @@
         </div>
 
         <div class="flex items-center gap-4 justify-end">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
             @if (session('status') === 'password-updated')
                 <p
                     x-data="{ show: true }"
@@ -43,6 +41,8 @@
                     class="text-sm text-gray-600"
                 >{{ __('Saved.') }}</p>
             @endif
+
+            <x-primary-button>{{ __('Save') }}</x-primary-button>
         </div>
     </form>
 </section>
