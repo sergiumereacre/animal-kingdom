@@ -131,8 +131,8 @@ CREATE TABLE `qualifications_users` (
   PRIMARY KEY (`qualifications_users_id`),
   KEY `qualifications_users_user_id_foreign` (`user_id`),
   KEY `qualifications_users_qualification_id_foreign` (`qualification_id`),
-  CONSTRAINT `qualifications_users_qualification_id_foreign` FOREIGN KEY (`qualification_id`) REFERENCES `qualifications` (`qualification_id`),
-  CONSTRAINT `qualifications_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `qualifications_users_qualification_id_foreign` FOREIGN KEY (`qualification_id`) REFERENCES `qualifications` (`qualification_id`)  ON DELETE CASCADE,
+  CONSTRAINT `qualifications_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `qualifications_vacancies`;
@@ -145,8 +145,8 @@ CREATE TABLE `qualifications_vacancies` (
   PRIMARY KEY (`qualifications_vacancies_id`),
   KEY `qualifications_vacancies_qualification_id_foreign` (`qualification_id`),
   KEY `qualifications_vacancies_vacancy_id_foreign` (`vacancy_id`),
-  CONSTRAINT `qualifications_vacancies_qualification_id_foreign` FOREIGN KEY (`qualification_id`) REFERENCES `qualifications` (`qualification_id`),
-  CONSTRAINT `qualifications_vacancies_vacancy_id_foreign` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`vacancy_id`)
+  CONSTRAINT `qualifications_vacancies_qualification_id_foreign` FOREIGN KEY (`qualification_id`) REFERENCES `qualifications` (`qualification_id`)  ON DELETE CASCADE,
+  CONSTRAINT `qualifications_vacancies_vacancy_id_foreign` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`vacancy_id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `skills`;
@@ -170,8 +170,8 @@ CREATE TABLE `skills_users` (
   PRIMARY KEY (`skills_users_id`),
   KEY `skills_users_user_id_foreign` (`user_id`),
   KEY `skills_users_skill_id_foreign` (`skill_id`),
-  CONSTRAINT `skills_users_skill_id_foreign` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`skill_id`),
-  CONSTRAINT `skills_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  CONSTRAINT `skills_users_skill_id_foreign` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`skill_id`)  ON DELETE CASCADE,
+  CONSTRAINT `skills_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `skills_vacancies`;
@@ -185,8 +185,8 @@ CREATE TABLE `skills_vacancies` (
   PRIMARY KEY (`skills_vacancies_id`),
   KEY `skills_vacancies_skill_id_foreign` (`skill_id`),
   KEY `skills_vacancies_vacancy_id_foreign` (`vacancy_id`),
-  CONSTRAINT `skills_vacancies_skill_id_foreign` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`skill_id`),
-  CONSTRAINT `skills_vacancies_vacancy_id_foreign` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`vacancy_id`)
+  CONSTRAINT `skills_vacancies_skill_id_foreign` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`skill_id`)  ON DELETE CASCADE,
+  CONSTRAINT `skills_vacancies_vacancy_id_foreign` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`vacancy_id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
@@ -216,7 +216,7 @@ CREATE TABLE `users` (
   KEY `users_species_id_foreign` (`species_id`),
   KEY `users_organisation_id_foreign` (`organisation_id`),
   CONSTRAINT `users_organisation_id_foreign` FOREIGN KEY (`organisation_id`) REFERENCES `organisations` (`organisation_id`),
-  CONSTRAINT `users_species_id_foreign` FOREIGN KEY (`species_id`) REFERENCES `animal_species` (`species_id`)
+  CONSTRAINT `users_species_id_foreign` FOREIGN KEY (`species_id`) REFERENCES `animal_species` (`species_id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users_vacancies`;
@@ -230,7 +230,7 @@ CREATE TABLE `users_vacancies` (
   PRIMARY KEY (`users_vacancies_id`),
   KEY `users_vacancies_user_id_foreign` (`user_id`),
   KEY `users_vacancies_vacancy_id_foreign` (`vacancy_id`),
-  CONSTRAINT `users_vacancies_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `users_vacancies_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)  ON DELETE CASCADE,
   CONSTRAINT `users_vacancies_vacancy_id_foreign` FOREIGN KEY (`vacancy_id`) REFERENCES `vacancies` (`vacancy_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -256,7 +256,7 @@ CREATE TABLE `vacancies` (
   `salary_range_upper` bigint unsigned NOT NULL,
   PRIMARY KEY (`vacancy_id`),
   KEY `vacancies_organisation_id_foreign` (`organisation_id`),
-  CONSTRAINT `vacancies_organisation_id_foreign` FOREIGN KEY (`organisation_id`) REFERENCES `organisations` (`organisation_id`)
+  CONSTRAINT `vacancies_organisation_id_foreign` FOREIGN KEY (`organisation_id`) REFERENCES `organisations` (`organisation_id`)  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
