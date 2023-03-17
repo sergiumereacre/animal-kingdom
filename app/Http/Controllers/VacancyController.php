@@ -11,7 +11,8 @@ use Illuminate\Validation\Rule;
 class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
-    public function index(){
+    public function index()
+    {
         return view('vacancies.index');
     }
 
@@ -26,12 +27,13 @@ class VacancyController extends Controller
 
     // REMEMBER TO SWITCH ALL REQUESTS TO VACANCIES FOR DEPENDENCY INJECTION
 
-    public function show(Vacancy $vacancy){
-                return view('vacancies.show', [
-                    // 'organisation' => Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id)->,
-                    'organisation' => Organisation::all()->find($vacancy->organisation_id),
-                    'vacancy' => $vacancy
-                ]);
+    public function show(Vacancy $vacancy)
+    {
+        return view('vacancies.show', [
+            // 'organisation' => Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id)->,
+            'organisation' => Organisation::all()->find($vacancy->organisation_id),
+            'vacancy' => $vacancy
+        ]);
     }
 
     public function create(Organisation $organisation)
@@ -62,10 +64,10 @@ class VacancyController extends Controller
                 'salary_range_lower' => 'required',
 
                 'salary_range_upper' => 'required',
-                ]
+            ]
         );
 
-       
+
 
         // $formFields['vacancy_description'] = $request->vacancy_description;
         // $formFields['category_requirement'] = $request->category_requirement;
@@ -77,52 +79,52 @@ class VacancyController extends Controller
         // $formFields['size_requirement'] = $request->size_requirement;
         // $formFields['speed_requirement'] = $request->speed_requirement;
         // $formFields['num_appendages_requirement'] = $request->num_appendages_requirement;
-        
+
         $formFields = $request->all();
 
         // dd($formFields['salary_range_lower']);
         $formFields['category_requirement'] = $request->input('category_requirement', 1);
 
-        if($request->category_requirement == "NULL"){
+        if ($request->category_requirement == "NULL") {
             $formFields['category_requirement'] = NULL;
         }
 
-        if($request->can_fly_requirement == "NULL"){
+        if ($request->can_fly_requirement == "NULL") {
             $formFields['can_fly_requirement'] = NULL;
         }
 
-        if($request->can_swim_requirement == "NULL"){
+        if ($request->can_swim_requirement == "NULL") {
             $formFields['can_swim_requirement'] = NULL;
         }
 
-        if($request->can_climb_requirement == "NULL"){
+        if ($request->can_climb_requirement == "NULL") {
             $formFields['can_climb_requirement'] = NULL;
         }
 
-        if($request->eating_style_requirement == "NULL"){
+        if ($request->eating_style_requirement == "NULL") {
             $formFields['eating_style_requirement'] = NULL;
         }
 
-        if($request->produces_toxins_requirement == "NULL"){
+        if ($request->produces_toxins_requirement == "NULL") {
             $formFields['produces_toxins_requirement'] = NULL;
         }
 
-        if($request->size_requirement == "NULL"){
+        if ($request->size_requirement == "NULL") {
             $formFields['size_requirement'] = NULL;
         }
 
-        if($request->speed_requirement == "NULL"){
+        if ($request->speed_requirement == "NULL") {
             $formFields['speed_requirement'] = NULL;
         }
 
-        if($request->num_appendages_requirement == "NULL"){
+        if ($request->num_appendages_requirement == "NULL") {
             $formFields['num_appendages_requirement'] = NULL;
         }
 
         if ($request->salary_range_lower > $request->salary_range_upper) {
             abort(403, 'The lower salary range can\'t exceed the upper range');
         }
-        
+
         $formFields['salary_range_lower'] = $request->salary_range_lower;
         $formFields['salary_range_upper'] = $request->salary_range_upper;
 
@@ -136,7 +138,7 @@ class VacancyController extends Controller
         Vacancy::create($formFields);
 
 
-        return redirect('/home' );
+        return redirect('/home');
     }
 
     public function edit(Request $request)
@@ -147,21 +149,31 @@ class VacancyController extends Controller
     }
 
     // Attempt to update vacancy
-    public function update(Request $request, Vacancy $vacancy){
-
+    public function update(Request $request, Vacancy $vacancy)
+    {
     }
 
     // Attempt to delete vacancy
-    public function destroy(Vacancy $vacancy){
+    public function destroy(Vacancy $vacancy)
+    {
+        $organisation = Organisation::find($vacancy->organisation_id);
 
+        // dd($organisation);
+        // Make sure logged in user is owner
+        if ($organisation->owner_id != auth()->id()) {
+            abort(403, 'Unauthorized Action, you\'re not the owner!!');
+        }
+
+        $vacancy->delete();
+        return redirect('/organisations/' . $organisation->organisation_id);
     }
 
     // Redirect to manage page
-    public function manage(){
+    public function manage()
+    {
         return view('vacancies.manage');
 
         // Eventually, we should be able to map a user's vacancies to the vacancies variable
         return view('vacancies.manage', ['vacancies' => auth()->user()->vacancies()->get()]);
-
     }
 }
