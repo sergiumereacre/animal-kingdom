@@ -1,18 +1,31 @@
 #!/bin/bash
 
 FLAG=$1
+FLAG_HELP="help"
+FLAG_INSTALL="install"
+FLAG_KILL="kill"
+FLAG_SEED="seed"
+FLAG_START="start"
+FLAG_REFRESH="refresh"
 SAIL="./vendor/bin/sail"
 
-if [[ -z "$FLAG" || "$FLAG" = "help" ]]; then
-    echo "usage: prog command"
-    echo "  commands:"
-    echo "    help     outputs list of commands"
-    echo "    start    initialises the application"
-    echo "    kill     kills sail process"
-    echo "    reset    wipes changes made to database"
-fi
+if [[ "$FLAG" = "$FLAG_START" ]]; then
+    echo "running npm dev"
+    $SAIL npm run dev
 
-if [[ "$FLAG" = "start" ]]; then
+elif [[ "$FLAG" = "$FLAG_KILL" ]]; then
+    echo "setting sail down"
+    $SAIL down
+
+elif [[ "$FLAG" = "$FLAG_REFRESH" ]]; then
+    echo "refreshing database"
+    $SAIL artisan migrate:fresh
+
+elif [[ "$FLAG" = "$FLAG_SEED" ]]; then
+    echo "seeding database"
+    $SAIL artisan db:seed
+
+elif [[ "$FLAG" = "$FLAG_INSTALL" ]]; then
     echo "installing dependencies via docker"
     docker run --rm \
       -u "$(id -u):$(id -g)" \
@@ -25,21 +38,17 @@ if [[ "$FLAG" = "start" ]]; then
     $SAIL up -d
 
     echo "migrating tables"
-    $SAIL artisan migrate
+    $SAIL artisan migrate:fresh --seed
 
     echo "installing npm"
     $SAIL npm install
 
-    echo "running npm dev"
-    $SAIL npm run dev
-fi
-
-if [[ "$FLAG" = "kill" ]]; then
-    echo "setting sail down"
-    $SAIL down
-fi
-
-if [[ "$FLAG" = "reset" ]]; then
-    echo "resetting database"
-    $SAIL artisan migrate:reset
+else
+    echo usage: prog command
+    echo commands:
+    echo $'\t'$FLAG_HELP$'\t'outputs list of commands
+    echo $'\t'$FLAG_START$'\t'initialises sail process
+    echo $'\t'$FLAG_SEED$'\t'seeds the database
+    echo $'\t'$FLAG_KILL$'\t'kills sail process
+    echo $'\t'$FLAG_REFRESH$'\t'wipes changes made to database
 fi
