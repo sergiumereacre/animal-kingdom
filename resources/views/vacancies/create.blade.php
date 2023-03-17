@@ -6,12 +6,30 @@
         @csrf
         <div>
             <label for="vacancy_title">Vacancy Title</label>
-            <input type="text" name="vacancy_title" placeholder="" value="{{old('vacancy_title')}}">
+            <input type="text" name="vacancy_title" placeholder="" value="{{ old('vacancy_title') }}">
         </div>
 
         {{-- Catching errors and displaying them --}}
         @error('vacancy_title')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
+        @enderror
+
+        <div>
+            <label for="organisation_id">What company will this vacancy be created under?</label>
+            <select name="organisation_id" id="organisation_id">
+
+                @foreach ($organisations as $org)
+                    @if ($org == $organisation)
+                    <option selected value="{{$org->organisation_id}}">{{$org->organisation_name}}</option>
+                    @else
+                    <option value="{{$org->organisation_id}}">{{$org->organisation_name}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+
+        @error('organisation_id')
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -27,7 +45,7 @@
         </div>
 
         @error('category_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -40,7 +58,7 @@
         </div>
 
         @error('can_fly_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -53,7 +71,7 @@
         </div>
 
         @error('can_swin_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -66,7 +84,7 @@
         </div>
 
         @error('can_climb_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -80,7 +98,7 @@
         </div>
 
         @error('eating_style_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -93,7 +111,7 @@
         </div>
 
         @error('produces_toxins_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -107,7 +125,7 @@
         </div>
 
         @error('size_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -121,7 +139,7 @@
         </div>
 
         @error('speed_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -135,16 +153,16 @@
         </div>
 
         @error('num_appendages_requirement')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
             <label for="vacancy_description">Vacancy Description</label>
-            <textarea name="vacancy_description" id="vacancy_description" rows="10" placeholder="Vacancy Description...">{{old('vacancy_description')}}</textarea>
+            <textarea name="vacancy_description" id="vacancy_description" rows="10" placeholder="Vacancy Description...">{{ old('vacancy_description') }}</textarea>
         </div>
 
         @error('vacancy_description')
-            <p>{{$message}}</p>
+            <p>{{ $message }}</p>
         @enderror
 
         <div>
@@ -153,7 +171,7 @@
             </button>
 
             <a href="/home">Go Back</a>
-     
+
     </form>
 
 

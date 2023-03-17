@@ -33,9 +33,12 @@ class VacancyController extends Controller
                 ]);
     }
 
-    public function create()
+    public function create(Organisation $organisation)
     {
-        return view('vacancies.create');
+        return view('vacancies.create', [
+            'organisation' => $organisation,
+            'organisations' => Organisation::all()->where('owner_id', '=', auth()->id())
+        ]);
     }
 
     // Store vacancy data with dependency injection

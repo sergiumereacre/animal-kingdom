@@ -21,7 +21,7 @@
     @endunless
 
     @if ($owner->id == auth()->id())
-    <a href="/vacancies/create">Create new vacancy</a>
+    <a href="/vacancies/{{$organisation->organisation_id}}/create">Create new vacancy</a>
     @else
     @endif
 </x-app-layout>

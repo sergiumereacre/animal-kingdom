@@ -72,7 +72,7 @@ Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('vacan
 
 // The convention is that if you want to do ANYTHING with stuff, prefix the path with 'vacancies'
 // Using the auth middleware, you'll be sent to a login page if you want to get to certain paths
-Route::get('/vacancies/create', [VacancyController::class, 'create'])->middleware('auth');
+Route::get('/vacancies/{organisation}/create', [VacancyController::class, 'create'])->middleware('auth');
 
 // Post
 Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth');
