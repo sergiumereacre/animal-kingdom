@@ -47,6 +47,7 @@ else
     echo usage: prog command
     echo commands:
     echo $'\t'$FLAG_HELP$'\t'outputs list of commands
+    echo $'\t'$FLAG_INSTALL$'\t'runs installation commands
     echo $'\t'$FLAG_START$'\t'initialises sail process
     echo $'\t'$FLAG_SEED$'\t'seeds the database
     echo $'\t'$FLAG_KILL$'\t'kills sail process
