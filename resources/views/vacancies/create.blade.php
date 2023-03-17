@@ -31,8 +31,11 @@
         @enderror
 
         <div>
-            <input type="checkbox" name="can_fly_requirement" id="can_fly_requirement" value="1">
-            <label for="can_fly_requirement">Can Fly Requirement</label>
+            <label for="can_fly_requirement">Should applicants be able to fly?</label>
+            <select name="can_fly_requirement" id="can_fly_requirement">
+                <option value="NULL">Doesn't matter</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
         </div>
 
@@ -41,18 +44,24 @@
         @enderror
 
         <div>
-            <input type="checkbox" name="can_swim_requirement" id="can_swim_requirement" value="1">
-            <label for="can_swim_requirement">Can Swim Requirement</label>
+            <label for="can_swin_requirement">Should applicants be able to swim?</label>
+            <select name="can_swin_requirement" id="can_swin_requirement">
+                <option value="NULL">Doesn't matter</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
         </div>
 
-        @error('can_swim_requirement')
+        @error('can_swin_requirement')
             <p>{{$message}}</p>
         @enderror
 
         <div>
-            <input type="checkbox" name="can_climb_requirement" id="can_climb_requirement" value="1">
-            <label for="can_climb_requirement">Can Climb Requirement</label>
+            <label for="can_climb_requirement">Should applicants be able to climb?</label>
+            <select name="can_climb_requirement" id="can_climb_requirement">
+                <option value="NULL">Doesn't matter</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
         </div>
 
@@ -75,8 +84,11 @@
         @enderror
 
         <div>
-            <input type="checkbox" name="produces_toxins_requirement" id="produces_toxins_requirement" value="1">
-            <label for="produces_toxins_requirement">Produces Toxins Requirement</label>
+            <label for="produces_toxins_requirement">Should applicants be able to produce toxins?</label>
+            <select name="produces_toxins_requirement" id="produces_toxins_requirement">
+                <option value="NULL">Doesn't matter</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
             </select>
         </div>
 
@@ -87,7 +99,7 @@
         <div>
             <label for="size_requirement">Size Requirement</label>
             <select name="size_requirement" id="size_requirement">
-                <option value="NULL">None</option>
+                <option value="NULL">Doesn't matter</option>
                 <option value="SMALL">Small</option>
                 <option value="MEDIUM">Medium</option>
                 <option value="LARGE">Large</option>
@@ -101,7 +113,7 @@
         <div>
             <label for="speed_requirement">Speed Requirement</label>
             <select name="speed_requirement" id="speed_requirement">
-                <option value="NULL">None</option>
+                <option value="NULL">Doesn't matter</option>
                 <option value="SLOW">Slow</option>
                 <option value="MEDIUM">Medium</option>
                 <option value="FAST">Fast</option>
@@ -113,9 +125,9 @@
         @enderror
 
         <div>
-            <label for="num_appendages_requirement">Number of Appendages Requirement</label>
+            <label for="num_appendages_requirement">How many appendages should applicants have?</label>
             <select name="num_appendages_requirement" id="num_appendages_requirement">
-                <option value="NULL">None</option>
+                <option value="NULL">Doesn't matter</option>
                 <option value="NONE">No Appendages</option>
                 <option value="FEW">Few Appendages, e.g., 4</option>
                 <option value="MANY">Many Appendages</option>

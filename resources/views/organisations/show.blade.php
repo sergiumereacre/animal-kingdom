@@ -3,6 +3,7 @@
     <div>
         <p>Organisation Name: {{$organisation->organisation_name}}</p>
         <p>Owner Name: <a href="/users/{{$owner->id}}">{{$owner->username}}</a></p>
+        <a href="/organisations/{{$organisation->organisation_id}}/edit">Edit Organisation</a>
     </div>
 
     @unless(count($vacancies) == 0)
@@ -18,4 +19,9 @@
     @else
     <p>No vacancies found</p>
     @endunless
+
+    @if ($owner->id == auth()->id())
+    <a href="/vacancies/create">Create new vacancy</a>
+    @else
+    @endif
 </x-app-layout>
