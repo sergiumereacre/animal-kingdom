@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use App\Models\Vacancy;
-use App\Models\Organisation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -63,9 +62,9 @@ class VacancyController extends Controller
             ]
         );
 
-        if($request->category_requirement != "NULL"){
-            $formFields['']
-        }
+        // if($request->category_requirement != "NULL"){
+        //     $formFields['']
+        // }
 
         // Check if file exists
         if ($request->hasFile('logo')) {
@@ -81,7 +80,7 @@ class VacancyController extends Controller
         Vacancy::create($formFields);
 
 
-        return redirect('/home');
+        return redirect('/home' );
     }
 
     public function edit(Request $request)

@@ -1,20 +1,22 @@
 <x-app-layout>
-    <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
+    {{-- <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
 
     </div>
 
-    <div>
 
         @unless(count($vacancies) == 0)
 
         @foreach($vacancies as $vacancy)
-        <div>
             <a href="/vacancies/{{$vacancy->vacancy_id}}">{{$vacancy->vacancy_title}}</a>
+        @endforeach
 
-<x-app-layout>
+        @endunless --}}
+
+{{-- </x-app-layout> --}}
+
+
     <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
 
-        <div>
 
 
             @unless(count($users) == 0)
@@ -24,7 +26,7 @@
                     <x-user-card :user="$user"/>
                 @endforeach
 
-                @else
+            @else
                 <p>No users found</p>
             @endunless
     </div>
@@ -57,7 +59,7 @@
 
       </div>
 
-      {{-- <div>
+      <div>
         <p>No organisations found</p>
         @endunless
 

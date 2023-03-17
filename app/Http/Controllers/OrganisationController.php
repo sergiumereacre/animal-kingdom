@@ -61,7 +61,6 @@ class OrganisationController extends Controller
         $formFields['description'] = $request->description;
 
 
-
         Organisation::create($formFields);
 
         return redirect('/home');
@@ -95,47 +94,19 @@ class OrganisationController extends Controller
         }
 
         $organisation->delete();
-        return redirect('/home');
+        return redirect('/users/'.auth()->id());
     }
 
-            if($request->hasFile('picture')) {
-                $formFields['picture'] = $request->file('picture')->store('logos', 'public');
-            }
 
-            $formFields['owner_id'] = auth()->id();
+    // Redirect to manage page
+    public function manage()
+    {
+        return view('organisations.manage');
 
-            Organisation::create($formFields);
+        // Eventually, we should be able to map a user's organisations to the organisations variable
+        return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
 
-            return redirect('/home');
 
-            // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
-        }
-
-        public function edit(Request $request)
-        {
-
-            return view('organisations.edit');
-            // return view('organisations.edit', ['organisation' => $organisation]);
-        }
-
-        // Attempt to update organisation
-        public function update(Request $request, Organisation $organisation){
-
-        }
-
-        // Attempt to delete organisation
-        public function destroy(Organisation $organisation){
-
-        }
-
-        // Redirect to manage page
-        public function manage(){
-            return view('organisations.manage');
-
-            // Eventually, we should be able to map a user's organisations to the organisations variable
-            return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
-
-        }
 
         // Eventually, we should be able to map a user's organisations to the organisations variable
         return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
