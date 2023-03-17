@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use App\Models\Vacancy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -55,27 +56,79 @@ class VacancyController extends Controller
             [
                 'vacancy_title' => 'required',
                 // Making sure that company is unique by checking the company column in the vacancies table
-                'company' => ['required', Rule::unique('vacancies', 'company')],
-                'location' => 'required',
-                'website' => 'required',
-                // Making sure it's in the email format
-                'email' => ['required', 'email'],
-                'tags' => 'required',
-                'description' => 'required',
-            ]
+                // 'organisation_id' => ['required', Rule::unique('vacancies', 'company')],
+                'organisation_id' => 'required',
+
+                'salary_range_lower' => 'required',
+
+                'salary_range_upper' => 'required',
+                ]
         );
 
-        // if($request->category_requirement != "NULL"){
-        //     $formFields['']
-        // }
+       
 
-        // Check if file exists
-        if ($request->hasFile('logo')) {
-            // We want to store it in the logos folder
-            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        // $formFields['vacancy_description'] = $request->vacancy_description;
+        // $formFields['category_requirement'] = $request->category_requirement;
+        // $formFields['can_fly_requirement'] = $request->can_fly_requirement;
+        // $formFields['can_swim_requirement'] = $request->can_swim_requirement;
+        // $formFields['can_climb_requirement'] = $request->can_climb_requirement;
+        // $formFields['eating_style_requirement'] = $request->eating_style_requirement;
+        // $formFields['produces_toxins_requirement'] = $request->produces_toxins_requirement;
+        // $formFields['size_requirement'] = $request->size_requirement;
+        // $formFields['speed_requirement'] = $request->speed_requirement;
+        // $formFields['num_appendages_requirement'] = $request->num_appendages_requirement;
+        
+        $formFields = $request->all();
+
+        // dd($formFields['salary_range_lower']);
+        $formFields['category_requirement'] = $request->input('category_requirement', 1);
+
+        if($request->category_requirement == "NULL"){
+            $formFields['category_requirement'] = NULL;
         }
 
-        $formFields['user_id'] = auth()->id();
+        if($request->can_fly_requirement == "NULL"){
+            $formFields['can_fly_requirement'] = NULL;
+        }
+
+        if($request->can_swim_requirement == "NULL"){
+            $formFields['can_swim_requirement'] = NULL;
+        }
+
+        if($request->can_climb_requirement == "NULL"){
+            $formFields['can_climb_requirement'] = NULL;
+        }
+
+        if($request->eating_style_requirement == "NULL"){
+            $formFields['eating_style_requirement'] = NULL;
+        }
+
+        if($request->produces_toxins_requirement == "NULL"){
+            $formFields['produces_toxins_requirement'] = NULL;
+        }
+
+        if($request->size_requirement == "NULL"){
+            $formFields['size_requirement'] = NULL;
+        }
+
+        if($request->speed_requirement == "NULL"){
+            $formFields['speed_requirement'] = NULL;
+        }
+
+        if($request->num_appendages_requirement == "NULL"){
+            $formFields['num_appendages_requirement'] = NULL;
+        }
+
+        if ($request->salary_range_lower > $request->salary_range_upper) {
+            abort(403, 'The lower salary range can\'t exceed the upper range');
+        }
+        
+        $formFields['salary_range_lower'] = $request->salary_range_lower;
+        $formFields['salary_range_upper'] = $request->salary_range_upper;
+
+
+        $formFields['time_created'] = Carbon::now();
+
 
         // If we're all good, you can just call the create() method of the model and that will generate an entry in the database
 

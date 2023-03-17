@@ -157,6 +157,43 @@
         @enderror
 
         <div>
+            <label for="skills">All skills the applicant should have. Please specify skill level with colon and separate with commas</label>
+            <input type="text" name="skills" placeholder="" value="{{ old('skills') }}">
+        </div>
+
+        @error('skills')
+            <p>{{ $message }}</p>
+        @enderror
+
+        <div>
+            <label for="qualifications">All qualifications the applicant should have. Please separate with commas</label>
+            <input type="text" name="qualifications" placeholder="" value="{{ old('qualifications') }}">
+        </div>
+
+        @error('qualifications')
+            <p>{{ $message }}</p>
+        @enderror
+
+        {{-- MUST CHECK IF SALARY RANGE IS LOWER --}}
+        <div>
+            <label for="salary_range_lower">Lower salary range</label>
+            <input type="number" name="salary_range_lower" placeholder="" value="{{ old('salary_range_lower') }}">
+        </div>
+
+        @error('salary_range_lower')
+            <p>{{ $message }}</p>
+        @enderror
+        
+        <div>
+            <label for="salary_range_upper">Upper salary range</label>
+            <input type="number" name="salary_range_upper" placeholder="" value="{{ old('salary_range_upper') }}">
+        </div>
+
+        @error('salary_range_upper')
+            <p>{{ $message }}</p>
+        @enderror
+
+        <div>
             <label for="vacancy_description">Vacancy Description</label>
             <textarea name="vacancy_description" id="vacancy_description" rows="10" placeholder="Vacancy Description...">{{ old('vacancy_description') }}</textarea>
         </div>

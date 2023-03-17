@@ -27,7 +27,14 @@ class Vacancy extends Model
         'category_requirement',
         'can_fly_requirement',
         'can_swim_requirement',
+        'can_climb_requirement',
         'eating_style_requirement',
+        'produces_toxins_requirement',
+        'size_requirement',
+        'speed_requirement',
+        'num_appendages_requirement',
+        'salary_range_lower',
+        'salary_range_upper',
     ];
 
     /**
@@ -39,6 +46,7 @@ class Vacancy extends Model
         'time_created' => 'datetime',
         'can_fly_requirement' => 'boolean',
         'can_swim_requirement' => 'boolean',
+        'can_climb_requirement' => 'boolean',
     ];
 
     public function organisation(): BelongsTo
