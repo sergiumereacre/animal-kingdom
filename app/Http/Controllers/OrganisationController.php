@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organisation;
 use App\Models\User;
 use App\Models\Vacancy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -53,6 +54,13 @@ class OrganisationController extends Controller
         }
 
         $formFields['owner_id'] = auth()->id();
+        $formFields['time_created'] = Carbon::now();
+        $formFields['address'] = $request->address;
+        $formFields['email'] = $request->email;
+        $formFields['contact_number'] = $request->contact_number;
+        $formFields['description'] = $request->description;
+
+
 
         Organisation::create($formFields);
 
