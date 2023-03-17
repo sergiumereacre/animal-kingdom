@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use App\Models\Vacancy;
+use App\Models\Organisation;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class VacancyController extends Controller
 {
@@ -40,7 +42,44 @@ class VacancyController extends Controller
     // Store vacancy data with dependency injection
     public function store(Request $request)
     {
+        // dd($request->vacancy_title);
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
+
+        // By default, files will be stored in the app folder in the storage folder
+        // $request->file('logo')->store();
+
+        // Handy way to validate form stuff using the validate() method
+        $formFields = $request->validate(
+            [
+                'vacancy_title' => 'required',
+                // Making sure that company is unique by checking the company column in the vacancies table
+                'company' => ['required', Rule::unique('vacancies', 'company')],
+                'location' => 'required',
+                'website' => 'required',
+                // Making sure it's in the email format
+                'email' => ['required', 'email'],
+                'tags' => 'required',
+                'description' => 'required',
+            ]
+        );
+
+        if($request->category_requirement != "NULL"){
+            $formFields['']
+        }
+
+        // Check if file exists
+        if ($request->hasFile('logo')) {
+            // We want to store it in the logos folder
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        $formFields['user_id'] = auth()->id();
+
+        // If we're all good, you can just call the create() method of the model and that will generate an entry in the database
+
+        // Make sure that the attributes in the model class are added to the fillable array! OR...
+        Vacancy::create($formFields);
+
 
         return redirect('/home');
     }
