@@ -20,9 +20,9 @@
 
                 @foreach ($organisations as $org)
                     @if ($org == $organisation)
-                    <option selected value="{{$org->organisation_id}}">{{$org->organisation_name}}</option>
+                        <option selected value="{{ $org->organisation_id }}">{{ $org->organisation_name }}</option>
                     @else
-                    <option value="{{$org->organisation_id}}">{{$org->organisation_name}}</option>
+                        <option value="{{ $org->organisation_id }}">{{ $org->organisation_name }}</option>
                     @endif
                 @endforeach
             </select>
@@ -157,18 +157,73 @@
         @enderror
 
         <div>
-            <label for="skills">All skills the applicant should have. Please specify skill level with colon and separate with commas</label>
-            <input type="text" name="skills" placeholder="" value="{{ old('skills') }}">
+            <label for="skills">All skills the applicant should have. Please specify skill level with colon and
+                separate with commas</label>
+            <input id="skills_list" type="text" name="skills" placeholder="" value="{{ old('skills') }}">
         </div>
+        <div>
+            <label for="skills_select">Select skills here</label>
+            <select id="skill_name" name="skills_select" id="skills_select">
+                @foreach ($skills as $skill)
+                    <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
+                @endforeach
+            </select>
+
+            <label for="skills_level_select">Select skills here</label>
+            <select id="skill_level" name="skills_level_select" id="skills_level_select">
+                <option value="NULL">Doesn't matter</option>
+                <option value="BEGINNER">Beginner</option>
+                <option value="INTERMEDIATE">Intermediate</option>
+                <option value="EXPERT">Expert</option>
+            </select>
+
+            <button onclick="addSkill()" type="button">Add Skill</button>
+        </div>
+
+        <script>
+            function addSkill() {
+                var skill_name = document.getElementById('skill_name').value;
+                var skill_level = document.getElementById('skill_level').value;
+
+
+
+                document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+
+                // Removing the last comma
+                // document.getElementById('skills_list').value = document.getElementById('skills_list').value.substring(0, document.getElementById('skills_list').value.length-1);
+            }
+        </script>
 
         @error('skills')
             <p>{{ $message }}</p>
         @enderror
 
         <div>
-            <label for="qualifications">All qualifications the applicant should have. Please separate with commas</label>
-            <input type="text" name="qualifications" placeholder="" value="{{ old('qualifications') }}">
+            <label for="qualifications">All qualifications the applicant should have. Please separate with
+                commas</label>
+            <input id="qualifications_list" type="text" name="qualifications" placeholder="" value="{{ old('qualifications') }}">
         </div>
+
+        <div>
+            <label for="qualifications_select">Select qualifications here</label>
+            <select id="qualification_name" name="qualifications_select" id="qualifications_select">
+                @foreach ($qualifications as $qualification)
+                    <option value="{{ $qualification->qualification_name }}">{{ $qualification->qualification_name }}</option>
+                @endforeach
+            </select>
+
+            <button onclick="addQualification()" type="button">Add Qualification</button>
+        </div>
+
+        <script>
+            function addQualification() {
+                var qualification_name = document.getElementById('qualification_name').value;
+
+                document.getElementById('qualifications_list').value += qualification_name.concat(",");
+
+            }
+        </script>
+
 
         @error('qualifications')
             <p>{{ $message }}</p>
@@ -183,7 +238,7 @@
         @error('salary_range_lower')
             <p>{{ $message }}</p>
         @enderror
-        
+
         <div>
             <label for="salary_range_upper">Upper salary range</label>
             <input type="number" name="salary_range_upper" placeholder="" value="{{ old('salary_range_upper') }}">

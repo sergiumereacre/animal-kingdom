@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organisation;
+use App\Models\Qualification;
+use App\Models\Skill;
 use App\Models\Vacancy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,7 +42,9 @@ class VacancyController extends Controller
     {
         return view('vacancies.create', [
             'organisation' => $organisation,
-            'organisations' => Organisation::all()->where('owner_id', '=', auth()->id())
+            'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
+            'skills' => Skill::all(),
+            'qualifications' => Qualification::all(),
         ]);
     }
 
