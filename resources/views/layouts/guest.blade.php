@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans text-greenButtons antialiased bg-appBackground">
         <div class="min-h-screen flex flex-col justify-center items-center pt-6">
-            <div class="lg:grid lg:grid-rows-1 lg:grid-cols-2 lg:gap-35">
+            <div class="lg:flex lg:flex-row lg:items-center">
                 <div class="justify-center px-6">
                     <!-- The welcome message.-->
                     <div>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <!-- Application Logo-->
-                <div class="hidden lg:inline-flex pt-40">
+                <div class="hidden lg:inline-flex lg:items-center">
                     <a>
                         <img class="w-500" src="{{ asset('img/logo.png')}}">
                     </a>

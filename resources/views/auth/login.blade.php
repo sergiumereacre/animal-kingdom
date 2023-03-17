@@ -32,13 +32,7 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-around last:mt-8">
-            <!-- Forgot password button. -->
-            @if (Route::has('password.request'))
-                <a class="text-sm text-greenButtons hover:text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-greenButtons" href="{{ route('password.request') }}">
-                    {{ __('Forgot password?') }}
-                </a>
-            @endif
+        <div class="flex items-center justify-end mt-5">
             <div class="">
                 <!-- Sign up button that leads them to register page-->
                 <a href="{{ route('register') }}">

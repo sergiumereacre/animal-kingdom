@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organisation;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
     public function index(){
-        return;
+        return view('vacancies.index');
     }
 
     // Showing individual vacancy
@@ -25,7 +26,9 @@ class VacancyController extends Controller
 
     public function show(Vacancy $vacancy){
                 return view('vacancies.show', [
-                    'organisation' => Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id);
+                    // 'organisation' => Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id)->,
+                    'organisation' => Organisation::all()->find($vacancy->organisation_id),
+                    'vacancy' => $vacancy
                 ]);
     }
 
