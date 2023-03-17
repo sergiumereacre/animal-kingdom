@@ -25,7 +25,7 @@
             <div class="flex items-center pb-5 gap-3 md:gap-0 flex-row md:pb-0">
                 <p class="font-medium text-black md:p-5 md:w-44">Skills Needed: </p>
                 <!-- Automated Skills List -->
-                <div class="flex gap-3">
+                <div class="flex gap-3 text-xs">
                     <x-skill>Skill1</x-skill>
                     <x-skill>Skill2</x-skill>
                     <x-skill>...</x-skill>

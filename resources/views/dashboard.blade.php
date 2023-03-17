@@ -1,8 +1,22 @@
 
 <x-app-layout>
-    <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
+    <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
 
-            @unless(count($users) == 0)
+        <div class="flex flex-col lg:flex-row gap-5">
+            <x-profile-info></x-profile-info>
+            <div class="flex flex-col items-center gap-5">
+                <div class="flex lg:flex-row items-center gap-5 flex-col">
+                    <div class="flex flex-col items-center gap-5">
+                        <x-profile-bio></x-profile-bio>
+                        <x-profile-skills></x-profile-skills>
+                    </div>
+                    <x-profile-connections></x-profile-connections>
+                </div>
+                <x-profile-previous-jobs></x-profile-previous-jobs>
+            </div>
+        </div>
+
+            {{-- @unless(count($users) == 0)
     
     
                 @foreach($users as $user)
@@ -11,7 +25,7 @@
     
                 @else
                 <p>No users found</p>
-            @endunless
+            @endunless --}}
     </div>
 
     

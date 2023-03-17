@@ -17,7 +17,7 @@
         </div>
         <!-- Skills and Buttons -->
         <div class="pb-5 flex flex-col items-center md:flex-row">
-            <div class="flex items-center pb-5 gap-3 flex-row md:pb-0">
+            <div class="flex items-center pb-5 gap-3 flex-row text-xs md:pb-0">
                 <p class="font-medium text-black">Skills Needed: </p>
                 <x-skill>Skill1</x-skill>
                 <x-skill>Skill2</x-skill>
