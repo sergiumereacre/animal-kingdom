@@ -23,7 +23,17 @@
                 <a href="/organisations/{{ $organisation->organisation_id }}">{{ $organisation->organisation_name }}</a>
 
                 @if ($user->id == auth()->id())
-                    <a href="/organisations/delete">Delete organisation</a>
+                    {{-- <a href="/organisations/">Delete organisation</a> --}}
+
+                    {{-- @php
+                        dd($organisation->organisation_id)
+                    @endphp --}}
+
+                    <form action="/organisations/{{$organisation->organisation_id}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button>Delete</button>
+                    </form>
                 @endif
 
             </div>

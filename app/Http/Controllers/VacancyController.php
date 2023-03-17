@@ -10,7 +10,7 @@ class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
     public function index(){
-        return;
+        return view('vacancies.index');
     }
 
     // Showing individual vacancy

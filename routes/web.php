@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // Choose Controller class along with whatever method
-Route::get('/vacancies/index', [VacancyController::class, 'index']);
+Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('vacancies.index');
 
 // The convention is that if you want to do ANYTHING with stuff, prefix the path with 'vacancies'
 // Using the auth middleware, you'll be sent to a login page if you want to get to certain paths
@@ -94,17 +94,18 @@ Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show']);
 
 // ========== ORGANISATIONS ================
 
-Route::get('/organisations/index', [OrganisationController::class, 'index']);
+Route::get('/organisations/index', [OrganisationController::class, 'index'])->name('organisations.index');
 
 Route::get('/organisations/create', [OrganisationController::class, 'create'])->middleware('auth');
 
 Route::post('/organisations', [OrganisationController::class, 'store'])->middleware('auth');
 
+Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
+
 Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->middleware('auth');
 
 Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth');
 
-Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
 
 Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
 

@@ -3,7 +3,8 @@
 
     @foreach ($users as $user)
     <div>
-        {{$user->username}}
+        <a href="{{$user->id}}">        {{$user->username}}
+        </a>
 
     </div>
     @endforeach
