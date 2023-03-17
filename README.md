@@ -16,6 +16,33 @@ Uses the following docker containers:
 - phpmyadmin
 - mysql
 
+# Using prog.sh
+prog.sh is a helper file included in this project. It gives succint aliases for some artisan commands.
+To run the application.
+```bash
+./prog.sh start
+```
+
+To end the application.
+```bash
+./prog.sh kill
+```
+
+To clear the database.
+```bash
+./prog.sh refresh
+```
+
+To seed the database.
+```bash
+./prog.sh seed
+```
+
+To install the requirements (equivalent to steps 5-9 of the installation guide):
+```bash
+./prog.sh install
+```
+
 # Basic Sail Commands
 
 Running laravel docker.
