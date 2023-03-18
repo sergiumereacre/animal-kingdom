@@ -67,7 +67,7 @@
             </button>
 
             {{-- Possibly go straight to the created organisation page? --}}
-            <a href="/dashboard">Go Back</a>
+            <a href="/home">Go Back</a>
         </div>
     </form>
 

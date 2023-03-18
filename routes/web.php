@@ -4,6 +4,7 @@ use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Connection;
+use App\Models\Vacancy;
 use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -24,22 +25,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    // return view('dashboard');
-    return view('dashboard', [
+Route::get('/home', function () {
+    // return view('home');
+    return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
-        'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
+        // 'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
         // All users with their ids available in second_user_id
         // of the connections table
+        
         // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
         //     'first_user_id', '=', auth()->id()
         // )->value('second_user_id'))
-        
+
         'users' => User::all()->whereIn('id', DB::table('connections')->where(
             'first_user_id', '=', auth()->id()
         )->pluck('second_user_id'))
     ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
@@ -66,11 +68,11 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // Choose Controller class along with whatever method
-Route::get('/vacancies/index', [VacancyController::class, 'index']);
+Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('vacancies.index');
 
 // The convention is that if you want to do ANYTHING with stuff, prefix the path with 'vacancies'
 // Using the auth middleware, you'll be sent to a login page if you want to get to certain paths
-Route::get('/vacancies/create', [VacancyController::class, 'create'])->middleware('auth');
+Route::get('/vacancies/{organisation}/create', [VacancyController::class, 'create'])->middleware('auth');
 
 // Post
 Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth');
@@ -94,17 +96,18 @@ Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show']);
 
 // ========== ORGANISATIONS ================
 
-Route::get('/organisations/index', [OrganisationController::class, 'index']);
+Route::get('/organisations/index', [OrganisationController::class, 'index'])->name('organisations.index');
 
 Route::get('/organisations/create', [OrganisationController::class, 'create'])->middleware('auth');
 
 Route::post('/organisations', [OrganisationController::class, 'store'])->middleware('auth');
 
+Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
+
 Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->middleware('auth');
 
 Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth');
 
-Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
 
 Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
 

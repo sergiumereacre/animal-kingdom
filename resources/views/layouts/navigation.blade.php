@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <span class="material-symbols-rounded text-greenButtons text-4xl">pets</span>
                     </a>
                 </div>
@@ -36,14 +36,14 @@
                 </div>
             </div>
 
-            
+
             <div class="flex gap-2">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-5 sm:-my-px sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">work</span>
                     </x-nav-link>
-                    <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">group</span>
                     </x-nav-link>
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
@@ -61,7 +61,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
+                            <x-dropdown-link href='/users/{{auth()->id()}}'>
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -95,13 +95,13 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('vacancies.index')" :active="request()->routeIs('vacancies.index')">
                 {{ __('Vacancies') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('profile')">
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('Users') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('profile')">
+            <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                 {{ __('Settings') }}
             </x-responsive-nav-link>
         </div>

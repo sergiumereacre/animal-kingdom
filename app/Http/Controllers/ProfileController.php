@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Organisation;
 use App\Models\User;
 use App\Models\UsersVacancy;
 use App\Models\Vacancy;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -24,10 +26,19 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function index(){
+        return view('profile.index', [
+            'users' => User::all()
+        ]);
+    }
+
     public function show(User $user){
+
+
         return view('profile.show', [
             'user' => $user,
-                'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id)
+            'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id),
+            'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
         ]);
     }
 
