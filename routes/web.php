@@ -21,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $results = DB::table('vacancies')
+            ->join('organisations', 'vacancies.organisation_id', '=', 'organisations.organisation_id')
+            ->selectRaw('vacancies.vacancy_id, CONCAT_WS(\' \', organisations.organisation_name, vacancies.vacancy_title, vacancies.vacancy_description) AS vacancy')
+            ->havingRaw('vacancy LIKE \'%operator%\'')
+            ->get();
+    dd($results);
     return view('welcome');
 });
 
@@ -124,3 +130,11 @@ Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user');
 Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
+
+// ========== SEARCH ==========
+
+Route::get('/search', [SearchController::class, 'create']);
+
+Route::post('/search', [SearchController::class, 'query']);
+
+// ========== SEARCH ==========
