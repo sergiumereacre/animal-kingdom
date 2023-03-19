@@ -80,6 +80,8 @@ Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth
 // Show Edit Form
 Route::get('/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->middleware('auth');
 
+Route::get('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->middleware('auth');
+
 // Updating Vacancy, Edit Submit to Update
 // Edit shows the form, update does the actual updating
 Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->middleware('auth');

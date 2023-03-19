@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Organisation;
 use App\Models\Qualification;
 use App\Models\Skill;
+use App\Models\UsersVacancy;
 use App\Models\Vacancy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -70,19 +71,6 @@ class VacancyController extends Controller
                 'salary_range_upper' => 'required',
             ]
         );
-
-
-
-        // $formFields['vacancy_description'] = $request->vacancy_description;
-        // $formFields['category_requirement'] = $request->category_requirement;
-        // $formFields['can_fly_requirement'] = $request->can_fly_requirement;
-        // $formFields['can_swim_requirement'] = $request->can_swim_requirement;
-        // $formFields['can_climb_requirement'] = $request->can_climb_requirement;
-        // $formFields['eating_style_requirement'] = $request->eating_style_requirement;
-        // $formFields['produces_toxins_requirement'] = $request->produces_toxins_requirement;
-        // $formFields['size_requirement'] = $request->size_requirement;
-        // $formFields['speed_requirement'] = $request->speed_requirement;
-        // $formFields['num_appendages_requirement'] = $request->num_appendages_requirement;
 
         $formFields = $request->all();
 
@@ -179,5 +167,24 @@ class VacancyController extends Controller
 
         // Eventually, we should be able to map a user's vacancies to the vacancies variable
         return view('vacancies.manage', ['vacancies' => auth()->user()->vacancies()->get()]);
+    }
+
+    public function apply(Vacancy $vacancy){
+        $organisation = Organisation::find($vacancy->organisation_id);
+
+        // Do a check to see if user is eligible here?
+        // if (true) {
+        //     abort(403, 'Unauthorized Action, you\'re not the owner!!');
+        // }
+
+        $formFields['user_id'] = auth()->id();
+        $formFields['vacancy_id'] = $vacancy->vacancy_id;
+        $formFields['time_joined'] = Carbon::now();
+
+
+        UsersVacancy::create($formFields);
+
+
+        return redirect('/organisations/' . $organisation->organisation_id);
     }
 }
