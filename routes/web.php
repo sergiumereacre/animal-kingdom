@@ -3,6 +3,7 @@
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
+use App\Models\AnimalSpecies;
 use App\Models\Connection;
 use App\Models\Vacancy;
 use App\Models\Organisation;
@@ -27,6 +28,10 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     // return view('home');
+
+    // Current user
+    $user = User::all()->find(auth()->id());
+
     return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
         // 'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
@@ -37,9 +42,11 @@ Route::get('/home', function () {
         //     'first_user_id', '=', auth()->id()
         // )->value('second_user_id'))
 
-        'users' => User::all()->whereIn('id', DB::table('connections')->where(
+        'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
             'first_user_id', '=', auth()->id()
-        )->pluck('second_user_id'))
+        )->pluck('second_user_id')),
+        'user' => $user,
+        'species' => AnimalSpecies::all()->find($user->species_id),
     ]);
 })->middleware(['auth', 'verified'])->name('home');
 

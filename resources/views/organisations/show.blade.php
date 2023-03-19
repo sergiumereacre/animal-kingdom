@@ -25,6 +25,7 @@
                     <button>Delete Vacancy</button>
                 </form>
             @endif
+
         @endforeach
     @else
         <p>No vacancies found</p>
