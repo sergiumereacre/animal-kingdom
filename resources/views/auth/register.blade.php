@@ -84,39 +84,17 @@
                 $all_species = \App\Models\AnimalSpecies::all();
                 // dd($all_species);
             @endphp
-            <select id="species_id" required
+            <select name="species_id" id="species_id" required
                 class="select w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-md shadow-lg">
-                <option disabled selected>What type of species?</option>
-
+                <option selected value="">What type of species?</option>
 
                 @foreach ($all_species as $species)
-                    <option value="{{$species->species_id}}">{{ $species->species_name }}</option>
+                    <option value="{{$species->species_id}}">{{ ucfirst($species->species_name) }}</option>
                 @endforeach
             </select>
 
-            <x-input-error :messages="$errors->get('species')" class="mt-2" />
+            <x-input-error :messages="$errors->get('species_id')" class="mt-2" />
 
-            {{-- <x-input-label for="species" :value="__('Species*')" />
-            <select id="species" onchange="updateSpecies()" required
-                class="select w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-md shadow-lg">
-                <option disabled selected>What type of species?</option>
-                <option>Fish</option>
-                <option>Mammal</option>
-                <option>Reptile</option>
-                <option>Bird</option>
-                <option>Amphibian</option>
-            </select>
-
-            <script>
-                function updateSpecies() {
-                    var species_category = document.getElementById('species').value;
-
-
-
-                    console.log(species_category);}
-            </script>
-
-            <x-input-error :messages="$errors->get('species')" class="mt-2" /> --}}
         </div>
 
         <div>

@@ -39,6 +39,8 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // dd($request->species_id);
+
         $user = User::create([
             'first_name' => $request->first_name,
             // 'second_name' => $request->second_name,
