@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\AnimalSpecies;
 use App\Models\Organisation;
 use App\Models\User;
 use App\Models\UsersVacancy;
@@ -35,12 +36,46 @@ class ProfileController extends Controller
     public function show(User $user){
 
 
+        // return view('profile.show', [
+        //     'user' => $user,
+        //     'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id),
+        //     'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
+        // ]);
+
+        // return view('home');
+    
+        // Current user
+        $user = User::all()->find($user->id);
+    
+        $past_vacancies = Vacancy::all()
+            ->whereIn('vacancy_id', DB::table('users_vacancies')
+                ->where(
+                    'user_id',
+                    '=',
+                    auth()->id()
+                )->pluck('vacancy_id'));
+    
+        $past_organisations = array();
+    
+        foreach ($past_vacancies as $vacancy){
+            $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
+        }
+    
         return view('profile.show', [
-            'user' => $user,
-            'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id),
             'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
+    
+            'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
+                'first_user_id',
+                '=',
+                $user->id
+            )->pluck('second_user_id')),
+            'user' => $user,
+            'species' => AnimalSpecies::all()->find($user->species_id),
+            'past_vacancies' => $past_vacancies,
+            'past_organisations' => $past_organisations,
         ]);
     }
+
 
     public function profile(Request $request){
         return view('profile.show', [

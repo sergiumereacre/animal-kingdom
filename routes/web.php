@@ -150,7 +150,7 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 
 Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
 
-Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user');
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
 
 
 // ========== USERS ================

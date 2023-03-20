@@ -8,7 +8,8 @@
 
 
         <div class="flex flex-col lg:flex-row gap-5">
-            <x-profile-info :user="$user" :species="$species" connections_num="{{$connected_users->count()}}"></x-profile-info>
+            <x-profile-info :user="$user" :species="$species" connections_num="{{ $connected_users->count() }}">
+            </x-profile-info>
             <div class="flex flex-col items-center gap-5">
                 <div class="flex lg:flex-row items-center gap-5 flex-col">
                     <div class="flex flex-col items-center gap-5">
@@ -20,13 +21,47 @@
                     <x-profile-connections :connected_users="$connected_users"></x-profile-connections>
                 </div>
 
-                
 
-                <x-profile-previous-jobs :vacancies="$past_vacancies"></x-profile-previous-jobs>
+
+                <x-profile-previous-jobs :vacancies="$past_vacancies" :user="$user"></x-profile-previous-jobs>
             </div>
         </div>
 
-            {{-- @unless(count($users) == 0)
+
+        @unless(count($organisations) == 0)
+            <p>Organisations owned: </p>
+            @foreach ($organisations as $organisation)
+                <div>
+
+                    <a href="/organisations/{{ $organisation->organisation_id }}">{{ $organisation->organisation_name }}</a>
+
+                    @if ($user->id == auth()->id())
+                        {{-- <a href="/organisations/">Delete organisation</a> --}}
+
+                        {{-- @php
+                        dd($organisation->organisation_id)
+                    @endphp --}}
+
+                        <form action="/organisations/{{ $organisation->organisation_id }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button>Delete</button>
+                        </form>
+                    @endif
+
+                </div>
+            @endforeach
+        @else
+            <p>No organisations found</p>
+        @endunless
+
+
+        @if ($user->id == auth()->id())
+            <a href="/organisations/create">Create new organisation</a>
+        @else
+        @endif
+
+        {{-- @unless(count($users) == 0)
     
     
     {{-- <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
@@ -36,23 +71,23 @@
 
         @unless(count($vacancies) == 0)
 
-        @foreach($vacancies as $vacancy)
+        @foreach ($vacancies as $vacancy)
             <a href="/vacancies/{{$vacancy->vacancy_id}}">{{$vacancy->vacancy_title}}</a>
         @endforeach
 
         @endunless --}}
 
-{{-- </x-app-layout> --}}
+        {{-- </x-app-layout> --}}
 
 
-    {{-- <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
+        {{-- <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
 
 
 
             @unless(count($connected_users) == 0)
 
 
-                @foreach($connected_users as $user)
+                @foreach ($connected_users as $user)
                     <x-user-card :user="$user"/>
                 @endforeach
 
@@ -62,21 +97,21 @@
     </div> --}}
 
 
-                {{-- <a href="/users/{{$user->id}}">{{$user->id}}
+        {{-- <a href="/users/{{$user->id}}">{{$user->id}}
                 {{$user->username}}</a> --}}
 
-    {{-- <div class="">
+        {{-- <div class="">
 
         @unless(count($organisations) == 0)
 
-        @foreach($organisations as $organisation)
+        @foreach ($organisations as $organisation)
 
 
         @unless(count($vacancies) == 0)
 
         <div>All vacancies</div>
 
-        @foreach($vacancies as $vacancy)
+        @foreach ($vacancies as $vacancy)
         <div>
             <a href="/organisations/{{$organisation->organisation_id}}">{{$organisation->organisation_name}}</a>
             <x-company-full :organisation="$organisation"></x-company-full>
@@ -95,12 +130,12 @@
 
     </div> --}}
 
-    {{-- <div>
+        {{-- <div>
 
         @unless(count($connections) == 0)
 
 
-        @foreach($connections as $connection)
+        @foreach ($connections as $connection)
         <div>
 
             <a href="/users/{{$connection->id}}">{{$connection->id}}</a>
@@ -113,12 +148,12 @@
 
     </div> --}}
 
-    {{-- <div>
+        {{-- <div>
 
         @unless(count($users) == 0)
 
 
-        @foreach($users as $user)
+        @foreach ($users as $user)
         <div>
             <x-user-card>
             </x-user-card>

@@ -15,7 +15,7 @@
                         <div class="flex flex-col items-center">
                             <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}"
                                 alt="Company Logo" />
-                            <span class="text-lg text-black">{{$user->first_name}} {{$user->last_name}}</span>
+                            <span class="text-lg text-black"><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></span>
                         </div>
                     @endforeach
                 @else
