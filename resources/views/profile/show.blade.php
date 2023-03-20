@@ -14,6 +14,8 @@
                 <div class="flex lg:flex-row items-center gap-5 flex-col">
                     <div class="flex flex-col items-center gap-5">
                         <x-profile-bio :bio="$user->bio"></x-profile-bio>
+
+                     
                         <x-profile-skills></x-profile-skills>
                         <x-profile-qualifications></x-profile-qualifications>
                     </div>

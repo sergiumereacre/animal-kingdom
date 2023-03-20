@@ -4,14 +4,11 @@ use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
 use App\Models\AnimalSpecies;
-use App\Models\Connection;
 use App\Models\Vacancy;
 use App\Models\Organisation;
 use App\Models\User;
-use App\Models\UsersVacancy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Psy\Formatter\Formatter;
 
 /*
 |--------------------------------------------------------------------------
