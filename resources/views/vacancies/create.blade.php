@@ -62,15 +62,15 @@
         @enderror
 
         <div>
-            <label for="can_swin_requirement">Should applicants be able to swim?</label>
-            <select name="can_swin_requirement" id="can_swin_requirement">
+            <label for="can_swim_requirement">Should applicants be able to swim?</label>
+            <select name="can_swim_requirement" id="can_swim_requirement">
                 <option value="NULL">Doesn't matter</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
         </div>
 
-        @error('can_swin_requirement')
+        @error('can_swim_requirement')
             <p>{{ $message }}</p>
         @enderror
 
@@ -157,40 +157,47 @@
         @enderror
 
         <div>
-            <label for="skills">All skills the applicant should have. Please specify skill level with colon and
+            <label for="skills">All skills applicants should have. Please specify skill level with colon and
                 separate with commas</label>
             <input id="skills_list" type="text" name="skills" placeholder="" value="{{ old('skills') }}">
         </div>
         <div>
             <label for="skills_select">Select skills here</label>
+
+            @php
+                $skills = App\Models\Skill::all();
+            @endphp
+
             <select id="skill_name" name="skills_select" id="skills_select">
                 @foreach ($skills as $skill)
                     <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
                 @endforeach
             </select>
 
-            <label for="skills_level_select">Select skills here</label>
+            <label for="skills_level_select">Select skill level here</label>
             <select id="skill_level" name="skills_level_select" id="skills_level_select">
-                <option value="NULL">Doesn't matter</option>
                 <option value="BEGINNER">Beginner</option>
                 <option value="INTERMEDIATE">Intermediate</option>
                 <option value="EXPERT">Expert</option>
             </select>
+
+            <p id="skills_error" hidden>Can't have duplicate skills</p>
 
             <button onclick="addSkill()" type="button">Add Skill</button>
         </div>
 
         <script>
             function addSkill() {
+                var skills_error = document.getElementById('skills_error');
                 var skill_name = document.getElementById('skill_name').value;
                 var skill_level = document.getElementById('skill_level').value;
 
-
-
-                document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
-
-                // Removing the last comma
-                // document.getElementById('skills_list').value = document.getElementById('skills_list').value.substring(0, document.getElementById('skills_list').value.length-1);
+                if (document.getElementById('skills_list').value.includes(skill_name)) {
+                    skills_error.style.display = "block";
+                } else {
+                    document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+                    skills_error.style.display = "none";
+                }
             }
         </script>
 
@@ -199,31 +206,42 @@
         @enderror
 
         <div>
-            <label for="qualifications">All qualifications the applicant should have. Please separate with
-                commas</label>
-            <input id="qualifications_list" type="text" name="qualifications" placeholder="" value="{{ old('qualifications') }}">
+            <label for="qualifications">All qualifications applicants should have. Please separate with commas</label>
+            <input id="qualifications_list" type="text" name="qualifications" placeholder=""
+                value="{{ old('qualifications') }}">
         </div>
-
         <div>
             <label for="qualifications_select">Select qualifications here</label>
+
+            @php
+                $qualifications = App\Models\Qualification::all();
+            @endphp
+
             <select id="qualification_name" name="qualifications_select" id="qualifications_select">
                 @foreach ($qualifications as $qualification)
-                    <option value="{{ $qualification->qualification_name }}">{{ $qualification->qualification_name }}</option>
+                    <option value="{{ $qualification->qualification_name }}">{{ $qualification->qualification_name }}
+                    </option>
                 @endforeach
             </select>
+
+            <p id="qualifications_error" hidden>Can't have duplicate qualifications</p>
 
             <button onclick="addQualification()" type="button">Add Qualification</button>
         </div>
 
         <script>
             function addQualification() {
+                var qualifications_error = document.getElementById('qualifications_error');
                 var qualification_name = document.getElementById('qualification_name').value;
 
-                document.getElementById('qualifications_list').value += qualification_name.concat(",");
-
+                if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
+                    qualifications_error.style.display = "block";
+                } else {
+                    document.getElementById('qualifications_list').value += qualification_name.concat(",");
+                    qualifications_error.style.display = "none";
+                }
             }
         </script>
-
 
         @error('qualifications')
             <p>{{ $message }}</p>

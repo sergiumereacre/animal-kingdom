@@ -182,7 +182,7 @@
             }
         </script>
 
-        @error('skills')
+        @error('qualifications')
         <p>{{ $message }}</p>
         @enderror
 

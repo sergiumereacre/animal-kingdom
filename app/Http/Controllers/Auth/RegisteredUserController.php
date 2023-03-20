@@ -91,6 +91,7 @@ class RegisteredUserController extends Controller
             $qual_user = QualificationsUser::create([
                 'user_id' => $user->id,
                 'qualification_id' => $qual_id,
+                // Date picker here?
                 'date_obtained' => Carbon::now(),
             ]);
         } 

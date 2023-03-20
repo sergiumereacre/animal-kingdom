@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use App\Models\Qualification;
+use App\Models\QualificationsVacancy;
 use App\Models\Skill;
+use App\Models\SkillsVacancy;
 use App\Models\UsersVacancy;
 use App\Models\Vacancy;
 use Carbon\Carbon;
@@ -127,7 +129,44 @@ class VacancyController extends Controller
         // If we're all good, you can just call the create() method of the model and that will generate an entry in the database
 
         // Make sure that the attributes in the model class are added to the fillable array! OR...
-        Vacancy::create($formFields);
+        $vacancy = Vacancy::create($formFields);
+
+        $all_skills_unproc = array_filter(explode(",", $request->skills));
+
+        $all_skills = [];
+
+        // Processing skills. This basically creates an array where a vacancies's skill is mapped to their level
+        foreach ($all_skills_unproc as $skill) {
+            $skill_attr = explode(":", $skill);
+
+            $skill_name = $skill_attr[0];
+            $skill_level = $skill_attr[1];
+
+            $all_skills[$skill_name] = $skill_level;
+        }
+
+
+        foreach ($all_skills as $skill_name=>$skill_level) {
+            $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
+
+            $skill_user = SkillsVacancy::create([
+                'vacancy_id' => $vacancy->vacancy_id,
+                'skill_id' => $skill_id,
+                'skill_level' => $skill_level,
+            ]);
+        }
+
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", $request->qualifications));
+
+        foreach ($all_quals as $qual_name) {
+            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name)->first()->qualification_id;
+
+            $qual_user = QualificationsVacancy::create([
+                'vacancy_id' => $vacancy->vacancy_id,
+                'qualification_id' => $qual_id,
+            ]);
+        } 
 
 
         return redirect('/home');
