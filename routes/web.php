@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UsersVacancy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Psy\Formatter\Formatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -151,7 +152,6 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
 
 Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
-
 
 // ========== USERS ================
 
