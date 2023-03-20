@@ -1,3 +1,9 @@
+@php
+                    // dd($past_vacancies);
+                    // dd($past_jobs);
+                @endphp
+
+
 <x-app-layout>
     <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
 
@@ -9,10 +15,15 @@
                     <div class="flex flex-col items-center gap-5">
                         <x-profile-bio :bio="$user->bio"></x-profile-bio>
                         <x-profile-skills></x-profile-skills>
+                        <x-profile-qualifications></x-profile-qualifications>
+
                     </div>
-                    <x-profile-connections></x-profile-connections>
+                    <x-profile-connections :connected_users="$connected_users"></x-profile-connections>
                 </div>
-                <x-profile-previous-jobs></x-profile-previous-jobs>
+
+                
+
+                <x-profile-previous-jobs :vacancies="$past_vacancies"></x-profile-previous-jobs>
             </div>
         </div>
 
@@ -35,7 +46,7 @@
 {{-- </x-app-layout> --}}
 
 
-    <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
+    {{-- <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
 
 
 
@@ -49,7 +60,7 @@
             @else
                 <p>No connections found</p>
             @endunless
-    </div>
+    </div> --}}
 
 
                 {{-- <a href="/users/{{$user->id}}">{{$user->id}}
