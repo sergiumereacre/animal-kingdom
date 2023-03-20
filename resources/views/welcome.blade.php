@@ -28,12 +28,11 @@
             @if (Route::has('login'))
                 <div class="flex flex-row items-center justify-center gap-3 z-10">
                     @auth
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('home') }}">
                             <x-primary-button>
-                                {{ __('Dashboard') }}
+                                {{ __('Home') }}
                             </x-primary-button>
                         </a>
-                        <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
                     @else
                         <a href="{{ route('login') }}">
                             <x-primary-button>
