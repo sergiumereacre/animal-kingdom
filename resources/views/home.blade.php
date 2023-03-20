@@ -22,7 +22,7 @@
                     <div class="flex flex-col items-center gap-5">
                         <x-profile-bio :bio="$user->bio"></x-profile-bio>
                         <x-profile-skills :skills="$skills"></x-profile-skills>
-                        <x-profile-qualifications></x-profile-qualifications>
+                        <x-profile-qualifications :quals="$quals"></x-profile-qualifications>
                     </div>
                     <x-profile-connections :connected_users="$connected_users" class=" min-h-full"></x-profile-connections>
                 </div>
