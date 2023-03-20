@@ -17,7 +17,7 @@
                         <x-profile-skills></x-profile-skills>
                         <x-profile-qualifications></x-profile-qualifications>
                     </div>
-                    <x-profile-connections :connected_users="$connected_users"></x-profile-connections>
+                    <x-profile-connections :connected_users="$connected_users" class=" min-h-full"></x-profile-connections>
                 </div>
                 <x-profile-user-organisations :user="$user"></x-profile-user-organisations>
             </div>
