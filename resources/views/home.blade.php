@@ -1,7 +1,6 @@
-@php
-                    // dd($past_vacancies);
-                    // dd($past_jobs);
-                @endphp
+{{-- @php
+    dd($connected_users);
+@endphp --}}
 
 
 <x-app-layout>

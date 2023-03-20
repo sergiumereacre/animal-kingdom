@@ -59,7 +59,7 @@ Route::get('/home', function () {
         //     'first_user_id', '=', auth()->id()
         // )->value('second_user_id'))
 
-        'connected_users' => User::all()->whereIn('username', DB::table('connections')->where(
+        'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
             'first_user_id',
             '=',
             auth()->id()
