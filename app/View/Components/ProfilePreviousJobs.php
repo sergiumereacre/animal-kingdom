@@ -20,6 +20,6 @@ class ProfilePreviousJobs extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.profile-previous-jobs');
+        return view('components.profile-user-organisations');
     }
 }

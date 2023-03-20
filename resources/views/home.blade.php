@@ -16,18 +16,14 @@
                         <x-profile-bio :bio="$user->bio"></x-profile-bio>
                         <x-profile-skills></x-profile-skills>
                         <x-profile-qualifications></x-profile-qualifications>
-
                     </div>
                     <x-profile-connections :connected_users="$connected_users"></x-profile-connections>
                 </div>
-
-
-
-                <x-profile-previous-jobs :vacancies="$past_vacancies" :user="$user"></x-profile-previous-jobs>
+                <x-profile-user-organisations :user="$user"></x-profile-user-organisations>
             </div>
         </div>
 
-
+{{-- 
         @unless(count($organisations) == 0)
             <p>Organisations owned: </p>
             @foreach ($organisations as $organisation)
@@ -36,11 +32,11 @@
                     <a href="/organisations/{{ $organisation->organisation_id }}">{{ $organisation->organisation_name }}</a>
 
                     @if ($user->id == auth()->id())
-                        {{-- <a href="/organisations/">Delete organisation</a> --}}
+                        <a href="/organisations/">Delete organisation</a>
 
-                        {{-- @php
+                        @php
                         dd($organisation->organisation_id)
-                    @endphp --}}
+                        @endphp
 
                         <form action="/organisations/{{ $organisation->organisation_id }}" method="post">
                             @csrf
@@ -59,7 +55,7 @@
         @if ($user->id == auth()->id())
             <a href="/organisations/create">Create new organisation</a>
         @else
-        @endif
+        @endif --}}
 
         {{-- @unless(count($users) == 0)
     

@@ -26,7 +26,6 @@
                     <p class="text-lg">{{$user->address}}</p>
                 </div>
             </div>
-            <hr class="h-px my-10 bg-greenButtons border-0">
             <div>
                 <div class="flex flex-row items-center gap-2 justify-center">
                     <h1 class="text-lg text-black font-black text-center">Species:</h1>
@@ -37,7 +36,8 @@
                     <p class="text-lg">Water</p>
                 </div> --}}
             </div>
-            <div class="py-5">
+            <hr class="h-px my-5 bg-greenButtons border-0">
+            <div class="pb-5">
                 <div class="flex flex-row items-center gap-2 justify-center">
                     <span class="material-symbols-rounded">call</span>
                     <h1 class="text-lg">{{$user->contact_number}}</h1>

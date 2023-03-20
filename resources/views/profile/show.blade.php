@@ -16,19 +16,15 @@
                         <x-profile-bio :bio="$user->bio"></x-profile-bio>
                         <x-profile-skills></x-profile-skills>
                         <x-profile-qualifications></x-profile-qualifications>
-
                     </div>
                     <x-profile-connections :connected_users="$connected_users"></x-profile-connections>
                 </div>
-
-
-
-                <x-profile-previous-jobs :vacancies="$past_vacancies" :user="$user"></x-profile-previous-jobs>
+                <x-profile-user-organisations :user="$user"></x-profile-user-organisations>
             </div>
         </div>
 
 
-        @unless(count($organisations) == 0)
+        {{-- @unless(count($organisations) == 0)
             <p>Organisations owned: </p>
             @foreach ($organisations as $organisation)
                 <div>
@@ -54,6 +50,6 @@
         @if ($user->id == auth()->id())
             <a href="/organisations/create">Create new organisation</a>
         @else
-        @endif
+        @endif --}}
 
 </x-app-layout>
