@@ -78,7 +78,7 @@
                         <form action="/organisations/{{ $organisation->organisation_id }}" class="pt-2 md:ml-auto" method="post">
                             @csrf
                             @method('DELETE')
-                            <button><x-remove-button>{{ __('Remove') }}</x-remove-button></button>
+                            <button><x-remove-button><span class="material-symbols-rounded">delete</span></x-remove-button></button>
                         </form>
                         @endif
                     </div>
