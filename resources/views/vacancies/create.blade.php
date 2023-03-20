@@ -1,7 +1,7 @@
 <x-app-layout>
     This page will show the form for creating vacancies
 
-    <form method="POST" action="/vacancies" enctype="multipart/form-data">
+    <form method="POST" action="/vacancies" enctype="multipart/form-data" onsubmit="return validateForm()">
         {{-- This tag makes it so that not anyone can just send a form pointed towards this URL --}}
         @csrf
         <div>
@@ -250,7 +250,8 @@
         {{-- MUST CHECK IF SALARY RANGE IS LOWER --}}
         <div>
             <label for="salary_range_lower">Lower salary range</label>
-            <input type="number" name="salary_range_lower" placeholder="" value="{{ old('salary_range_lower') }}">
+            <input id="salary_lower" type="number" name="salary_range_lower" placeholder=""
+                value="{{ old('salary_range_lower') }}">
         </div>
 
         @error('salary_range_lower')
@@ -259,8 +260,25 @@
 
         <div>
             <label for="salary_range_upper">Upper salary range</label>
-            <input type="number" name="salary_range_upper" placeholder="" value="{{ old('salary_range_upper') }}">
+            <input id="salary_upper" type="number" name="salary_range_upper" placeholder=""
+                value="{{ old('salary_range_upper') }}">
         </div>
+
+        <script>
+            function validateForm() {
+
+                var salary_lower = parseInt(document.getElementById('salary_lower').value);
+                var salary_upper = parseInt(document.getElementById('salary_upper').value);
+
+                console.log(salary_lower);
+                console.log(salary_upper);
+
+                if (salary_lower > salary_upper) {
+                    alert("Invalid salary range. Please make sure that the lower salary range is less than the upper range.");
+                    return false;
+                }
+            }
+        </script>
 
         @error('salary_range_upper')
             <p>{{ $message }}</p>
