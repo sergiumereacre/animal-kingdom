@@ -7,7 +7,7 @@
         <!-- Card Content -->
         <div class="flex flex-col gap-5 items-center">
             @php
-                $organisations = App\Models\Organisation::all()->where('owner_id', '=', auth()->id());
+                $organisations = App\Models\Organisation::all()->where('owner_id', '=', $user->id);
             @endphp
 
             @unless(count($organisations) == 0)
