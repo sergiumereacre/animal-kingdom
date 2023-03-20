@@ -3,8 +3,7 @@
         <!-- User avatar and name -->
         <div class="flex flex-col items-center">
             <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4" src="{{ asset('img/logo.png')}}" alt="Company Logo"/>
-            <h1 class="text-4xl text-black font-black text-center p-5">Timmothy Turtle</h1>
-            <p class="text-xl text-gray-700 font-thin text-center">Software Engineer</p>
+            <h1 class="text-4xl text-black font-black text-center pt-5">Timmothy Turtle</h1>
         </div>
         <!-- Connect Button -->
         <div>
@@ -14,23 +13,8 @@
         <div class="bg-appBackground rounded-2xl w-full p-10">
             <div>
                 <div class="flex flex-row items-center gap-2 justify-center">
-                    <h1 class="text-lg text-black font-black text-center">Pronouns:</h1>
-                    <p class="text-lg">He/Him</p>
-                </div>
-                <div class="flex flex-row items-center gap-2 justify-center">
                     <h1 class="text-lg text-black font-black text-center">Location:</h1>
                     <p class="text-lg">Dublin, Ireland</p>
-                </div>
-            </div>
-            <hr class="h-px my-10 bg-greenButtons border-0">
-            <div>
-                <div class="flex flex-row items-center gap-2 justify-center">
-                    <h1 class="text-lg text-black font-black text-center">Species:</h1>
-                    <p class="text-lg">Reptile</p>
-                </div>
-                <div class="flex flex-row items-center gap-2 justify-center">
-                    <h1 class="text-lg text-black font-black text-center">Habitat:</h1>
-                    <p class="text-lg">Water</p>
                 </div>
             </div>
             <div class="py-5">
