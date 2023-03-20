@@ -14,4 +14,9 @@
                 <p>{{$key}}: {{$attr}}</p>
             @endforeach
     </div>
+
+    {{-- Check if the current user isn't the owner --}}
+    @if (auth()->id() != $organisation->owner_id)
+        <a href="/vacancies/{{$vacancy->vacancy_id}}/apply">Apply for vacancy</a>
+    @endif
 </x-app-layout>

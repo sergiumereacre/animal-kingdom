@@ -3,12 +3,15 @@
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
+use App\Models\AnimalSpecies;
 use App\Models\Connection;
 use App\Models\Vacancy;
 use App\Models\Organisation;
 use App\Models\User;
+use App\Models\UsersVacancy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Psy\Formatter\Formatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,19 +30,46 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     // return view('home');
+
+    // Current user
+    $user = User::all()->find(auth()->id());
+
+    $past_vacancies = Vacancy::all()
+        ->whereIn('vacancy_id', DB::table('users_vacancies')
+            ->where(
+                'user_id',
+                '=',
+                auth()->id()
+            )->pluck('vacancy_id'));
+
+    $past_organisations = array();
+
+    foreach ($past_vacancies as $vacancy){
+        $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
+    }
+
+    // $past_jobs = array_combine($past_vacancies->toArray(), $past_organisations);
+
     return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
         // 'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
         // All users with their ids available in second_user_id
         // of the connections table
-        
+
         // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
         //     'first_user_id', '=', auth()->id()
         // )->value('second_user_id'))
 
-        'users' => User::all()->whereIn('id', DB::table('connections')->where(
-            'first_user_id', '=', auth()->id()
-        )->pluck('second_user_id'))
+        'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
+            'first_user_id',
+            '=',
+            auth()->id()
+        )->pluck('second_user_id')),
+        'user' => $user,
+        'species' => AnimalSpecies::all()->find($user->species_id),
+        'past_vacancies' => $past_vacancies,
+        'past_organisations' => $past_organisations,
+        // 'past_jobs' => $past_jobs,
     ]);
 })->middleware(['auth', 'verified'])->name('home');
 
@@ -65,7 +95,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Choose Controller class along with whatever method
 Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('vacancies.index');
@@ -79,6 +109,8 @@ Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth
 
 // Show Edit Form
 Route::get('/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->middleware('auth');
+
+Route::get('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->middleware('auth');
 
 // Updating Vacancy, Edit Submit to Update
 // Edit shows the form, update does the actual updating
@@ -119,8 +151,7 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 
 Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
 
-Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user');
-
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
 
 // ========== USERS ================
 
