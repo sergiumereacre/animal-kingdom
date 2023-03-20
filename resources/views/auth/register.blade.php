@@ -89,7 +89,7 @@
                 <option selected value="">What type of species?</option>
 
                 @foreach ($all_species as $species)
-                    <option value="{{$species->species_id}}">{{ ucfirst($species->species_name) }}</option>
+                    <option value="{{ $species->species_id }}">{{ ucfirst($species->species_name) }}</option>
                 @endforeach
             </select>
 
@@ -115,23 +115,32 @@
                 @endforeach
             </select>
 
-            <label for="skills_level_select">Select skills here</label>
+            <label for="skills_level_select">Select skill level here</label>
             <select id="skill_level" name="skills_level_select" id="skills_level_select">
-                <option value="NULL">Doesn't matter</option>
                 <option value="BEGINNER">Beginner</option>
                 <option value="INTERMEDIATE">Intermediate</option>
                 <option value="EXPERT">Expert</option>
             </select>
+
+            <p id="skills_error" hidden>Can't have duplicate skills</p>
 
             <button onclick="addSkill()" type="button">Add Skill</button>
         </div>
 
         <script>
             function addSkill() {
+                var skills_error = document.getElementById('skills_error');
                 var skill_name = document.getElementById('skill_name').value;
                 var skill_level = document.getElementById('skill_level').value;
 
-                document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+                if (document.getElementById('skills_list').value.includes(skill_name)) {
+                    skills_error.style.display = "block";
+                } else {
+                    document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+                    skills_error.style.display = "none";
+                }
+
+
             }
         </script>
 
