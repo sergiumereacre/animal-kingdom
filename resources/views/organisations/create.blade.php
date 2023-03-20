@@ -56,11 +56,15 @@
                     </div>
         
                     <div class="flex justify-center gap-2 md:gap-5">
+                        {{-- Possibly go straight to the created organisation page? --}}
+                        <a href="{{ route('home') }}">
+                            <x-secondary-button>
+                                {{ __('Go Back') }}
+                            </x-secondary-button>
+                        </a>
                         <x-primary-button>
                             Create Organisation
                         </x-primary-button>
-                        {{-- Possibly go straight to the created organisation page? --}}
-                        <x-secondary-button><a href="/home">Go Back</a></x-secondary-button>
                     </div>
                 </div>
             </form>
