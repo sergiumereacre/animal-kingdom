@@ -1,4 +1,4 @@
-<x-card-base class="max-w-md w-full md:max-w-4xl">
+<x-card-base class="max-w-md w-full md:max-w-5xl">
     <div class="flex flex-col p-10">
         <!-- Card Name -->
         <h1 class="text-3xl text-black font-black pb-3">Previous Jobs</h1>

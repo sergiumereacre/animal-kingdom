@@ -5,7 +5,7 @@
             <x-profile-info></x-profile-info>
             <div class="flex flex-col items-center gap-5">
                 <div class="flex lg:flex-row items-center gap-5 flex-col">
-                    <div class="flex flex-col items-center gap-5">
+                    <div class="flex flex-col items-center gap-5 md:max-h-max">
                         <x-profile-bio></x-profile-bio>
                         <x-profile-skills></x-profile-skills>
                     </div>
