@@ -45,17 +45,8 @@ Route::get('/home', function () {
         $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
     }
 
-    // $past_jobs = array_combine($past_vacancies->toArray(), $past_organisations);
-
     return view('home', [
         'organisations' => Organisation::all()->where('owner_id', '=', auth()->id()),
-        // 'connections' => Connection::all()->where('first_user_id', '=', auth()->id()),
-        // All users with their ids available in second_user_id
-        // of the connections table
-
-        // 'users' => User::all()->whereIn('id', DB::table('connections')->where(
-        //     'first_user_id', '=', auth()->id()
-        // )->value('second_user_id'))
 
         'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
             'first_user_id',
@@ -66,7 +57,6 @@ Route::get('/home', function () {
         'species' => AnimalSpecies::all()->find($user->species_id),
         'past_vacancies' => $past_vacancies,
         'past_organisations' => $past_organisations,
-        // 'past_jobs' => $past_jobs,
     ]);
 })->middleware(['auth', 'verified'])->name('home');
 

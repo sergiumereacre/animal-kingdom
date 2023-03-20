@@ -5,6 +5,8 @@
     dd($organisation);
 @endphp --}}
 
+    <x-vacancy-full :vacancy="$vacancy" :organisation="$organisation"></x-vacancy-full>
+
     <div>
         {{-- @php
             dd($vacancy);
