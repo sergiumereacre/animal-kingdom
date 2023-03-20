@@ -34,15 +34,6 @@ class ProfileController extends Controller
     }
 
     public function show(User $user){
-
-
-        // return view('profile.show', [
-        //     'user' => $user,
-        //     'vacancies' => UsersVacancy::all()->where('user_id', '=', $user->id),
-        //     'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
-        // ]);
-
-        // return view('home');
     
         // Current user
         $user = User::all()->find($user->id);
