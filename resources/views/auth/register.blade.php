@@ -139,8 +139,6 @@
                     document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
                     skills_error.style.display = "none";
                 }
-
-
             }
         </script>
 
@@ -148,6 +146,45 @@
             <p>{{ $message }}</p>
         @enderror
 
+        <div>
+            <label for="qualifications">All qualifications you have. Please separate with commas</label>
+            <input id="qualifications_list" type="text" name="qualifications" placeholder="" value="{{ old('qualifications') }}">
+        </div>
+        <div>
+            <label for="qualifications_select">Select qualifications here</label>
+
+            @php
+                $qualifications = App\Models\Qualification::all();
+            @endphp
+
+            <select id="qualification_name" name="qualifications_select" id="qualifications_select">
+                @foreach ($qualifications as $qualification)
+                    <option value="{{ $qualification->qualification_name }}">{{ $qualification->qualification_name }}</option>
+                @endforeach
+            </select>
+
+            <p id="qualifications_error" hidden>Can't have duplicate qualifications</p>
+
+            <button onclick="addQualification()" type="button">Add Qualification</button>
+        </div>
+
+        <script>
+            function addQualification() {
+                var qualifications_error = document.getElementById('qualifications_error');
+                var qualification_name = document.getElementById('qualification_name').value;
+
+                if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
+                    qualifications_error.style.display = "block";
+                } else {
+                    document.getElementById('qualifications_list').value += qualification_name.concat(",");
+                    qualifications_error.style.display = "none";
+                }
+            }
+        </script>
+
+        @error('skills')
+        <p>{{ $message }}</p>
+        @enderror
 
         <div class="flex items-center justify-end mt-4">
             <a class="text-sm text-greenButtons hover:text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-greenButtons"

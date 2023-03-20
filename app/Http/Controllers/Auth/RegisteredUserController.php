@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Qualification;
+use App\Models\QualificationsUser;
 use App\Models\Skill;
 use App\Models\SkillsUser;
 use App\Models\User;
@@ -54,8 +56,6 @@ class RegisteredUserController extends Controller
             'species_id' => $request->species_id,
         ]);
 
-            // dd($request->skills);
-        // dd(explode(",", $request->skills));
 
         $all_skills_unproc = array_filter(explode(",", $request->skills));
 
@@ -64,7 +64,6 @@ class RegisteredUserController extends Controller
         // Processing skills. This basically creates an array where a user's skill is mapped to their level
         foreach ($all_skills_unproc as $skill) {
             $skill_attr = explode(":", $skill);
-            // dd($skill_level);
 
             $skill_name = $skill_attr[0];
             $skill_level = $skill_attr[1];
@@ -74,7 +73,6 @@ class RegisteredUserController extends Controller
 
 
         foreach ($all_skills as $skill_name=>$skill_level) {
-            // dd($skill_name);
             $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
             $skill_user = SkillsUser::create([
@@ -83,6 +81,19 @@ class RegisteredUserController extends Controller
                 'skill_level' => $skill_level,
             ]);
         }
+
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", $request->qualifications));
+
+        foreach ($all_quals as $qual_name) {
+            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name)->first()->qualification_id;
+
+            $qual_user = QualificationsUser::create([
+                'user_id' => $user->id,
+                'qualification_id' => $qual_id,
+                'date_obtained' => Carbon::now(),
+            ]);
+        } 
 
         event(new Registered($user));
 
