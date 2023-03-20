@@ -1,306 +1,308 @@
 <x-app-layout>
-    This page will show the form for creating vacancies
 
-    <form method="POST" action="/vacancies" enctype="multipart/form-data" onsubmit="return validateForm()">
-        {{-- This tag makes it so that not anyone can just send a form pointed towards this URL --}}
-        @csrf
-        <div>
-            <label for="vacancy_title">Vacancy Title</label>
-            <input type="text" name="vacancy_title" placeholder="" value="{{ old('vacancy_title') }}">
-        </div>
+    <div class="py-12 flex flex-col items-center max-w-2xl mx-auto">
+        <x-card-base>
+            <form method="POST" action="/vacancies" enctype="multipart/form-data" onsubmit="return validateForm()"
+                class="p-10 flex flex-col items-center gap-5">
+                {{-- This tag makes it so that not anyone can just send a form pointed towards this URL --}}
+                @csrf
 
-        {{-- Catching errors and displaying them --}}
-        @error('vacancy_title')
-            <p>{{ $message }}</p>
-        @enderror
+                <!-- Form Title -->
+                <div>
+                    <p class="font-bold text-2xl md:text-3xl">Create Vacancy</p>
+                </div>
 
-        <div>
-            <label for="organisation_id">What company will this vacancy be created under?</label>
-            <select name="organisation_id" id="organisation_id">
+                <div class="flex flex-col gap-5 md:w-full">
+                    <div>
+                        <x-input-label for="vacancy_title">Vacancy Title</x-input-label>
+                        <x-text-input type="text" name="vacancy_title" class="mt-1 block w-full" placeholder=""
+                            value="{{ old('vacancy_title') }}"></x-text-input>
+                        <x-input-error class="mt-2" :messages="$errors->get('vacancy_title')" />
+                    </div>
 
-                @foreach ($organisations as $org)
-                    @if ($org == $organisation)
-                        <option selected value="{{ $org->organisation_id }}">{{ $org->organisation_name }}</option>
-                    @else
-                        <option value="{{ $org->organisation_id }}">{{ $org->organisation_name }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
+                    <div>
+                        <x-input-label for="organisation_id">What organisation will this vacancy be under?
+                        </x-input-label>
+                        <x-select name="organisation_id" id="organisation_id" class="mt-1 block w-full">
+                            @foreach ($organisations as $org)
+                                @if ($org == $organisation)
+                                    <option selected value="{{ $org->organisation_id }}">{{ $org->organisation_name }}
+                                    </option>
+                                @else
+                                    <option value="{{ $org->organisation_id }}">{{ $org->organisation_name }}</option>
+                                @endif
+                            @endforeach
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('organisation_id')" />
+                    </div>
 
-        @error('organisation_id')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="category_requirement">Category Requirement</x-input-label>
+                        <x-select name="category_requirement" id="category_requirement" class="mt-1 block w-full">
+                            <option value="NULL">None</option>
+                            <option value="MAMMAL">Mammal</option>
+                            <option value="REPTILE">Reptile</option>
+                            <option value="AMPHIBIAN">Amphibian</option>
+                            <option value="AVIAN">Avian</option>
+                            <option value="FISH">Fish</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('category_requirement')" />
+                    </div>
 
-        <div>
-            <label for="category_requirement">Category Requirement</label>
-            <select name="category_requirement" id="category_requirement">
-                <option value="NULL">None</option>
-                <option value="MAMMAL">Mammal</option>
-                <option value="REPTILE">Reptile</option>
-                <option value="AMPHIBIAN">Amphibian</option>
-                <option value="AVIAN">Avian</option>
-                <option value="FISH">Fish</option>
-            </select>
-        </div>
+                    <div>
+                        <x-input-label for="can_fly_requirement">Should applicants be able to fly?</x-input-label>
+                        <x-select name="can_fly_requirement" id="can_fly_requirement" class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('can_fly_requirement')" />
+                    </div>
 
-        @error('category_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="can_swim_requirement">Should applicants be able to swim?</x-input-label>
+                        <x-select name="can_swim_requirement" id="can_swim_requirement" class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('can_swim_requirement')" />
+                    </div>
 
-        <div>
-            <label for="can_fly_requirement">Should applicants be able to fly?</label>
-            <select name="can_fly_requirement" id="can_fly_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
-        </div>
+                    <div>
+                        <x-input-label for="can_climb_requirement">Should applicants be able to climb?</x-input-label>
+                        <x-select name="can_climb_requirement" id="can_climb_requirement" class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('can_climb_requirement')" />
+                    </div>
 
-        @error('can_fly_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="eating_style_requirement">Eating Style Requirement</x-input-label>
+                        <x-select name="eating_style_requirement" id="eating_style_requirement"
+                            class="mt-1 block w-full">
+                            <option value="NULL">None</option>
+                            <option value="HERBIVORE">Herbivore</option>
+                            <option value="CARNIVORE">Carnivore</option>
+                            <option value="OMNIVORE">Omnivore</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('eating_style_requirement')" />
+                    </div>
 
-        <div>
-            <label for="can_swim_requirement">Should applicants be able to swim?</label>
-            <select name="can_swim_requirement" id="can_swim_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
-        </div>
+                    <div>
+                        <x-input-label for="produces_toxins_requirement">Should applicants be able to produce toxins?
+                        </x-input-label>
+                        <x-select name="produces_toxins_requirement" id="produces_toxins_requirement"
+                            class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('produces_toxins_requirement')" />
+                    </div>
 
-        @error('can_swim_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="size_requirement">Size Requirement</x-input-label>
+                        <x-select name="size_requirement" id="size_requirement" class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="SMALL">Small</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="LARGE">Large</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('size_requirement')" />
+                    </div>
 
-        <div>
-            <label for="can_climb_requirement">Should applicants be able to climb?</label>
-            <select name="can_climb_requirement" id="can_climb_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
-        </div>
+                    <div>
+                        <x-input-label for="speed_requirement">Speed Requirement</x-input-label>
+                        <x-select name="speed_requirement" id="speed_requirement" class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="SLOW">Slow</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="FAST">Fast</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('speed_requirement')" />
+                    </div>
 
-        @error('can_climb_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="num_appendages_requirement">How many appendages should applicants have?
+                        </x-input-label>
+                        <x-select name="num_appendages_requirement" id="num_appendages_requirement"
+                            class="mt-1 block w-full">
+                            <option value="NULL">Doesn't matter</option>
+                            <option value="NONE">No Appendages</option>
+                            <option value="FEW">Few Appendages, e.g., 4</option>
+                            <option value="MANY">Many Appendages</option>
+                        </x-select>
+                        <x-input-error class="mt-2" :messages="$errors->get('num_appendages_requirement')" />
+                    </div>
 
-        <div>
-            <label for="eating_style_requirement">Eating Style Requirement</label>
-            <select name="eating_style_requirement" id="eating_style_requirement">
-                <option value="NULL">None</option>
-                <option value="HERBIVORE">Herbivore</option>
-                <option value="CARNIVORE">Carnivore</option>
-                <option value="OMNIVORE">Omnivore</option>
-            </select>
-        </div>
+                    <div>
+                        <x-input-label for="skills">All skills applicants should have. Please specify skill level
+                            with colon and
+                            separate with commas.</x-input-label>
+                        <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full"
+                            placeholder="" value="{{ old('skills') }}"></x-text-input>
+                    </div>
 
-        @error('eating_style_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div class="flex flex-col gap-5">
+                        @php
+                            $skills = App\Models\Skill::all();
+                        @endphp
 
-        <div>
-            <label for="produces_toxins_requirement">Should applicants be able to produce toxins?</label>
-            <select name="produces_toxins_requirement" id="produces_toxins_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
-        </div>
+                        <div>
+                            <x-input-label for="skills_select">Select specific skill.</x-input-label>
+                            <x-select id="skill_name" name="skills_select" class="mt-1 block w-full">
+                                @foreach ($skills as $skill)
+                                    <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
+                                @endforeach
+                            </x-select>
+                        </div>
 
-        @error('produces_toxins_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                        <div>
+                            <x-input-label for="skills_level_select">Select skill level.</x-input-label>
+                            <x-select id="skill_level" name="skills_level_select" class="mt-1 block w-full">
+                                <option value="BEGINNER">Beginner</option>
+                                <option value="INTERMEDIATE">Intermediate</option>
+                                <option value="EXPERT">Expert</option>
+                            </x-select>
+                        </div>
 
-        <div>
-            <label for="size_requirement">Size Requirement</label>
-            <select name="size_requirement" id="size_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="SMALL">Small</option>
-                <option value="MEDIUM">Medium</option>
-                <option value="LARGE">Large</option>
-            </select>
-        </div>
+                        <div class="flex flex-col items-center">
+                            <p id="skills_error" hidden
+                                class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't have duplicate
+                                skills.</p>
+                        </div>
 
-        @error('size_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                        <div class="flex flex-col items-center">
+                            <x-primary-button class="w-max" onclick="addSkill()" type="button">Add Skill
+                            </x-primary-button>
+                        </div>
+                    </div>
 
-        <div>
-            <label for="speed_requirement">Speed Requirement</label>
-            <select name="speed_requirement" id="speed_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="SLOW">Slow</option>
-                <option value="MEDIUM">Medium</option>
-                <option value="FAST">Fast</option>
-            </select>
-        </div>
+                    <script>
+                        function addSkill() {
+                            var skills_error = document.getElementById('skills_error');
+                            var skill_name = document.getElementById('skill_name').value;
+                            var skill_level = document.getElementById('skill_level').value;
 
-        @error('speed_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                            if (document.getElementById('skills_list').value.includes(skill_name)) {
+                                skills_error.style.display = "block";
+                            } else {
+                                document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+                                skills_error.style.display = "none";
+                            }
+                        }
+                    </script>
 
-        <div>
-            <label for="num_appendages_requirement">How many appendages should applicants have?</label>
-            <select name="num_appendages_requirement" id="num_appendages_requirement">
-                <option value="NULL">Doesn't matter</option>
-                <option value="NONE">No Appendages</option>
-                <option value="FEW">Few Appendages, e.g., 4</option>
-                <option value="MANY">Many Appendages</option>
-            </select>
-        </div>
+                    @error('skills')
+                        <p>{{ $message }}</p>
+                    @enderror
 
-        @error('num_appendages_requirement')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="qualifications">All qualifications applicants should have. Please separate
+                            with
+                            commas.</x-input-label>
+                        <x-text-input id="qualifications_list" type="text" name="qualifications"
+                            class="mt-1 block w-full" placeholder="" value="{{ old('qualifications') }}">
+                        </x-text-input>
+                    </div>
+                    <div class="flex flex-col gap-5">
 
-        <div>
-            <label for="skills">All skills applicants should have. Please specify skill level with colon and
-                separate with commas</label>
-            <input id="skills_list" type="text" name="skills" placeholder="" value="{{ old('skills') }}">
-        </div>
-        <div>
-            <label for="skills_select">Select skills here</label>
+                        @php
+                            $qualifications = App\Models\Qualification::all();
+                        @endphp
 
-            @php
-                $skills = App\Models\Skill::all();
-            @endphp
+                        <div>
+                            <x-input-label for="qualifications_select">Select qualifications here</x-input-label>
+                            <x-select id="qualification_name" name="qualifications_select"
+                                class="mt-1 block w-full">
+                                @foreach ($qualifications as $qualification)
+                                    <option value="{{ $qualification->qualification_name }}">
+                                        {{ $qualification->qualification_name }}
+                                    </option>
+                                @endforeach
+                            </x-select>
+                        </div>
 
-            <select id="skill_name" name="skills_select" id="skills_select">
-                @foreach ($skills as $skill)
-                    <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
-                @endforeach
-            </select>
+                        <div class="flex flex-col items-center">
+                            <p id="qualifications_error" hidden class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't have duplicate qualifications.</p>
+                        </div>
 
-            <label for="skills_level_select">Select skill level here</label>
-            <select id="skill_level" name="skills_level_select" id="skills_level_select">
-                <option value="BEGINNER">Beginner</option>
-                <option value="INTERMEDIATE">Intermediate</option>
-                <option value="EXPERT">Expert</option>
-            </select>
+                        <div class="flex flex-col items-center">
+                            <x-primary-button onclick="addQualification()" type="button">Add Qualification
+                            </x-primary-button>
+                        </div>
+                    </div>
 
-            <p id="skills_error" hidden>Can't have duplicate skills</p>
+                    <script>
+                        function addQualification() {
+                            var qualifications_error = document.getElementById('qualifications_error');
+                            var qualification_name = document.getElementById('qualification_name').value;
 
-            <button onclick="addSkill()" type="button">Add Skill</button>
-        </div>
+                            if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
+                                qualifications_error.style.display = "block";
+                            } else {
+                                document.getElementById('qualifications_list').value += qualification_name.concat(",");
+                                qualifications_error.style.display = "none";
+                            }
+                        }
+                    </script>
 
-        <script>
-            function addSkill() {
-                var skills_error = document.getElementById('skills_error');
-                var skill_name = document.getElementById('skill_name').value;
-                var skill_level = document.getElementById('skill_level').value;
+                    @error('qualifications')
+                        <p>{{ $message }}</p>
+                    @enderror
 
-                if (document.getElementById('skills_list').value.includes(skill_name)) {
-                    skills_error.style.display = "block";
-                } else {
-                    document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
-                    skills_error.style.display = "none";
-                }
-            }
-        </script>
+                    {{-- MUST CHECK IF SALARY RANGE IS LOWER --}}
+                    <div>
+                        <x-input-label for="salary_range_lower">Lower salary range</x-input-label>
+                        <x-text-input id="salary_lower" type="number" name="salary_range_lower" class="mt-1 block w-full" placeholder="" value="{{ old('salary_range_lower') }}" required></x-text-input>
+                        <x-input-error class="mt-2" :messages="$errors->get('salary_range_lower')" />
+                    </div>
 
-        @error('skills')
-            <p>{{ $message }}</p>
-        @enderror
+                    <div>
+                        <x-input-label for="salary_range_upper">Upper salary range</x-input-label>
+                        <x-text-input id="salary_upper" type="number" name="salary_range_upper" class="mt-1 block w-full" placeholder="" value="{{ old('salary_range_upper') }}" required></x-text-input>
+                        <x-input-error class="mt-2" :messages="$errors->get('salary_range_upper')" />
+                    </div>
 
-        <div>
-            <label for="qualifications">All qualifications applicants should have. Please separate with commas</label>
-            <input id="qualifications_list" type="text" name="qualifications" placeholder=""
-                value="{{ old('qualifications') }}">
-        </div>
-        <div>
-            <label for="qualifications_select">Select qualifications here</label>
+                    <script>
+                        function validateForm() {
 
-            @php
-                $qualifications = App\Models\Qualification::all();
-            @endphp
+                            var salary_lower = parseInt(document.getElementById('salary_lower').value);
+                            var salary_upper = parseInt(document.getElementById('salary_upper').value);
 
-            <select id="qualification_name" name="qualifications_select" id="qualifications_select">
-                @foreach ($qualifications as $qualification)
-                    <option value="{{ $qualification->qualification_name }}">{{ $qualification->qualification_name }}
-                    </option>
-                @endforeach
-            </select>
+                            console.log(salary_lower);
+                            console.log(salary_upper);
 
-            <p id="qualifications_error" hidden>Can't have duplicate qualifications</p>
+                            if (salary_lower > salary_upper) {
+                                alert("Invalid salary range. Please make sure that the lower salary range is less than the upper range.");
+                                return false;
+                            }
+                        }
+                    </script>
 
-            <button onclick="addQualification()" type="button">Add Qualification</button>
-        </div>
+                    <div>
+                        <x-input-label for="vacancy_description">Vacancy Description</x-input-label>
+                        <textarea name="vacancy_description" id="vacancy_description" rows="10" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" placeholder="Description Details.">{{ old('vacancy_description') }}</textarea>
+                        <x-input-error class="mt-2" :messages="$errors->get('vacancy_description')" />
+                    </div>
 
-        <script>
-            function addQualification() {
-                var qualifications_error = document.getElementById('qualifications_error');
-                var qualification_name = document.getElementById('qualification_name').value;
-
-                if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
-                    qualifications_error.style.display = "block";
-                } else {
-                    document.getElementById('qualifications_list').value += qualification_name.concat(",");
-                    qualifications_error.style.display = "none";
-                }
-            }
-        </script>
-
-        @error('qualifications')
-            <p>{{ $message }}</p>
-        @enderror
-
-        {{-- MUST CHECK IF SALARY RANGE IS LOWER --}}
-        <div>
-            <label for="salary_range_lower">Lower salary range</label>
-            <input id="salary_lower" type="number" name="salary_range_lower" placeholder=""
-                value="{{ old('salary_range_lower') }}">
-        </div>
-
-        @error('salary_range_lower')
-            <p>{{ $message }}</p>
-        @enderror
-
-        <div>
-            <label for="salary_range_upper">Upper salary range</label>
-            <input id="salary_upper" type="number" name="salary_range_upper" placeholder=""
-                value="{{ old('salary_range_upper') }}">
-        </div>
-
-        <script>
-            function validateForm() {
-
-                var salary_lower = parseInt(document.getElementById('salary_lower').value);
-                var salary_upper = parseInt(document.getElementById('salary_upper').value);
-
-                console.log(salary_lower);
-                console.log(salary_upper);
-
-                if (salary_lower > salary_upper) {
-                    alert("Invalid salary range. Please make sure that the lower salary range is less than the upper range.");
-                    return false;
-                }
-            }
-        </script>
-
-        @error('salary_range_upper')
-            <p>{{ $message }}</p>
-        @enderror
-
-        <div>
-            <label for="vacancy_description">Vacancy Description</label>
-            <textarea name="vacancy_description" id="vacancy_description" rows="10" placeholder="Vacancy Description...">{{ old('vacancy_description') }}</textarea>
-        </div>
-
-        @error('vacancy_description')
-            <p>{{ $message }}</p>
-        @enderror
-
-        <div>
-            <button>
-                Create Vacancy
-            </button>
-
-            <a href="/home">Go Back</a>
-
-    </form>
-
+                    <div class="flex justify-center gap-2 md:gap-5">
+                        {{-- Possibly go straight to the created organisation page? --}}
+                        <a href="{{ route('home') }}">
+                            <x-secondary-button>
+                                {{ __('Go Back') }}
+                            </x-secondary-button>
+                        </a>
+                        <x-primary-button>
+                            Create Vacancy
+                        </x-primary-button>
+                    </div>
+                </div>
+            </form>
+        </x-card-base>
+    </div>
 
 </x-app-layout>
