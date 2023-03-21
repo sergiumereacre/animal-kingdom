@@ -141,6 +141,7 @@ Route::get('/users/index', [ProfileController::class, 'index'])->name('users.ind
 
 Route::put('/users/{user}/toggleBan', [ProfileController::class, 'toggleBan'])->middleware('auth');
 
+Route::put('/users/{user}/toggleConnect', [ProfileController::class, 'toggleConnect'])->middleware('auth');
 
 Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
 

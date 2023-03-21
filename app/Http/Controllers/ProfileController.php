@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\AnimalSpecies;
+use App\Models\Connection;
 use App\Models\Organisation;
 use App\Models\Qualification;
 use App\Models\QualificationsUser;
@@ -60,14 +61,26 @@ class ProfileController extends Controller
             $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
         }
 
+        // Get all connections where selected user is in first_user_id
+        $connected_users_first = User::all()->whereIn('id', DB::table('connections')->where(
+            'first_user_id',
+            '=',
+            $user->id
+        )->pluck('second_user_id'));
+
+        // Get all connections where selected user is in second_user_id
+        $connected_users_last = User::all()->whereIn('id', DB::table('connections')->where(
+            'second_user_id',
+            '=',
+            $user->id
+        )->pluck('first_user_id'));
+
+        $all_connected_users = $connected_users_first->merge($connected_users_last);
+
         return view('profile.show', [
             'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
 
-            'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
-                'first_user_id',
-                '=',
-                $user->id
-            )->pluck('second_user_id')),
+            'connected_users' => $all_connected_users,
             'user' => $user,
             'species' => AnimalSpecies::all()->find($user->species_id),
             'past_vacancies' => $past_vacancies,
@@ -213,8 +226,31 @@ class ProfileController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function toggleBan(User $user){
+    public function toggleBan(User $user)
+    {
         $user->update(['is_banned' => !$user->is_banned]);
+        return redirect()->back();
+    }
+
+    public function toggleConnect(User $user)
+    {
+
+        $connection = Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
+        ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
+        ->first();
+
+        if($connection){
+            $connection->delete();
+        }else{
+            Connection::create([
+                'first_user_id' => auth()->id(),
+                'second_user_id' => $user->id,
+                'time_created' => Carbon::now(),
+            ]);    
+        }
+
+
+        // $user->update(['is_banned' => !$user->is_banned]);
         return redirect()->back();
     }
 }

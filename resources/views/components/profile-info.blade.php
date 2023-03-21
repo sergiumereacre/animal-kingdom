@@ -6,7 +6,8 @@
         <div class="flex flex-col items-center">
             {{-- <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4" src="{{ asset('img/logo.png') }}"
                 alt="Company Logo" /> --}}
-                <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4" src="{{$user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png')}}"
+            <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4"
+                src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png') }}"
                 alt="Company Logo" />
             <h1 class="text-4xl text-black font-black text-center p-5">{{ $user->first_name }} {{ $user->last_name }}
             </h1>
@@ -20,8 +21,37 @@
             @endif
         </div>
         <!-- Connect Button -->
+
+        {{-- Check if connection exists --}}
+        @php
+            // $connections = Illuminate\Support\Facades\DB::table('connections')
+            // ->where(['first_user_id' => auth()->id(), 'second_user_id' => $user->id])
+            // ->orWhere(['first_user_id' => $user->id, 'second_user_id' => auth()->id()])->get();
+            
+            // Check if connection exists
+            $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
+                ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
+                ->first();
+            
+        @endphp
+
         <div>
-            <x-primary-button>{{ __('Connect') }}</x-primary-button>
+            @if ($user->id != auth()->id())
+                @if ($connection)
+                    <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
+                        @csrf
+                        @method('PUT')
+                        <x-primary-button>{{ __('Disconnect') }}</x-primary-button>
+
+                    </form>
+                @else
+                    <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
+                        @csrf
+                        @method('PUT')
+                        <x-primary-button>{{ __('Connect') }}</x-primary-button>
+                    </form>
+                @endif
+            @endif
         </div>
         <!-- Profile info section -->
         <div class="bg-appBackground rounded-2xl w-full p-10">
