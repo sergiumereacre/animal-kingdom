@@ -4,4 +4,8 @@
             <x-organisation-card :organisation="$organisation"></x-organisation-card>
         @endforeach
     </div>
+
+    <div class="mt-6 p-4">
+        {{$organisations->links()}}
+    </div>
 </x-app-layout>
