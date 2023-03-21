@@ -4,7 +4,9 @@
     <div class="py-10 px-16 flex flex-col items-center gap-5">
         <!-- User avatar and name -->
         <div class="flex flex-col items-center">
-            <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4" src="{{ asset('img/logo.png') }}"
+            {{-- <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4" src="{{ asset('img/logo.png') }}"
+                alt="Company Logo" /> --}}
+                <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4" src="{{$user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png')}}"
                 alt="Company Logo" />
             <h1 class="text-4xl text-black font-black text-center p-5">{{ $user->first_name }} {{ $user->last_name }}
             </h1>

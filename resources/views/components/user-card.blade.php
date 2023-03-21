@@ -7,7 +7,7 @@
 <x-card-base class="md:flex md:flex-row md:max-w-xl">
     <!-- Avatar and Current Positon -->
     <div class="flex flex-col items-center py-5 md:mx-5 md:w-max md:h-max md:pt-10">
-        <img class="w-36 h-36 min-w-max mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}"
+        <img class="w-36 h-36 min-w-max mb-3 rounded-full shadow-lg" src="{{$user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png')}}"
             alt="Company Logo" />
         <span class="text-md text-gray-800 font-bold text-center">{{ $user->username }}</span>
     </div>
