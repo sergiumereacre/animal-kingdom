@@ -41,14 +41,18 @@
                     <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
                         @csrf
                         @method('PUT')
-                        <x-primary-button>{{ __('Disconnect') }}</x-primary-button>
+                        <x-remove-button class="flex items-center gap-2"><span class="material-symbols-rounded">
+                            person_remove
+                        </span>{{ __('Disconnect') }}</x-remove-button>
 
                     </form>
                 @else
                     <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
                         @csrf
                         @method('PUT')
-                        <x-primary-button>{{ __('Connect') }}</x-primary-button>
+                        <x-primary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
+                            person_add
+                        </span>{{ __('Connect') }}</x-primary-button>
                     </form>
                 @endif
             @endif
