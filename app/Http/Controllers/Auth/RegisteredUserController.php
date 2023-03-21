@@ -107,7 +107,7 @@ class RegisteredUserController extends Controller
             if (count($qual_id) != 0) {
                 $qual_id = $qual_id->first()->qualification_id;
                 $qual_user = QualificationsUser::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => $user->id,
                     'qualification_id' => $qual_id,
                     // Date picker here?
                     'date_obtained' => Carbon::now(),
@@ -119,6 +119,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('home');
     }
 }
