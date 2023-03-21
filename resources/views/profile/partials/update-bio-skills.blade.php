@@ -15,14 +15,16 @@
 
         <div>
             <x-input-label for="bio">Profile Bio</x-input-label>
-            <textarea name="bio" id="bio" rows="6" type="text" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" required autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
+            <textarea name="bio" id="bio" rows="6" type="text"
+                class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
+                required autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
 
         <div>
             <x-input-label for="skills">This box bellow is used for adding skills.</x-input-label>
-            <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full"
-                placeholder="" value="{{ old('skills') }}"></x-text-input>
+            <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full" placeholder=""
+                value="{{ old('skills') }}"></x-text-input>
         </div>
 
         <div class="flex flex-wrap flex-row items-center gap-3">
@@ -80,8 +82,7 @@
             </div>
 
             <div class="flex flex-col items-center">
-                <x-secondary-button class="w-max" onclick="addSkill()" type="button">Add Skill
-                </x-secondary-button>
+                <x-secondary-button class="w-max" onclick="addSkill()" type="button">Add Skill</x-secondary-button>
             </div>
         </div>
 

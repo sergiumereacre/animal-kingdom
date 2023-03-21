@@ -46,6 +46,9 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">work</span>
                     </x-nav-link>
+                    <x-nav-link :href="route('organisations.index')" :active="request()->routeIs('organisations.index')">
+                        <span class="material-symbols-rounded text-greenButtons text-3xl">home_work</span>
+                    </x-nav-link>
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         <span class="material-symbols-rounded text-greenButtons text-3xl">group</span>
                     </x-nav-link>
@@ -64,7 +67,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link href="{{route('home')}}">
+                            <x-dropdown-link href="/users/{{$user->id}}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -98,8 +101,11 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('vacancies.index')" :active="request()->routeIs('vacancies.index')">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                 {{ __('Vacancies') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('organisations.index')" :active="request()->routeIs('organisations.index')">
+                {{ __('Organisations') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('Users') }}
@@ -112,12 +118,15 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
+                @if ($user->is_admin)
+                    <div class="font-bold text-sm text-red-500">Admin</div>
+                @endif
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->username }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('home')">
+                <x-responsive-nav-link href="/users/{{$user->id}}">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
