@@ -7,7 +7,7 @@
 <x-card-base>
     <!-- Company Logo And Name -->
     <div class="flex flex-col items-center py-5 md:px-5 md:pt-5">
-        <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}" alt="Company Logo" />
+        <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{$organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png')}}" alt="Company Logo" />
         <span class="text-sm text-black"><a
                 href="/organisations/{{ $vacancy->organisation_id }}">{{ $organisation->organisation_name }}</a></span>
     </div>
@@ -26,7 +26,12 @@
         <!-- Job Description -->
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Job Description:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">{{ $vacancy->vacancy_description }}</p>
+            <p class="md:px-0 md:w-500 text-sm text-gray-700">
+                @if ($vacancy->vacancy_description == "")
+                    None
+                @endif
+                {{ $vacancy->vacancy_description }}
+            </p>
         </div>
 
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
@@ -59,11 +64,10 @@
                     
                     if (!is_null($var)) {
                         if ($var == true) {
-                            echo "Yes";
+                            echo 'Yes';
                         } else {
-                            echo "No";
+                            echo 'No';
                         }
-                        
                     } else {
                         echo $no_matter;
                     }
@@ -74,17 +78,16 @@
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Swim?</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
-              
+
                 @php
                     $var = $vacancy->can_swim_requirement;
                     
                     if (!is_null($var)) {
                         if ($var == true) {
-                            echo "Yes";
+                            echo 'Yes';
                         } else {
-                            echo "No";
+                            echo 'No';
                         }
-                        
                     } else {
                         echo $no_matter;
                     }
@@ -95,17 +98,16 @@
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Climb?</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
-                
+
                 @php
                     $var = $vacancy->can_climb_requirement;
                     
                     if (!is_null($var)) {
                         if ($var == true) {
-                            echo "Yes";
+                            echo 'Yes';
                         } else {
-                            echo "No";
+                            echo 'No';
                         }
-                        
                     } else {
                         echo $no_matter;
                     }
@@ -117,17 +119,16 @@
             <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Produce Toxins?</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
 
-                
+
                 @php
                     $var = $vacancy->produces_toxins_requirement;
                     
                     if (!is_null($var)) {
                         if ($var == true) {
-                            echo "Yes";
+                            echo 'Yes';
                         } else {
-                            echo "No";
+                            echo 'No';
                         }
-                        
                     } else {
                         echo $no_matter;
                     }
@@ -221,18 +222,49 @@
                 <p class="font-medium text-black md:p-5 md:w-44">Skills Needed: </p>
                 <!-- Automated Skills List -->
                 <div class="flex gap-3 text-xs">
-                    @foreach ($skills as $skill)
-                        <x-skill>{{ $skill->skill_name }}</x-skill>
-                    @endforeach
+                    @if (count($skills) != 0)
+                        @foreach ($skills as $skill)
+                            @php
+                                // dd($skill);
+                                $skill_level = App\Models\SkillsVacancy::all()
+                                    ->whereIn(
+                                        'skills_vacancies_id',
+                                        Illuminate\Support\Facades\DB::table('skills_vacancies')
+                                            ->where('skill_id', '=', $skill->skill_id)
+                                            ->pluck('skills_vacancies_id'),
+                                    )
+                                    ->first()->skill_level;
+                            @endphp
+
+                            @if ($skill_level == 'BEGINNER')
+                                <x-skill style="background-color: rgb(231, 255, 231)">{{ $skill->skill_name }}</x-skill>
+                            @endif
+
+                            @if ($skill_level == 'INTERMEDIATE')
+                                <x-skill style="background-color: rgb(224, 205, 255)">{{ $skill->skill_name }}</x-skill>
+                            @endif
+
+                            @if ($skill_level == 'EXPERT')
+                                <x-skill style="background-color: rgb(255, 207, 207)">{{ $skill->skill_name }}
+                                </x-skill>
+                            @endif
+                        @endforeach
+                    @else
+                        <x-skill>None</x-skill>
+                    @endif
                 </div>
             </div>
 
             <div class="flex items-center pb-5 gap-3 md:gap-0 flex-row md:pb-0">
                 <p class="font-medium text-black md:p-5 md:w-44">Qualifications Needed: </p>
                 <div class="flex gap-3 text-xs">
-                    @foreach ($quals as $qual)
-                        <x-skill>{{ $qual->qualification_name }}</x-skill>
-                    @endforeach
+                    @if (count($quals) != 0)
+                        @foreach ($quals as $qual)
+                            <x-qualification>{{ $qual->qualification_name }}</x-qualification>
+                        @endforeach
+                    @else
+                        <x-qualification>None</x-qualification>
+                    @endif
                 </div>
             </div>
 
@@ -240,9 +272,16 @@
 
             <!-- Remove and Apply Buttons -->
             <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
-                <x-remove-button>
-                    Remove
-                </x-remove-button>
+                @if ($organisation->owner_id == auth()->id())
+                    <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        {{-- <button>Delete Vacancy</button> --}}
+                        <x-remove-button>
+                            Remove
+                        </x-remove-button>
+                    </form>
+                @endif
                 <x-primary-button>
                     Apply
                 </x-primary-button>

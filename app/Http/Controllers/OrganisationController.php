@@ -49,6 +49,7 @@ class OrganisationController extends Controller
             'organisation_name' => 'required'
         ]);
 
+        // Stores in the logo folder in public
         if ($request->hasFile('picture')) {
             $formFields['picture'] = $request->file('picture')->store('logos', 'public');
         }

@@ -146,3 +146,6 @@ Just seeding: sail artisan db:seed
     - All controllers can be found in Http/Controllers/
     - For example, `return view('vacancies.manage')` will automagically return the view defined in resources/views/vacancies/manage.blade.php. Notice how the "vacancies" folder and "manage.blade.php" maps to "vacancies." and "manage" in the string.
     - Say you want to check your work on the vacancies.create view. This view is returned by the `vacancies/create` route in web.php You can navigate to `localhost/vacancies/create` to get the corresponding page.
+
+## Making Images Publically Accessible
+sail artisan storage:link

@@ -3,7 +3,7 @@
 <x-card-base class="md:flex md:flex-row">
     <!-- Company Logo and Name -->
     <div class="flex flex-col items-center py-5 md:px-5 md:pt-11">
-        <img class="w-24 md:w-auto md:h-auto h-24 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}"
+        <img class="w-24 md:w-auto md:h-auto h-24 mb-3 rounded-full shadow-lg" src="{{$organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png')}}"
             alt="Company Logo" />
         <span class="text-sm text-black"><a
                 href="/organisations/{{ $organisation->organisation_id }}">{{ $organisation->organisation_name }}</a></span>
@@ -78,9 +78,14 @@
 
             <div class="flex items-center pb-5 gap-3 flex-row text-xs md:pb-0">
                 <p class="font-medium text-black">Qualifications Needed: </p>
-                @foreach ($quals as $qual)
-                    <x-qualification>{{ $qual->qualification_name }}</x-qualification>
-                @endforeach
+                @if (count($quals) != 0)
+                    @foreach ($quals as $qual)
+                        <x-qualification>{{ $qual->qualification_name }}</x-qualification>
+                    @endforeach
+                @else
+                    <x-qualification>None</x-qualification>
+                @endif
+
             </div>
             <!-- Remove and Apply Buttons -->
             <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
@@ -94,7 +99,7 @@
                         </x-remove-button>
                     </form>
                 @endif
-               
+
                 <x-primary-button>
                     Apply
                 </x-primary-button>

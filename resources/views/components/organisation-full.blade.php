@@ -4,7 +4,8 @@
 <x-card-base>
     <!-- Avatar and Company Name -->
     <div class="flex flex-col items-center py-5 md:px-5">
-        <img class="w-36 h-36 mb-5 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}" alt="Company Logo" />
+        {{-- <img class="w-36 h-36 mb-5 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}" alt="Company Logo" /> --}}
+        <img class="w-36 h-36 mb-5 rounded-full shadow-lg" src="{{$organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png')}}" alt="Company Logo" />
         <span class="text-3xl font-bold text-black px-10 text-center">{{ $organisation->organisation_name }}</span>
     </div>
     <!-- Main Section -->

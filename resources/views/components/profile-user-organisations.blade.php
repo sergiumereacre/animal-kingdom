@@ -13,7 +13,7 @@
             @unless(count($organisations) == 0)
                 @foreach ($organisations as $organisation)
                     <div class="flex flex-col items-center md:flex-row md:w-full">
-                        <img class="w-44 h-44 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}" alt="Company Logo" />
+                        <img class="w-44 h-44 mb-3 rounded-full shadow-lg" src="{{$organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png')}}" alt="Company Logo" />
                         <div class="flex flex-col items-center md:items-start md:ml-5">
                             <span class="text-xl text-greenButtons font-bold"><a href="/organisations/{{ $organisation->organisation_id }}">{{ $organisation->organisation_name }}</a></span>
                             <div class="text-gray-800 text-center">
