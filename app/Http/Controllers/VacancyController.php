@@ -17,8 +17,11 @@ class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
     public function index()
-    {
-        return view('vacancies.index');
+    {   
+        // return vacancies inlcuding their respective organisations
+        return view('vacancies.index', [
+            'vacancies' => Vacancy::all(),
+        ]);
     }
 
     // Showing individual vacancy

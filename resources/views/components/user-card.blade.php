@@ -61,7 +61,7 @@
             @endif
         </div>
         <!--Connect Button-->
-        <div class="pb-5 flex flex-col items-center md:items-end">
+        <div class="pb-5 flex flex-row items-center justify-center  md:justify-end flex-wrap gap-2 px-5 md:px-0 md:items-end">
             
             {{-- Make sure that the current user can't ban themselves!! --}}
             @if ($user->id != $current_user->id)
@@ -69,31 +69,31 @@
             {{-- Only show these buttons if the current user is an admin and the selected user isn't --}}
                 @if ($current_user->is_admin && !$user->is_admin)
                     @if (!$user->is_banned)
-                        <form method="POST" action="/users/{{ $user->id }}/toggleBan">
+                        <form method="POST" class="md:ml-auto" action="/users/{{ $user->id }}/toggleBan">
                             @csrf
                             @method('PUT')
-                            <x-primary-button>
-                                Ban
-                            </x-primary-button>
+                            <x-remove-button class="flex gap-2">
+                                <span class="material-symbols-rounded">do_not_disturb_on</span> BAN
+                            </x-remove-button>
                         </form>
                     @else
                         <form method="POST" action="/users/{{ $user->id }}/toggleBan">
                             @csrf
                             @method('PUT')
-                            <x-primary-button>
-                                Unban
+                            <x-primary-button class="flex gap-2">
+                                <span class="material-symbols-rounded">check_circle</span>UNBAN
                             </x-primary-button>
                         </form>
                     @endif
-                    <form action="/users/{{ $user->id }}" class="pt-2 md:ml-auto" method="post">
+                    <form action="/users/{{ $user->id }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <x-remove-button><span class="material-symbols-rounded">delete</span></x-remove-button>
-
+                        <x-remove-button class="flex gap-2"><span class="material-symbols-rounded">delete_forever</span>REMOVE</x-remove-button> 
                     </form>
                 @endif
 
-                <x-primary-button>
+                <x-primary-button class="flex gap-2">
+                    <span class="material-symbols-rounded">person_add</span>
                     Connect
                 </x-primary-button>
             @endif

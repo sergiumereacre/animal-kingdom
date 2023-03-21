@@ -213,7 +213,8 @@ class ProfileController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function toggleBan(User $user){
+    public function toggleBan(User $user)
+    {
         $user->update(['is_banned' => !$user->is_banned]);
         return redirect()->back();
     }

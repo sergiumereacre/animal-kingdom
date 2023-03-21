@@ -14,7 +14,9 @@ class OrganisationController extends Controller
     // Some sort of index page for organisations?
     public function index()
     {
-        return view('organisations.index');
+        return view('organisations.index', [
+            'organisations' => Organisation::all(),
+        ]);
     }
 
     // Showing individual organisation
