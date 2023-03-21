@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $formFields = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:' . User::class],
@@ -43,18 +43,29 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        if ($request->hasFile('profile_pic')) {
+            // dd($request->file('profile_pic'));
+            $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
+        }
     
-        $user = User::create([
-            'first_name' => $request->first_name,
-            // 'second_name' => $request->second_name,
-            'last_name' => $request->last_name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'address' => $request->address,
-            'contact_number' => $request->contact_number,
-            'species_id' => $request->species_id,
-        ]);
+        $formFields['address'] = $request->address;
+        $formFields['contact_number'] = $request->contact_number;
+        $formFields['species_id'] = $request->species_id;
+
+        // $user = User::create([
+        //     'first_name' => $request->first_name,
+        //     // 'second_name' => $request->second_name,
+        //     'last_name' => $request->last_name,
+        //     'username' => $request->username,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'address' => $request->address,
+        //     'contact_number' => $request->contact_number,
+        //     'species_id' => $request->species_id,
+        //     'profile_pic' = $profile_pic,
+        // ]);
+
+        $user = User::create($formFields);
 
 
         $all_skills_unproc = array_filter(explode(",", $request->skills));
