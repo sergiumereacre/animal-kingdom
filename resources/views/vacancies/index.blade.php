@@ -7,4 +7,8 @@
             <x-vacancy :vacancy="$vacancy" :organisation="$organisation" />
         @endforeach
     </div>
+
+    <div class="mt-6 p-4">
+        {{$vacancies->links()}}
+    </div>
 </x-app-layout>
