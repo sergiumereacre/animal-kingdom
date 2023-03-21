@@ -6,13 +6,13 @@
         <!-- Avatar and Company Name -->
         <div class="flex flex-col items-center py-5 md:px-5 md:min-w-fit">
             {{-- <img class="w-36 h-36 mb-5 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}" alt="Company Logo" /> --}}
-            <img class="w-36 h-36 mb-5 rounded-full shadow-lg min-w-fit"
+            <img class="w-36 h-36 mb-5 rounded-full shadow-lg aspect-square object-fill"
                 src="{{ $organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png') }}"
                 alt="Company Logo" />
             <a href="/organisations/{{ $organisation->organisation_id }}" class="flex items-center"><span class="text-2xl md:text-xl font-bold text-black px-10 md:px-0 text-center md:max-w-md">{{ $organisation->organisation_name }}</span></a>
         </div>
         <!-- Main Section -->
-        <div class="">
+        <div class="md:w-screen">
             @php
                 $owner = App\Models\User::find($organisation->owner_id);
             @endphp

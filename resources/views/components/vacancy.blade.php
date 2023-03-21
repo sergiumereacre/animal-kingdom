@@ -2,8 +2,8 @@
 
 <x-card-base class="md:flex md:flex-row">
     <!-- Company Logo and Name -->
-    <div class="flex flex-col items-center py-5 md:px-5 md:pt-11 min-w-fit">
-        <img class="w-36 h-36 min-w-max mb-3 rounded-full shadow-lg"
+    <div class="flex flex-col items-center py-5 md:px-5 md:pt-11 md:min-w-fit">
+        <img class="w-36 h-36 mb-3 rounded-full shadow-lg aspect-square object-fill"
             src="{{ $organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png') }}"
             alt="Company Logo" />
         <span class="text-sm text-black text-center"><a

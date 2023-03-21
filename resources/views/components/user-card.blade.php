@@ -3,17 +3,17 @@
 @php
     $current_user = App\Models\User::find(auth()->id());
     $skills = App\Models\SkillsUser::all()->where('user_id', $user->id);
-// Check if connection exists
-$connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
-    ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
-    ->first();
-
+    // Check if connection exists
+    $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
+        ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
+        ->first();
+    
 @endphp
 
 <x-card-base class="md:flex md:flex-row md:max-w-xl">
     <!-- Avatar and Current Positon -->
-    <div class="flex flex-col items-center py-5 md:mx-5 md:w-max md:h-max md:pt-10">
-        <img class="w-36 h-36 min-w-max mb-3 rounded-full shadow-lg"
+    <div class="flex flex-col items-center py-5 md:mx-5 md:pt-10 md:min-w-fit">
+        <img class="w-36 h-36 object-fill mb-3 rounded-full shadow-lg aspect-square"
             src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png') }}"
             alt="Company Logo" />
         <span class="text-md text-gray-800 font-bold text-center">{{ $user->username }}</span>
@@ -67,8 +67,9 @@ $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()]
             @endif
         </div>
         <!--Connect Button-->
-        <div class="pb-5 flex flex-row items-center justify-center  md:justify-end flex-wrap gap-2 px-5 md:px-0 md:items-end">
-            
+        <div
+            class="pb-5 flex flex-row items-center justify-center  md:justify-end flex-wrap gap-2 px-5 md:px-0 md:items-end">
+
             {{-- Make sure that the current user can't ban themselves!! --}}
             @if ($user->id != auth()->id())
 
@@ -94,7 +95,8 @@ $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()]
                     <form action="/users/{{ $user->id }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <x-remove-button class="flex gap-2"><span class="material-symbols-rounded">delete_forever</span>REMOVE</x-remove-button> 
+                        <x-remove-button class="flex gap-2"><span
+                                class="material-symbols-rounded">delete_forever</span>REMOVE</x-remove-button>
                     </form>
                 @endif
 
@@ -103,7 +105,7 @@ $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()]
                         @csrf
                         @method('PUT')
                         <x-remove-button class="flex items-center gap-2"><span class="material-symbols-rounded">
-                            person_remove
+                                person_remove
                             </span>{{ __('Disconnect') }}</x-remove-button>
 
                     </form>
@@ -112,7 +114,7 @@ $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()]
                         @csrf
                         @method('PUT')
                         <x-primary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
-                            person_add
+                                person_add
                             </span>{{ __('Connect') }}</x-primary-button>
                     </form>
                 @endif
@@ -121,4 +123,3 @@ $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()]
         </div>
     </div>
 </x-card-base>
-
