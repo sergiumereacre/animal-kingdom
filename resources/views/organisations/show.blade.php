@@ -20,7 +20,7 @@
             @if ($owner->id == auth()->id())
                 <x-primary-button class="flex gap-1">
                     <span class="material-symbols-rounded">
-                        edit
+                        design_services
                     </span>
                     <a href="/vacancies/{{ $organisation->organisation_id }}/create">Create new vacancy</a>
                 </x-primary-button>
