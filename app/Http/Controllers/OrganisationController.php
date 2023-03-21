@@ -94,7 +94,8 @@ class OrganisationController extends Controller
         }
 
         $organisation->delete();
-        return redirect('/users/'.auth()->id());
+        // return redirect('/users/'.auth()->id());
+        return redirect('home');
     }
 
 

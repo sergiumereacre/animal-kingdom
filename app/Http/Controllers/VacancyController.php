@@ -169,7 +169,9 @@ class VacancyController extends Controller
         } 
 
 
-        return redirect('/home');
+        // return redirect('/home');
+        return redirect('/organisations/' . $request->organisation_id);
+        // return redirect()->back();
     }
 
     public function edit(Request $request)

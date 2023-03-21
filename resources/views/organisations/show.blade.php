@@ -8,17 +8,9 @@
         <div>All vacancies belonging to this company:</div>
 
         @foreach ($vacancies as $vacancy)
-            <div>
-                <a href="/vacancies/{{ $vacancy->vacancy_id }}">{{ $vacancy->vacancy_title }}</a>
-            </div>
+            <x-vacancy :vacancy="$vacancy" :organisation="$organisation"></x-vacancy>
 
-            @if ($organisation->owner_id == auth()->id())
-                <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button>Delete Vacancy</button>
-                </form>
-            @endif
+           
 
         @endforeach
     @else

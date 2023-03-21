@@ -58,7 +58,12 @@
                     $var = $vacancy->can_fly_requirement;
                     
                     if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
+                        if ($var == true) {
+                            echo "Yes";
+                        } else {
+                            echo "No";
+                        }
+                        
                     } else {
                         echo $no_matter;
                     }
@@ -69,11 +74,17 @@
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Swim?</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
+              
                 @php
                     $var = $vacancy->can_swim_requirement;
                     
                     if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
+                        if ($var == true) {
+                            echo "Yes";
+                        } else {
+                            echo "No";
+                        }
+                        
                     } else {
                         echo $no_matter;
                     }
@@ -84,11 +95,17 @@
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Climb?</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
+                
                 @php
                     $var = $vacancy->can_climb_requirement;
                     
                     if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
+                        if ($var == true) {
+                            echo "Yes";
+                        } else {
+                            echo "No";
+                        }
+                        
                     } else {
                         echo $no_matter;
                     }
@@ -100,11 +117,17 @@
             <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Produce Toxins?</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
 
+                
                 @php
                     $var = $vacancy->produces_toxins_requirement;
                     
                     if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
+                        if ($var == true) {
+                            echo "Yes";
+                        } else {
+                            echo "No";
+                        }
+                        
                     } else {
                         echo $no_matter;
                     }
