@@ -20,7 +20,7 @@ class VacancyController extends Controller
     {   
         // return vacancies inlcuding their respective organisations
         return view('vacancies.index', [
-            'vacancies' => Vacancy::all(),
+            'vacancies' => Vacancy::paginate(8),
         ]);
     }
 
