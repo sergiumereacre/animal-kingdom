@@ -15,7 +15,8 @@
         <div class="flex flex-col items-center md:flex-row md:pt-5">
             <h1 class="font-bold text-2xl"><a
                     href="/vacancies/{{ $vacancy->vacancy_id }}">{{ $vacancy->vacancy_title }}</a> </h1>
-            <p class="pt-5 md:pt-0 font-bold text-greenButtons md:ml-auto md:mr-10">${{ $vacancy->salary_range_lower }} -
+            <p class="pt-5 md:pt-0 font-bold text-greenButtons md:ml-auto md:mr-10">${{ $vacancy->salary_range_lower }}
+                -
                 ${{ $vacancy->salary_range_upper }}</p>
         </div>
         <!-- Job Description -->
@@ -117,12 +118,15 @@
                 </form>
             @endif
 
-            <x-primary-button class="flex gap-1">
-                <span class="material-symbols-rounded">
-                    handshake
-                </span>
-                Apply
-            </x-primary-button>
+            <!-- Check if the owner owns this organisation dont show apply button.-->
+            @if ($organisation->owner_id != auth() -> id())
+                <x-primary-button class="flex gap-1">
+                    <span class="material-symbols-rounded">
+                        handshake
+                    </span>
+                    Apply
+                </x-primary-button>
+            @endif
         </div>
     </div>
 </x-card-base>
