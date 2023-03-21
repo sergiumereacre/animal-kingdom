@@ -37,7 +37,7 @@ class ProfileController extends Controller
     public function index()
     {
         return view('profile.index', [
-            'users' => User::paginate(6)
+            'users' => User::paginate(9)
         ]);
     }
 
