@@ -10,7 +10,7 @@
                 href="/organisations/{{ $organisation->organisation_id }}">{{ $organisation->organisation_name }}</a></span>
     </div>
     <!-- Main Section -->
-    <div>
+    <div class="md:w-screen">
         <!-- Job Title and Salary Range -->
         <div class="flex flex-col items-center md:flex-row md:pt-5">
             <h1 class="font-bold text-2xl"><a

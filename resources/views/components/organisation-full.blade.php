@@ -67,15 +67,18 @@
         </div>
         <!-- Remove Button -->
         @if ($owner->id == auth()->id())
-            <div class="px-5 pb-5 flex flex-col items-center md:items-end">
+            <div class="px-5 pb-5 flex flex-row items-center justify-center gap-3">
                 <a href="/organisations/{{ $organisation->organisation_id }}/edit">
-                    <button>Edit</button>
-
+                    <x-secondary-button class="flex gap-2">
+                        <span class="material-symbols-rounded">edit</span>
+                        Edit
+                    </x-secondary-button>
                 </a>
                 <form action="/organisations/{{ $organisation->organisation_id }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <x-remove-button>
+                    <x-remove-button class="flex gap-2">
+                        <span class="material-symbols-rounded">delete_forever</span>
                         Remove
                     </x-remove-button>
                 </form>
