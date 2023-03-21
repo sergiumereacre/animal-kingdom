@@ -105,10 +105,54 @@
             <p>{{ $message }}</p>
         @enderror
 
-        <div>
-            <x-input-label for="qualifications" :value="__('Qualifications')" />
-            <x-text-input id="qualifications" name="qualifications" type="text" class="mt-1 block w-full" />
-            <x-input-error class="mt-2" :messages="$errors->get('qualifications')" />
+        <!-- Qualifications -->
+        <div class="flex flex-col gap-5">
+            <div>
+                <x-input-label for="qualifications">All qualifications applicants should have. Please separate
+                    with
+                    commas.</x-input-label>
+                <x-text-input id="qualifications_list" type="text" name="qualifications"
+                    class="mt-1 block w-full" placeholder="" value="{{ old('qualifications') }}">
+                </x-text-input>
+            </div>
+            <div class="flex flex-col gap-5">
+                @php
+                    $qualifications = App\Models\Qualification::all();
+                @endphp
+                <div>
+                    <x-input-label for="qualifications_select">Select qualifications here</x-input-label>
+                    <x-select id="qualification_name" name="qualifications_select"
+                        class="mt-1 block w-full">
+                        @foreach ($qualifications as $qualification)
+                            <option value="{{ $qualification->qualification_name }}">
+                                {{ $qualification->qualification_name }}
+                            </option>
+                        @endforeach
+                    </x-select>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p id="qualifications_error" hidden class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't have duplicate qualifications.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <x-secondary-button onclick="addQualification()" type="button">Add Qualification
+                    </x-secondary-button>
+                </div>
+            </div>
+            <script>
+                function addQualification() {
+                    var qualifications_error = document.getElementById('qualifications_error');
+                    var qualification_name = document.getElementById('qualification_name').value;
+                    if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
+                        qualifications_error.style.display = "block";
+                    } else {
+                        document.getElementById('qualifications_list').value += qualification_name.concat(",");
+                        qualifications_error.style.display = "none";
+                    }
+                }
+            </script>
+            @error('qualifications')
+                <p>{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="flex items-center gap-4 justify-end">

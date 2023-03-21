@@ -18,20 +18,18 @@
                         </div>
                     @endforeach
                 @else
-                
-                
                     <div class="flex flex-col items-center">
-                        <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
-                        <span class="text-lg text-black">None</span>
-                    </div>
-                    {{-- <div class="flex flex-col items-center">
                         <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
                         <span class="text-lg text-black">None</span>
                     </div>
                     <div class="flex flex-col items-center">
                         <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
                         <span class="text-lg text-black">None</span>
-                    </div> --}}
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
+                        <span class="text-lg text-black">None</span>
+                    </div>
                 @endunless
             </div>
         </div>
