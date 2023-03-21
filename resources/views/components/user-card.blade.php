@@ -3,12 +3,18 @@
 @php
     $current_user = App\Models\User::find(auth()->id());
     $skills = App\Models\SkillsUser::all()->where('user_id', $user->id);
+// Check if connection exists
+$connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
+    ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
+    ->first();
+
 @endphp
 
 <x-card-base class="md:flex md:flex-row md:max-w-xl">
     <!-- Avatar and Current Positon -->
     <div class="flex flex-col items-center py-5 md:mx-5 md:w-max md:h-max md:pt-10">
-        <img class="w-36 h-36 min-w-max mb-3 rounded-full shadow-lg" src="{{$user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png')}}"
+        <img class="w-36 h-36 min-w-max mb-3 rounded-full shadow-lg"
+            src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png') }}"
             alt="Company Logo" />
         <span class="text-md text-gray-800 font-bold text-center">{{ $user->username }}</span>
     </div>
@@ -64,10 +70,10 @@
         <div class="pb-5 flex flex-row items-center justify-center  md:justify-end flex-wrap gap-2 px-5 md:px-0 md:items-end">
             
             {{-- Make sure that the current user can't ban themselves!! --}}
-            @if ($user->id != $current_user->id)
-            
-            {{-- Only show these buttons if the current user is an admin and the selected user isn't --}}
-                @if ($current_user->is_admin && !$user->is_admin)
+            @if ($user->id != auth()->id())
+
+                {{-- Only show these buttons if the current user is an admin and the selected user isn't --}}
+                @if (auth()->user()->is_admin && !$user->is_admin)
                     @if (!$user->is_banned)
                         <form method="POST" class="md:ml-auto" action="/users/{{ $user->id }}/toggleBan">
                             @csrf
@@ -92,10 +98,20 @@
                     </form>
                 @endif
 
-                <x-primary-button class="flex gap-2">
-                    <span class="material-symbols-rounded">person_add</span>
-                    Connect
-                </x-primary-button>
+                @if ($connection)
+                    <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
+                        @csrf
+                        @method('PUT')
+                        <x-primary-button>{{ __('Disconnect') }}</x-primary-button>
+
+                    </form>
+                @else
+                    <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
+                        @csrf
+                        @method('PUT')
+                        <x-primary-button>{{ __('Connect') }}</x-primary-button>
+                    </form>
+                @endif
             @endif
 
         </div>

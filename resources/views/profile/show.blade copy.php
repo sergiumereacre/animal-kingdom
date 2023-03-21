@@ -1,4 +1,4 @@
-<x-app-layout>
+<!-- <x-app-layout>
     This page will show individuals
     {{-- <div>
         <p>{{$organisation->organisation_name}}</p>
@@ -47,4 +47,4 @@
         <a href="/organisations/create">Create new organisation</a>
     @else
     @endif
-</x-app-layout>
+</x-app-layout> -->

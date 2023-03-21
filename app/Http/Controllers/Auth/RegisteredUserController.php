@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
             // dd($request->file('profile_pic'));
             $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
         }
-    
+
         $formFields['address'] = $request->address;
         $formFields['contact_number'] = $request->contact_number;
         $formFields['species_id'] = $request->species_id;
@@ -79,11 +79,16 @@ class RegisteredUserController extends Controller
             $skill_name = $skill_attr[0];
             $skill_level = $skill_attr[1];
 
-            $all_skills[$skill_name] = $skill_level;
+            $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
+            $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
+
+            if ($level_exists && $name_exists) {
+                $all_skills[$skill_name] = $skill_level;
+            }
         }
 
 
-        foreach ($all_skills as $skill_name=>$skill_level) {
+        foreach ($all_skills as $skill_name => $skill_level) {
             $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
             $skill_user = SkillsUser::create([
@@ -97,15 +102,18 @@ class RegisteredUserController extends Controller
         $all_quals = array_filter(explode(",", $request->qualifications));
 
         foreach ($all_quals as $qual_name) {
-            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name)->first()->qualification_id;
+            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name);
 
-            $qual_user = QualificationsUser::create([
-                'user_id' => $user->id,
-                'qualification_id' => $qual_id,
-                // Date picker here?
-                'date_obtained' => Carbon::now(),
-            ]);
-        } 
+            if (count($qual_id) != 0) {
+                $qual_id = $qual_id->first()->qualification_id;
+                $qual_user = QualificationsUser::create([
+                    'user_id' => auth()->id(),
+                    'qualification_id' => $qual_id,
+                    // Date picker here?
+                    'date_obtained' => Carbon::now(),
+                ]);
+            }
+        }
 
         event(new Registered($user));
 
