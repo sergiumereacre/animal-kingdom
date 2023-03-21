@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    Route::delete('/users/{user}', [ProfileController::class, 'destroyOther'])->middleware('auth');
 
     // For viewing other users, possibly some exclusive to admins
     // Route::get('/users/index', [ProfileController::class, 'index']);
@@ -138,6 +138,9 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 // ========== USERS ================
 
 Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
+
+Route::put('/users/{user}/toggleBan', [ProfileController::class, 'toggleBan'])->middleware('auth');
+
 
 Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
 

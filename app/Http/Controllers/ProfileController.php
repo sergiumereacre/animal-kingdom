@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -32,17 +33,19 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function index(){
+    public function index()
+    {
         return view('profile.index', [
             'users' => User::all()
         ]);
     }
 
-    public function show(User $user){
-    
+    public function show(User $user)
+    {
+
         // Current user
         $user = User::all()->find($user->id);
-    
+
         $past_vacancies = Vacancy::all()
             ->whereIn('vacancy_id', DB::table('users_vacancies')
                 ->where(
@@ -50,16 +53,16 @@ class ProfileController extends Controller
                     '=',
                     auth()->id()
                 )->pluck('vacancy_id'));
-    
+
         $past_organisations = array();
-    
-        foreach ($past_vacancies as $vacancy){
+
+        foreach ($past_vacancies as $vacancy) {
             $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
         }
-    
+
         return view('profile.show', [
             'organisations' => Organisation::all()->where('owner_id', '=', $user->id),
-    
+
             'connected_users' => User::all()->whereIn('id', DB::table('connections')->where(
                 'first_user_id',
                 '=',
@@ -73,10 +76,11 @@ class ProfileController extends Controller
     }
 
 
-    public function profile(Request $request){
+    public function profile(Request $request)
+    {
         return view('profile.show', [
             'user' => auth(),
-                'vacancies' => UsersVacancy::all()->where('user_id', '=', auth()->id())
+            'vacancies' => UsersVacancy::all()->where('user_id', '=', auth()->id())
         ]);
     }
 
@@ -87,7 +91,7 @@ class ProfileController extends Controller
     {
         // dd($request);
 
-        if($request->user()->id != auth()->id()) {
+        if ($request->user()->id != auth()->id()) {
             abort(403, 'Unauthorized Action,you\'re not the right user!!');
         }
 
@@ -100,7 +104,7 @@ class ProfileController extends Controller
         $formFields['address'] = $request->address;
         $formFields['contact_number'] = $request->contact_number;
 
-        if($request->hasFile('profile_pic')) {
+        if ($request->hasFile('profile_pic')) {
             $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
         }
 
@@ -114,7 +118,7 @@ class ProfileController extends Controller
     {
         // dd($request);
 
-        if($request->user()->id != auth()->id()) {
+        if ($request->user()->id != auth()->id()) {
             abort(403, 'Unauthorized Action,you\'re not the right user!!');
         }
 
@@ -137,7 +141,7 @@ class ProfileController extends Controller
         }
 
 
-        foreach ($all_skills as $skill_name=>$skill_level) {
+        foreach ($all_skills as $skill_name => $skill_level) {
             $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
             $skill_user = SkillsUser::create([
@@ -159,7 +163,7 @@ class ProfileController extends Controller
                 // Date picker here?
                 'date_obtained' => Carbon::now(),
             ]);
-        } 
+        }
 
         $request->user()->update($formFields);
 
@@ -185,5 +189,32 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Delete the user's account.
+     */
+    public function destroyOther(User $user): RedirectResponse
+    {
+
+        $current_user = User::find(auth()->id());
+        // Make sure logged in user is owner
+        if (!$current_user->is_admin) {
+            abort(403, 'Unauthorized Action, you\'re not an admin!!');
+        }
+
+        // Deleting profile pic
+        if ($user->profile_pic && Storage::disk('public')->exists($user->profile_pic)) {
+            Storage::disk('public')->delete($user->profile_pic);
+        }
+
+        $user->delete();
+        // return redirect('/users/'.auth()->id());
+        return redirect()->route('users.index');
+    }
+
+    public function toggleBan(User $user){
+        $user->update(['is_banned' => !$user->is_banned]);
+        return redirect()->back();
     }
 }

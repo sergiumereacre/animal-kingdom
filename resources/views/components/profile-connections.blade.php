@@ -12,24 +12,26 @@
                 @unless(count($connected_users) == 0)
                     @foreach ($connected_users as $user)
                         <div class="flex flex-col items-center">
-                            <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png') }}"
+                            <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{$user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png')}}"
                                 alt="Company Logo" />
                             <span class="text-lg text-black"><a href="/users/{{$user->id}}">{{$user->first_name}} {{$user->last_name}}</a></span>
                         </div>
                     @endforeach
                 @else
+                
+                
                     <div class="flex flex-col items-center">
+                        <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
+                        <span class="text-lg text-black">None</span>
+                    </div>
+                    {{-- <div class="flex flex-col items-center">
                         <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
                         <span class="text-lg text-black">None</span>
                     </div>
                     <div class="flex flex-col items-center">
                         <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
                         <span class="text-lg text-black">None</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-36 h-36 mb-3 rounded-full shadow-lg bg-gray-200"></div>
-                        <span class="text-lg text-black">None</span>
-                    </div>
+                    </div> --}}
                 @endunless
             </div>
         </div>

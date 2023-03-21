@@ -1,30 +1,16 @@
 <x-app-layout>
-    This page will show individual organisations
-    <div>
-        <p>Organisation Name: {{ $organisation->organisation_name }}</p>
-        <p>Owner Name: <a href="/users/{{ $owner->id }}">{{ $owner->username }}</a></p>
-        @if ($owner->id == auth()->id())
-            <a href="/organisations/{{ $organisation->organisation_id }}/edit">Edit Organisation</a>
-        @else
-        @endif
-    </div>
+
+    <x-organisation-full :organisation="$organisation"></x-organisation-full>
+
 
     @unless(count($vacancies) == 0)
 
         <div>All vacancies belonging to this company:</div>
 
         @foreach ($vacancies as $vacancy)
-            <div>
-                <a href="/vacancies/{{ $vacancy->vacancy_id }}">{{ $vacancy->vacancy_title }}</a>
-            </div>
+            <x-vacancy :vacancy="$vacancy" :organisation="$organisation"></x-vacancy>
 
-            @if ($organisation->owner_id == auth()->id())
-                <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button>Delete Vacancy</button>
-                </form>
-            @endif
+           
 
         @endforeach
     @else
