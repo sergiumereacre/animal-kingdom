@@ -139,6 +139,14 @@ class ProfileController extends Controller
             'bio' => 'required',
         ]);
 
+        $all_skills_users = SkillsUser::all()->where('user_id', '=', auth()->id());
+
+        foreach ($all_skills_users as $skill_user) {
+            $skill_user->delete();
+        }
+
+        // dd($all_skills_users);
+
         $all_skills_unproc = array_filter(explode(",", $request->skills));
 
         $all_skills = [];
@@ -150,7 +158,12 @@ class ProfileController extends Controller
             $skill_name = $skill_attr[0];
             $skill_level = $skill_attr[1];
 
-            $all_skills[$skill_name] = $skill_level;
+            $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
+            $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
+
+            if ($level_exists && $name_exists) {
+                $all_skills[$skill_name] = $skill_level;
+            }
         }
 
 
@@ -167,15 +180,25 @@ class ProfileController extends Controller
         // Processing qualifications
         $all_quals = array_filter(explode(",", $request->qualifications));
 
-        foreach ($all_quals as $qual_name) {
-            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name)->first()->qualification_id;
 
-            $qual_user = QualificationsUser::create([
-                'user_id' => auth()->id(),
-                'qualification_id' => $qual_id,
-                // Date picker here?
-                'date_obtained' => Carbon::now(),
-            ]);
+        $all_quals_users = QualificationsUser::all()->where('user_id', '=', auth()->id());
+
+        foreach ($all_quals_users as $qual_user) {
+            $qual_user->delete();
+        }
+
+        foreach ($all_quals as $qual_name) {
+            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name);
+
+            if (count($qual_id) != 0) {
+                $qual_id = $qual_id->first()->qualification_id;
+                $qual_user = QualificationsUser::create([
+                    'user_id' => auth()->id(),
+                    'qualification_id' => $qual_id,
+                    // Date picker here?
+                    'date_obtained' => Carbon::now(),
+                ]);
+            }
         }
 
         $request->user()->update($formFields);
@@ -236,17 +259,17 @@ class ProfileController extends Controller
     {
 
         $connection = Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
-        ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
-        ->first();
+            ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
+            ->first();
 
-        if($connection){
+        if ($connection) {
             $connection->delete();
-        }else{
+        } else {
             Connection::create([
                 'first_user_id' => auth()->id(),
                 'second_user_id' => $user->id,
                 'time_created' => Carbon::now(),
-            ]);    
+            ]);
         }
 
 
