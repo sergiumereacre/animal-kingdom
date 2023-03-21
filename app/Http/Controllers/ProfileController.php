@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\AnimalSpecies;
 use App\Models\Organisation;
+use App\Models\Qualification;
+use App\Models\QualificationsUser;
+use App\Models\Skill;
+use App\Models\SkillsUser;
 use App\Models\User;
 use App\Models\UsersVacancy;
 use App\Models\Vacancy;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +104,62 @@ class ProfileController extends Controller
             $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
         }
 
+
+        $request->user()->update($formFields);
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updatePersonal(ProfileUpdateRequest $request): RedirectResponse
+    {
+        // dd($request);
+
+        if($request->user()->id != auth()->id()) {
+            abort(403, 'Unauthorized Action,you\'re not the right user!!');
+        }
+
+        $formFields = $request->validate([
+            'bio' => 'required',
+        ]);
+
+        $all_skills_unproc = array_filter(explode(",", $request->skills));
+
+        $all_skills = [];
+
+        // Processing skills. This basically creates an array where a user's skill is mapped to their level
+        foreach ($all_skills_unproc as $skill) {
+            $skill_attr = explode(":", $skill);
+
+            $skill_name = $skill_attr[0];
+            $skill_level = $skill_attr[1];
+
+            $all_skills[$skill_name] = $skill_level;
+        }
+
+
+        foreach ($all_skills as $skill_name=>$skill_level) {
+            $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
+
+            $skill_user = SkillsUser::create([
+                'user_id' => auth()->id(),
+                'skill_id' => $skill_id,
+                'skill_level' => $skill_level,
+            ]);
+        }
+
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", $request->qualifications));
+
+        foreach ($all_quals as $qual_name) {
+            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name)->first()->qualification_id;
+
+            $qual_user = QualificationsUser::create([
+                'user_id' => auth()->id(),
+                'qualification_id' => $qual_id,
+                // Date picker here?
+                'date_obtained' => Carbon::now(),
+            ]);
+        } 
 
         $request->user()->update($formFields);
 
