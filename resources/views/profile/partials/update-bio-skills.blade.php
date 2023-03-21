@@ -14,9 +14,8 @@
         @method('patch')
 
         <div>
-            <x-input-label for="bio" :value="__('Bio')" />
-            <x-text-input id="bio" name="bio" type="text" class="mt-1 block w-full h-max" :value="old('bio', $user->bio)"
-                required autofocus autocomplete="bio" />
+            <x-input-label for="bio">Profile Bio</x-input-label>
+            <textarea name="bio" id="bio" rows="6" type="text" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" required autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
 
@@ -81,8 +80,8 @@
             </div>
 
             <div class="flex flex-col items-center">
-                <x-primary-button class="w-max" onclick="addSkill()" type="button">Add Skill
-                </x-primary-button>
+                <x-secondary-button class="w-max" onclick="addSkill()" type="button">Add Skill
+                </x-secondary-button>
             </div>
         </div>
 
@@ -114,10 +113,10 @@
         <div class="flex items-center gap-4 justify-end">
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
+                    class="text-sm text-gray-600">{{ __('Updated.') }}</p>
             @endif
 
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ __('Update') }}</x-primary-button>
         </div>
     </form>
 </section>

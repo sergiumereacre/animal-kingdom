@@ -2,6 +2,7 @@
 
 @php
     $current_user = App\Models\User::find(auth()->id());
+    $skills = App\Models\SkillsUser::all()->where('user_id', $user->id);
 @endphp
 
 <x-card-base class="md:flex md:flex-row md:max-w-xl">
@@ -28,10 +29,6 @@
         </div>
         <!-- User Skills -->
         <div class="flex flex-row justify-center md:justify-start gap-2 flex-wrap pb-5">
-            @php
-                $skills = App\Models\SkillsUser::all()->where('user_id', $user->id);
-            @endphp
-
             @php
                 $iteration = 0;
             @endphp
