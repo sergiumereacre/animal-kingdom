@@ -61,7 +61,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link href='/users/{{auth()->id()}}'>
+                            <x-dropdown-link href="{{route('home')}}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 

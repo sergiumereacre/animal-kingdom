@@ -28,9 +28,12 @@
         </div>
         <!--Connect Button-->
         <div class="pb-5 flex flex-col items-center md:items-end">
+            
+            {{-- Make sure that the current user can't ban themselves!! --}}
             @if ($user->id != $current_user->id)
-                {{-- @if ($current_user->is_admin) --}}
-                @if ($current_user->is_admin)
+            
+            {{-- Only show these buttons if the current user is an admin and the selected user isn't --}}
+                @if ($current_user->is_admin && !$user->is_admin)
                     @if (!$user->is_banned)
                         <form method="POST" action="/users/{{ $user->id }}/toggleBan">
                             @csrf
@@ -54,8 +57,6 @@
                         <x-remove-button><span class="material-symbols-rounded">delete</span></x-remove-button>
 
                     </form>
-
-
                 @endif
 
                 <x-primary-button>
