@@ -102,6 +102,15 @@
                 @else
                     <x-qualification>None</x-qualification>
                 @endif
+
+                @php
+                    $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
+                @endphp
+
+                <!-- Check if the owner owns this organisation dont show apply button.-->
+                {{-- @if ($organisation->owner_id != auth()->id()) --}}
+
+
             </div>
         </div>
         <!-- Remove and Apply Buttons -->
@@ -116,17 +125,43 @@
                         Remove
                     </x-remove-button>
                 </form>
-            @endif
+                {{-- @endif --}}
 
-            <!-- Check if the owner owns this organisation dont show apply button.-->
-            @if ($organisation->owner_id != auth() -> id())
-                <x-primary-button class="flex gap-1">
+                <!-- Check if the owner owns this organisation dont show apply button.-->
+                {{-- @if ($organisation->owner_id != auth()->id()) --}}
+                {{-- <x-primary-button class="flex gap-1">
                     <span class="material-symbols-rounded">
                         handshake
                     </span>
                     Apply
-                </x-primary-button>
+                </x-primary-button> --}}
             @endif
+
+            @if ($user_vacancy)
+                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
+                    @csrf
+                    @method('PUT')
+                    <x-primary-button class="flex gap-1">
+                        <span class="material-symbols-rounded">
+                            handshake
+                        </span>
+                        Unapply
+                    </x-primary-button>
+                </form>
+            @else
+                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
+                    @csrf
+                    @method('PUT')
+
+                    <x-primary-button class="flex gap-1">
+                        <span class="material-symbols-rounded">
+                            handshake
+                        </span>
+                        Apply
+                    </x-primary-button>
+                </form>
+            @endif
+
         </div>
     </div>
 </x-card-base>

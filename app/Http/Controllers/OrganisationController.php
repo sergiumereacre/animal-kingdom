@@ -66,7 +66,7 @@ class OrganisationController extends Controller
 
         Organisation::create($formFields);
 
-        return redirect('/home');
+        return redirect()->route('home');
 
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
@@ -98,7 +98,7 @@ class OrganisationController extends Controller
 
         $organisation->delete();
         // return redirect('/users/'.auth()->id());
-        return redirect('home');
+        return redirect()->route('home');
     }
 
 
