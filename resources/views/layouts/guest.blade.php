@@ -19,9 +19,9 @@
             <div class="lg:flex lg:flex-row lg:items-center">
                 <div class="justify-center px-6">
                     <!-- The welcome message.-->
-                    <div>
-                        <p class="mt-4 font-thin text-4xl lg:text-6xl">Welcome to</p>
-                        <p class="font-black text-5xl lg:text-6xl">Animal Kingdom</p>
+                    <div class="flex flex-col items-center justify-center">
+                        <p class="mt-4 font-thin text-4xl lg:text-6xl text-center">Welcome to</p>
+                        <p class="font-black text-5xl lg:text-6xl text-center">Animal Kingdom</p>
                     </div>
                 
                     <!-- Any content here.-->

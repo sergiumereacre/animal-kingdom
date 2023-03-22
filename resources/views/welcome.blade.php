@@ -16,11 +16,11 @@
     </head>
     <body class="antialiased">
         <div class="bg-appBackground flex flex-col items-center justify-center py-10 min-h-screen">
-            <div class="flex flex-col items-center p-10 z-10">
-                <div class="text-5xl font-medium md:text-6xl">
+            <div class="flex flex-col items-center justify-center p-10 z-10">
+                <div class="text-5xl font-medium md:text-6xl text-center">
                     <p>Welcome to</p>
                 </div>
-                <div class="text-6xl font-bold text-greenButtons md:text-7xl">
+                <div class="flex items-center justify-center text-center text-6xl font-bold text-greenButtons md:text-7xl">
                     <h1>Animal Kingdom</h1>
                 </div>
             </div>
