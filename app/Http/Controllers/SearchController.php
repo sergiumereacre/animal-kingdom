@@ -43,12 +43,6 @@ class SearchController extends Controller
             $this->sortResults($vacancyResults, $searchTerms);
             $vacancyResults = $this->replaceVacancies($vacancyResults);
         }
-
-        //debug, pls remove
-        //print($results);
-        //print_r($results);
-
-        //sort results
         
         return view('search.index', ['users' => $userResults, 'organisations' => $organisationResults,'vacancies' => $vacancyResults]);
     }
@@ -71,7 +65,9 @@ class SearchController extends Controller
 
     private function getOrganisations($searchTerms)
     {
-
+        return DB::table('organisations')
+        ->selectRaw('organisations.organisation_id, CONCAT_WS(\' \', organisations.organisation_name, organisations.description, organisations.address) AS merged')
+        ->get();
     }
 
     private function getVacancies($searchTerms)
@@ -99,7 +95,16 @@ class SearchController extends Controller
 
     private function replaceOrganisations($organisationResults)
     {
-
+        $output = array();
+        $organisationResults = $organisationResults->reverse();
+        foreach($organisationResults as $organisation)
+        {
+            $output[] = DB::table('organisation')
+            ->select('*')
+            ->where('organisation.organisation_id', '=', $organisation->organisation_id)
+            ->get()[0];
+        }
+        return $output;
     }
 
     private function replaceVacancies($vacancyResults)
