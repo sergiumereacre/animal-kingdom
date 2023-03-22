@@ -12,7 +12,7 @@ use App\Models\UsersVacancy;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-function checkEligibility(User $user, Vacancy $vacancy)
+function checkEligibility(User $user, $vacancy)
 {
     $organisation = Organisation::find($vacancy->organisation_id);
     $user = auth()->user();

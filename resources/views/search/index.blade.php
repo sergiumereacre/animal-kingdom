@@ -196,6 +196,7 @@
                             @break
                         @endif
                         @php
+                        // dd($vacancy);
                             $organisation = App\Models\Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id)->first();
                         @endphp
                         <x-vacancy :vacancy="$vacancy" :organisation="$organisation" />
