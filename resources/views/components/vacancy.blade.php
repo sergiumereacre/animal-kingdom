@@ -86,24 +86,39 @@
                     <x-qualification>None</x-qualification>
                 @endif
 
-            </div>
-            <!-- Remove and Apply Buttons -->
-            <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
-                @if ($organisation->owner_id == auth()->id())
-                    <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
+            @php
+                $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
+            @endphp
+
+            <!-- Check if the owner owns this organisation dont show apply button.-->
+            @if ($organisation->owner_id != auth()->id())
+
+
+                @if ($user_vacancy)
+                    <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/toggleApply">
                         @csrf
-                        @method('DELETE')
-                        {{-- <button>Delete Vacancy</button> --}}
-                        <x-remove-button>
-                            Remove
-                        </x-remove-button>
+                        @method('PUT')
+                        <x-primary-button class="flex gap-1">
+                            <span class="material-symbols-rounded">
+                                handshake
+                            </span>
+                            Apply
+                        </x-primary-button>
+                    </form>
+                @else
+                    <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/toggleApply">
+                        @csrf
+                        @method('PUT')
+
+                        <x-primary-button class="flex gap-1">
+                            <span class="material-symbols-rounded">
+                                handshake
+                            </span>
+                            Apply
+                        </x-primary-button>
                     </form>
                 @endif
-
-                <x-primary-button>
-                    Apply
-                </x-primary-button>
-            </div>
+            @endif
         </div>
     </div>
 </x-card-base>
