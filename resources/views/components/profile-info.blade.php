@@ -60,6 +60,12 @@
                             </span>{{ __('Connect') }}</x-primary-button>
                     </form>
                 @endif
+            @else
+                <a href="/profile/edit">
+                    <x-secondary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
+                            edit
+                        </span>{{ __('Edit Profile') }}</x-secondary-button>
+                </a>
             @endif
         </div>
         <!-- Profile info section -->
