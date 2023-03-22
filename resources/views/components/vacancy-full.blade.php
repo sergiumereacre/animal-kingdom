@@ -259,7 +259,11 @@
 
         <!-- Remove and Apply Buttons -->
         <div class="flex flex-row items-center justify-center pb-4 gap-3 md:justify-end md:mr-5">
+         @php
+                $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
+            @endphp
             @if ($organisation->owner_id == auth()->id())
+             
                 <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
                     @csrf
                     @method('DELETE')
@@ -268,9 +272,10 @@
                         Remove
                     </x-remove-button>
                 </form>
-            @else
+                @else
                 @php
                     $is_eligible = checkEligibility(auth()->user(), $vacancy);
+                    // dd($is_eligible);
                 @endphp
 
                 @if ($is_eligible)
@@ -299,14 +304,17 @@
                         </form>
                     @endif
                 @else
-                <x-primary-button class="flex gap-1 disabled bg-slate-600 hover:bg-slate-800 focus:bg-slate-900 focus:ring-slate-600">
+                               <x-primary-button class="flex gap-1 disabled bg-slate-600 hover:bg-slate-800 focus:bg-slate-900 focus:ring-slate-600">
                     <span class="material-symbols-rounded">
                         heart_broken
                     </span>
                     Not Eligible
                 </x-primary-button>
                 @endif
+
+
             @endif
+
         </div>
     </div>
 </x-card-base>

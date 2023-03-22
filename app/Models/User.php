@@ -90,4 +90,8 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'connections', 'id', 'first_user_id');
         // User::all()->where()
     }
+
+    public function scopeCategory($query){
+        
+    }
 }
