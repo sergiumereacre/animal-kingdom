@@ -135,42 +135,44 @@
                     </span>
                     Apply
                 </x-primary-button> --}}
-            @endif
+            @else
+                @php
+                    $is_eligible = checkEligibility(auth()->user(), $vacancy);
+                    // dd($is_eligible);
+                @endphp
 
-
-            @php
-                $is_eligible = checkEligibility(auth()->user(), $vacancy);
-                // dd($is_eligible);
-            @endphp
-
-            @if ($is_eligible)
-                @if ($user_vacancy)
-                    <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
-                        @csrf
-                        @method('PUT')
-                        <x-primary-button class="flex gap-1">
-                            <span class="material-symbols-rounded">
-                                handshake
-                            </span>
-                            Unapply
-                        </x-primary-button>
-                    </form>
-                @else
-                    <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
-                        @csrf
-                        @method('PUT')
-
-                        <x-primary-button class="flex gap-1">
-                            <span class="material-symbols-rounded">
-                                handshake
-                            </span>
-                            Apply
-                        </x-primary-button>
-                    </form>
-                @endif
+                @if ($is_eligible)
+                    @if ($user_vacancy)
+                        <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
+                            @csrf
+                            @method('PUT')
+                            <x-primary-button class="flex gap-1">
+                                <span class="material-symbols-rounded">
+                                    handshake
+                                </span>
+                                Unapply
+                            </x-primary-button>
+                        </form>
                     @else
+                        <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
+                            @csrf
+                            @method('PUT')
+
+                            <x-primary-button class="flex gap-1">
+                                <span class="material-symbols-rounded">
+                                    handshake
+                                </span>
+                                Apply
+                            </x-primary-button>
+                        </form>
+                    @endif
+                @else
                     <p>Not eligible for this vacancy.</p>
+                @endif
+
+
             @endif
+
 
 
         </div>
