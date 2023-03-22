@@ -1,47 +1,312 @@
+@props(['vacancy', 'organisation'])
+
+@php
+    $no_matter = "Doesn't matter";
+@endphp
+
 <x-card-base>
     <!-- Company Logo And Name -->
     <div class="flex flex-col items-center py-5 md:px-5 md:pt-5">
-        <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{ asset('img/logo.png')}}" alt="Company Logo"/>
-        <span class="text-sm text-black">Company Name that is actually very long</span>
+        <img class="w-36 h-36 mb-3 rounded-full shadow-lg"
+            src="{{ $organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png') }}"
+            alt="Company Logo" />
+        <span class="text-sm text-black"><a
+                href="/organisations/{{ $vacancy->organisation_id }}">{{ $organisation->organisation_name }}</a></span>
     </div>
     <!-- Main Section -->
     <div>
         <!-- Job Title -->
         <div class="flex flex-col items-center md:flex-row">
-            <h1 class="font-bold text-2xl md:mx-auto">Job Title</h1>
+            <h1 class="font-bold text-2xl md:mx-auto">{{ $vacancy->vacancy_title }}</h1>
         </div>
         <!-- Salary Range -->
         <div class="px-5 py-5 flex flex-col md:flex-row items-center md:py-0">
             <p class="font-medium text-black md:p-5 md:w-44">Salary Range:</p>
-            <p class="font-bold text-greenButtons">$49,000- $56,000</p>
+            <p class="font-bold text-greenButtons">${{ $vacancy->salary_range_lower }} -
+                ${{ $vacancy->salary_range_upper }}</p>
         </div>
         <!-- Job Description -->
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Job Description:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus interdum augue efficitur, auctor massa sit amet, efficitur tortor. Phasellus a odio fringilla, varius nisl non, condimentum purus. Donec sed nisl dictum, cursus dolor sit amet, mollis magna. Pellentesque blandit augue eget tellus gravida, rhoncus volutpat justo congue. Sed mollis auctor malesuada. Aenean ac tempus mauris, nec condimentum tortor. Pellentesque mauris ligula, aliquet sit amet iaculis at, efficitur eu enim. Duis posuere neque quis eros accumsan, vitae pulvinar ex mattis. Quisque mattis dictum nisl vitae elementum. Vivamus ac nibh eleifend eros elementum commodo a id orci. Nam id gravida ex, ut cursus ante. Aenean aliquet, nulla et luctus tempor, ligula augue egestas odio, ac volutpat ligula ex sed mi. Morbi vitae bibendum massa, sit amet aliquet orci.</p>
+            <p class="md:px-0 md:w-500 text-sm text-gray-700">
+                @if ($vacancy->vacancy_description == '')
+                    None
+                @endif
+                {{ $vacancy->vacancy_description }}
+            </p>
         </div>
+
+        <!-- Lots of questions -->
+        <div class="grid md:grid-cols-2 gap-5 pb-5">
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Time Created:</p>
+                <p class="md:px-0 text-sm text-gray-700">{{ $vacancy->time_created }}</p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Category Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->category_requirement;
+                        
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Fly?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->can_fly_requirement;
+                        
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Swim?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->can_swim_requirement;
+                        
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Climb?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->can_climb_requirement;
+                        
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Produce Toxins?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->produces_toxins_requirement;
+                        
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Eating Style Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->eating_style_requirement;
+                        
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Size Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->size_requirement;
+                        
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Speed Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->speed_requirement;
+                        
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44 text-center md:text-left">How Many Appendages Should
+                    Applicants Have?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->num_appendages_requirement;
+                        
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+        </div>
+
         <!-- Skills Needed and Buttons -->
-        <div class="pb-5 px-5 flex flex-col items-center md:flex-row">
+        <div class="pb-5 px-5 flex flex-col items-center md:flex-row md:flex-wrap">
             <div class="flex items-center pb-5 gap-3 md:gap-0 flex-row md:pb-0">
+
+                @php
+                    $skills = App\Models\Skill::all()->whereIn(
+                        'skill_id',
+                        Illuminate\Support\Facades\DB::table('skills_vacancies')
+                            ->where('vacancy_id', '=', $vacancy->vacancy_id)
+                            ->pluck('skill_id'),
+                    );
+                    
+                    $quals = App\Models\Qualification::all()->whereIn(
+                        'qualification_id',
+                        Illuminate\Support\Facades\DB::table('qualifications_vacancies')
+                            ->where('vacancy_id', '=', $vacancy->vacancy_id)
+                            ->pluck('qualification_id'),
+                    );
+                @endphp
+
                 <p class="font-medium text-black md:p-5 md:w-44">Skills Needed: </p>
                 <!-- Automated Skills List -->
                 <div class="flex gap-3 text-xs">
-                    <x-skill>Skill1</x-skill>
-                    <x-skill>Skill2</x-skill>
-                    <x-skill>...</x-skill>
-                    <x-skill class="hidden">Skill3</x-skill>
-                    <x-skill class="hidden">Skill3</x-skill>
+                    @if (count($skills) != 0)
+                        @foreach ($skills as $skill)
+                            @php
+                                // dd($skill);
+                                $skill_level = App\Models\SkillsVacancy::all()
+                                    ->whereIn(
+                                        'skills_vacancies_id',
+                                        Illuminate\Support\Facades\DB::table('skills_vacancies')
+                                            ->where('skill_id', '=', $skill->skill_id)
+                                            ->pluck('skills_vacancies_id'),
+                                    )
+                                    ->first()->skill_level;
+                            @endphp
+
+                            @if ($skill_level == 'BEGINNER')
+                                <x-skill style="background-color: rgb(231, 255, 231)">{{ $skill->skill_name }}</x-skill>
+                            @endif
+
+                            @if ($skill_level == 'INTERMEDIATE')
+                                <x-skill style="background-color: rgb(224, 205, 255)">{{ $skill->skill_name }}</x-skill>
+                            @endif
+
+                            @if ($skill_level == 'EXPERT')
+                                <x-skill style="background-color: rgb(255, 207, 207)">{{ $skill->skill_name }}
+                                </x-skill>
+                            @endif
+                        @endforeach
+                    @else
+                        <x-skill>None</x-skill>
+                    @endif
                 </div>
             </div>
-            <!-- Remove and Apply Buttons -->
-            <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
-                <x-remove-button>
-                    Remove
-                </x-remove-button>
-                <x-primary-button>
-                    Apply
-                </x-primary-button>
+
+            <div class="flex items-center pb-5 gap-3 md:gap-0 flex-row md:pb-0">
+                <p class="font-medium text-black md:p-5 md:w-44">Qualifications Needed: </p>
+                <div class="flex gap-3 text-xs">
+                    @if (count($quals) != 0)
+                        @foreach ($quals as $qual)
+                            <x-qualification>{{ $qual->qualification_name }}</x-qualification>
+                        @endforeach
+                    @else
+                        <x-qualification>None</x-qualification>
+                    @endif
+                </div>
             </div>
+        </div>
+
+        <!-- Remove and Apply Buttons -->
+        <div class="flex flex-row items-center justify-center pb-4 gap-3 md:justify-end md:mr-5">
+            @if ($organisation->owner_id == auth()->id())
+                <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    {{-- <button>Delete Vacancy</button> --}}
+                    <x-remove-button>
+                        <span class="material-symbols-rounded">delete_forever</span>
+                        Remove
+                    </x-remove-button>
+                </form>
+            @endif
+
+            @php
+                $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
+            @endphp
+
+            @if ($user_vacancy)
+                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
+                    @csrf
+                    @method('PUT')
+                    <x-primary-button class="flex gap-1">
+                        <span class="material-symbols-rounded">
+                            handshake
+                        </span>
+                        Unapply
+                    </x-primary-button>
+                </form>
+            @else
+                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
+                    @csrf
+                    @method('PUT')
+
+                    <x-primary-button class="flex gap-1">
+                        <span class="material-symbols-rounded">
+                            handshake
+                        </span>
+                        Apply
+                    </x-primary-button>
+                </form>
+            @endif
+
+
+            {{-- <x-primary-button class="flex gap-1">
+                <span class="material-symbols-rounded">
+                    handshake
+                </span>
+                Apply
+            </x-primary-button> --}}
         </div>
     </div>
 </x-card-base>

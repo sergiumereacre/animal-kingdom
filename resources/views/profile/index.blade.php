@@ -4,5 +4,7 @@
             <x-user-card :user="$user"/>
         @endforeach
     </div>
-
+    <div class="p-10">
+        {{$users->links()}}
+    </div>
 </x-app-layout>

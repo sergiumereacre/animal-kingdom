@@ -11,6 +11,7 @@ class UsersVacancy extends Model
     use HasFactory;
 
     protected $primaryKey = 'users_vacancies_id';
+    public $timestamps = false;
 
 
     /**

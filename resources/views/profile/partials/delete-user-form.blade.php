@@ -10,10 +10,10 @@
     </header>
 
     <div class="flex justify-end">
-        <x-remove-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-remove-button>
+        <x-remove-button x-data="" x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')" class="flex flex-row gap-1">
+            <span class="material-symbols-rounded">
+                delete
+            </span>{{ __('Delete Account') }}</x-remove-button>
     </div>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
@@ -32,23 +32,24 @@
             <div class="mt-6">
                 <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
 
-                <x-text-input
-                    id="password"
-                    name="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    placeholder="{{ __('Password') }}"
-                />
+                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
+                    placeholder="{{ __('Password') }}" />
 
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
             <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
+                <x-secondary-button x-on:click="$dispatch('close')" class="flex flex-row gap-1">
+                    <span class="material-symbols-rounded">
+                        close
+                        </span>
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-remove-button class="ml-3">
+                <x-remove-button class="ml-3 flex flex-row gap-2">
+                    <span class="material-symbols-rounded">
+                        delete
+                    </span>
                     {{ __('Delete Account') }}
                 </x-remove-button>
             </div>

@@ -1,3 +1,5 @@
 <x-app-layout>
-    This page will show individual vacancies
+    <div class="flex justify-center py-10">
+        <x-vacancy-full :vacancy="$vacancy" :organisation="$organisation"></x-vacancy-full>
+    </div>
 </x-app-layout>
