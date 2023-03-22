@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VacancyController;
 use App\Models\AnimalSpecies;
 use App\Models\Vacancy;
@@ -153,3 +154,9 @@ Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show
 Route::get('/settings', function () {
     return view('settings');
 })->name('settings')->middleware('auth');
+
+// ========== SEARCH ==========
+
+Route::get('/search', [SearchController::class, 'query'])->name('search');
+
+// ========== SEARCH ==========

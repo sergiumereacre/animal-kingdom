@@ -26,6 +26,7 @@ class VacancyController extends Controller
         return view('vacancies.index', [
             'vacancies' => Vacancy::paginate(8),
         ]);
+
     }
 
     // Showing individual vacancy

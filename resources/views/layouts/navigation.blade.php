@@ -38,6 +38,7 @@
                             </div>
                         </x-slot>
                     </x-search-dropdown>
+
                     <div class="relative hidden md:block md:pl-5">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 md:pl-8 pointer-events-none">
                             <svg class="w-5 h-5 text-greenButtons" aria-hidden="true" fill="currentColor"
@@ -48,10 +49,13 @@
                             </svg>
                             <span class="sr-only">Search icon</span>
                         </div>
-                        <input type="text" id="search-navbar"
-                            class="placeholder-greenButtons block w-80 px-2 pl-11 font-medium text-sm text-greenButtons rounded-xl bg-appBackground border-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Search">
+                        <form method="GET" action="{{route('search')}}">
+                            <input type="text" name="search" id="search-navbar" class="placeholder-greenButtons block w-80 px-2 pl-11 font-medium text-sm text-greenButtons rounded-xl bg-appBackground border-none focus:ring-green-500 focus:border-green-500" placeholder="Search"/>
+                            <button type="submit" class="material-symbols-rounded text-greenButtons text-3xl"></button>
+                        </form>
                     </div>
+
+
                 </div>
             </div>
 
