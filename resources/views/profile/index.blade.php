@@ -258,7 +258,7 @@
                     final_query.href += "speed=" + speed.value + "&";
                 }
 
-                var fly = document.getElementById("num_appendages_requirement");
+                var num_appendages = document.getElementById("num_appendages_requirement");
                 if (num_appendages.value != "NULL"){
                     final_query.href += "num_appendages=" + num_appendages.value + "&";
                 }

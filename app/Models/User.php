@@ -106,10 +106,135 @@ class User extends Authenticatable
         }
     }
 
-    public function scopeCanFly($query, $fly_req)
+    public function scopeCanFly($query, $can_fly)
     {
-        if ($fly_req ?? false) {
-            $query->where('can_fly', '=', request('can_fly'));
+        // dd($query->getQuery()->joins);
+
+        if ($can_fly ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('can_fly', '=', request('can_fly'));
+                });
+            } else {
+                $query->where('can_fly', '=', request('can_fly'));
+            }
         }
     }
+
+    public function scopeCanSwim($query, $can_swim)
+    {
+
+        if ($can_swim ?? false) {
+            // dd((int) request('can_swim'));
+
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('can_swim', '=', (int) request('can_swim'));
+                });
+            } else {
+                $query->where('can_swim', '=', (int) request('can_swim'));
+            }
+        }
+    }
+
+    public function scopeCanClimb($query, $can_climb)
+    {
+        if ($can_climb ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('can_climb', '=', request('can_climb'));
+                });
+            } else {
+                $query->where('can_climb', '=', request('can_climb'));
+            }
+        }
+    }
+
+    public function scopeEatingStyle($query, $eating_style)
+    {
+        if ($eating_style ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('eating_style', '=', request('eating_style'));
+                });
+            } else {
+                $query->where('eating_style', '=', request('eating_style'));
+            }
+        }
+    }
+
+    public function scopeProducesToxins($query, $produces_toxins)
+    {
+        if ($produces_toxins ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('produces_toxins', '=', request('produces_toxins'));
+                });
+            } else {
+                $query->where('produces_toxins', '=', request('produces_toxins'));
+            }
+        }
+    }
+
+    public function scopeSize($query, $size)
+    {
+        if ($size ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('size', '=', request('size'));
+                });
+            } else {
+                $query->where('size', '=', request('size'));
+            }
+        }
+    }
+
+    public function scopeSpeed($query, $speed)
+    {
+        if ($speed ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('speed', '=', request('speed'));
+                });
+            } else {
+                $query->where('speed', '=', request('speed'));
+            }
+        }
+    }
+
+    public function scopeNumAppendages($query, $num_appendages)
+    {
+        if ($num_appendages ?? false) {
+            if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+                $query->join('animal_species', function ($join) {
+                    $join->on('users.species_id', '=', 'animal_species.species_id')
+                        ->where('num_appendages', '=', request('num_appendages'));
+                });
+            } else {
+                $query->where('num_appendages', '=', request('num_appendages'));
+            }
+        }
+    }
+
+    // public function scopeAnimalTraits($query, array $filters){
+    //     foreach ($filters as $trait) {
+    //         if ($trait ?? false) {
+    //             if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+    //                 $query->join('animal_species', function ($join) {
+    //                     $join->on('users.species_id', '=', 'animal_species.species_id')
+    //                         ->where('num_appendages', '=', request('num_appendages'));
+    //                 });
+    //             } else {
+    //                 $query->where('num_appendages', '=', request('num_appendages'));
+    //             }
+    //         }
+    //     }
+    // }
 }
