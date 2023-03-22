@@ -1,55 +1,54 @@
 
 <x-app-layout>
     
-    <h1> users! </h1>
+    @if(isset($users))
+    <h1> Users </h1>
     <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
-        @if(isset($users))
-            @unless(count($users) == 0)
-                @foreach($users as $count => $user)
-                    @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
-                        @break
-                    @endif
-                    <x-user-card :user="$user"/>
-                @endforeach
-            @else
-                <p>No users found</p>
-            @endunless
-        @endif
+        @unless(count($users) == 0)
+            @foreach($users as $count => $user)
+                @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
+                    @break
+                @endif
+                <x-user-card :user="$user"/>
+            @endforeach
+        @else
+            <p>No users found</p>
+        @endunless
     </div>
-    <a href="{{route('users.index')}}">View more users</a>
+    <a href="">View more users</a>
+    @endif
 
-    <h1> orgs! </h1>
+    @if(isset($organisations))
+    <h1> Organisations </h1>
     <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
-        @if(isset($organisations))
-            @unless(count($organisations) == 0)
-                @foreach($organisations as $count => $organisation)
-                    @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
-                        @break
-                    @endif
-                    <x-company-full :organisation="$organisation"></x-company-full>
-                @endforeach
-            @else
-                <p>No organisations found</p>
-            @endunless
-        @endif
+        @unless(count($organisations) == 0)
+            @foreach($organisations as $count => $organisation)
+                @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
+                    @break
+                @endif
+                <x-company-full :organisation="$organisation"></x-company-full>
+            @endforeach
+        @else
+            <p>No organisations found</p>
+        @endunless
     </div>
-    <a href="/organisations">View more organisations</a>
+    <a href="">View more organisations</a>
+    @endif
 
-    <h1> vacancies! </h1>
+    @if(isset($vacancies))
+    <h1> Vacancies </h1>
     <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
-        @if(isset($vacancies))
-            @unless(count($vacancies) == 0)
-                @foreach($vacancies as $count => $vacancy)
-                    @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
-                        @break
-                    @endif
-                    <x-vacancy :vacancy="$vacancy"></x-vacancy>
-                @endforeach
-            @else
-                <p>No users found</p>
-            @endunless
-        @endif
+        @unless(count($vacancies) == 0)
+            @foreach($vacancies as $count => $vacancy)
+                @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
+                    @break
+                @endif
+                <x-vacancy :vacancy="$vacancy"></x-vacancy>
+            @endforeach
+        @else
+            <p>No users found</p>
+        @endunless
     </div>
-    <a href="/vacancies">View more vacancies</a>
-</div>
+    <a href="">View more vacancies</a>
+    @endif
 </x-app-layout>

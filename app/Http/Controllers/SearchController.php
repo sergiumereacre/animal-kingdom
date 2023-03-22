@@ -18,7 +18,6 @@ class SearchController extends Controller
     public function query(Request $request)
     {
         //TODO: validate $request
-        //TODO: extend search to work on users and organisations
         //TODO: extend search to have toggleable skills
 
         $searchString = $request->input('search');

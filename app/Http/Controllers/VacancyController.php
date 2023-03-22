@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
-    public function index(){
-        return;
+    public function index(Request $request) {
+        return view('vacancies.index');
     }
 
     // Showing individual vacancy
