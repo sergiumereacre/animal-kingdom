@@ -47,7 +47,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->category_requirement;
-            
+                        
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -61,7 +61,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->can_fly_requirement;
-            
+                        
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -79,7 +79,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->can_swim_requirement;
-            
+                        
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -97,7 +97,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->can_climb_requirement;
-            
+                        
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -115,7 +115,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->produces_toxins_requirement;
-            
+                        
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -133,7 +133,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->eating_style_requirement;
-            
+                        
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -147,7 +147,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->size_requirement;
-            
+                        
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -161,7 +161,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->speed_requirement;
-            
+                        
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -171,11 +171,12 @@
                 </p>
             </div>
             <div class="px-5 flex flex-col md:flex-row items-center">
-                <p class="font-medium text-black md:p-5 md:w-44 text-center md:text-left">How Many Appendages Should Applicants Have?</p>
+                <p class="font-medium text-black md:p-5 md:w-44 text-center md:text-left">How Many Appendages Should
+                    Applicants Have?</p>
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->num_appendages_requirement;
-            
+                        
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -270,12 +271,42 @@
                 </form>
             @endif
 
-            <x-primary-button class="flex gap-1">
+            @php
+                $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
+            @endphp
+
+            @if ($user_vacancy)
+                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
+                    @csrf
+                    @method('PUT')
+                    <x-primary-button class="flex gap-1">
+                        <span class="material-symbols-rounded">
+                            handshake
+                        </span>
+                        Unapply
+                    </x-primary-button>
+                </form>
+            @else
+                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
+                    @csrf
+                    @method('PUT')
+
+                    <x-primary-button class="flex gap-1">
+                        <span class="material-symbols-rounded">
+                            handshake
+                        </span>
+                        Apply
+                    </x-primary-button>
+                </form>
+            @endif
+
+
+            {{-- <x-primary-button class="flex gap-1">
                 <span class="material-symbols-rounded">
                     handshake
                 </span>
                 Apply
-            </x-primary-button>
+            </x-primary-button> --}}
         </div>
     </div>
 </x-card-base>

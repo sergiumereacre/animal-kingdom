@@ -8,6 +8,7 @@ use App\Models\Qualification;
 use App\Models\QualificationsUser;
 use App\Models\QualificationsVacancy;
 use App\Models\Skill;
+use App\Models\SkillsUser;
 use App\Models\SkillsVacancy;
 use App\Models\UsersVacancy;
 use App\Models\Vacancy;
@@ -20,7 +21,7 @@ class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
     public function index()
-    {   
+    {
         // return vacancies inlcuding their respective organisations
         return view('vacancies.index', [
             'vacancies' => Vacancy::paginate(8),
@@ -267,44 +268,82 @@ class VacancyController extends Controller
             $eligible = false;
         }
 
-        if(!$eligible){
+        if (!$eligible) {
             return redirect()->back();
         }
 
-        $user_skills = 0;
-        $vacancy_skills = 0;
+        $user_skills = SkillsUser::all()->where('user_id', '=', $user->id);
+        $vacancy_skills = SkillsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
 
-        // Checking for qualifications
-        $user_quals = QualificationsUser::all()->where('user_id', '=', $user->id);
-        $vacancy_quals = QualificationsVacancy::all()->where('vacancy_id', '=', $vacancy->id);
+        // dd($vacancy_skills);
 
-        $eligible = false;
+        if (count($vacancy_skills) == 0) {
+            $eligible = true;
+        } else {
 
-        foreach ($vacancy_quals as $vacancy_qual) {
-            foreach ($user_quals as $user_qual) {
-                if($vacancy_qual->qualification_id == $vacancy_qual->qualification_id){
-                    $eligible = true;
+            foreach ($vacancy_skills as $vacancy_skill) {
+                $eligible = false;
+
+                foreach ($user_skills as $user_skill) {
+                    if (!$vacancy_skill->skill_level || $vacancy_skill->skill_id == $user_skill->skill_id) {
+                        $eligible = true;
+                        break;
+                    }
                 }
             }
         }
+
+
+        // dd($eligible);
+
+        // Checking for qualifications
+        $user_quals = QualificationsUser::all()->where('user_id', '=', $user->id);
+        $vacancy_quals = QualificationsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+
+
+        if (count($vacancy_quals) == 0) {
+        } else {
+
+
+            foreach ($vacancy_quals as $vacancy_qual) {
+                $eligible = false;
+                foreach ($user_quals as $user_qual) {
+                    if ($vacancy_qual->qualification_id == $user_qual->qualification_id) {
+                        $eligible = true;
+                        break;
+                    }
+                }
+            }
+        }
+
 
         // Do a check to see if user is eligible here?
         // if (true) {
         //     abort(403, 'Unauthorized Action, you\'re not the owner!!');
         // }
 
-        if($eligible){
+        if ($eligible) {
             $formFields['user_id'] = auth()->id();
             $formFields['vacancy_id'] = $vacancy->vacancy_id;
             $formFields['time_joined'] = Carbon::now();
-    
-    
-            UsersVacancy::create($formFields);    
+
+
+            UsersVacancy::create($formFields);
         }
 
 
         // return redirect('/organisations/' . $organisation->organisation_id);
         return redirect()->back();
+    }
 
+    public function unapply(Vacancy $vacancy)
+    {
+        $uservacancy = UsersVacancy::all()->where('user_id', '=', auth()->id())->first();
+
+        if ($uservacancy) {
+            $uservacancy->delete();
+        }
+
+        return redirect()->back();
     }
 }
