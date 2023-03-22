@@ -167,7 +167,12 @@
                         </form>
                     @endif
                 @else
-                    <p>Not eligible for this vacancy.</p>
+                <x-primary-button class="flex gap-1 disabled bg-slate-600 hover:bg-slate-800 focus:bg-slate-900 focus:ring-slate-600">
+                    <span class="material-symbols-rounded">
+                        heart_broken
+                    </span>
+                    Not Eligible
+                </x-primary-button>
                 @endif
 
 

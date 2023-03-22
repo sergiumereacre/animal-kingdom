@@ -263,50 +263,50 @@
                 <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
                     @csrf
                     @method('DELETE')
-                    {{-- <button>Delete Vacancy</button> --}}
                     <x-remove-button>
                         <span class="material-symbols-rounded">delete_forever</span>
                         Remove
                     </x-remove-button>
                 </form>
-            @endif
-
-            @php
-                $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
-            @endphp
-
-            @if ($user_vacancy)
-                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
-                    @csrf
-                    @method('PUT')
-                    <x-primary-button class="flex gap-1">
-                        <span class="material-symbols-rounded">
-                            handshake
-                        </span>
-                        Unapply
-                    </x-primary-button>
-                </form>
             @else
-                <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
-                    @csrf
-                    @method('PUT')
+                @php
+                    $is_eligible = checkEligibility(auth()->user(), $vacancy);
+                @endphp
 
-                    <x-primary-button class="flex gap-1">
-                        <span class="material-symbols-rounded">
-                            handshake
-                        </span>
-                        Apply
-                    </x-primary-button>
-                </form>
+                @if ($is_eligible)
+                    @if ($user_vacancy)
+                        <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
+                            @csrf
+                            @method('PUT')
+                            <x-primary-button class="flex gap-1">
+                                <span class="material-symbols-rounded">
+                                    handshake
+                                </span>
+                                Unapply
+                            </x-primary-button>
+                        </form>
+                    @else
+                        <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
+                            @csrf
+                            @method('PUT')
+
+                            <x-primary-button class="flex gap-1">
+                                <span class="material-symbols-rounded">
+                                    handshake
+                                </span>
+                                Apply
+                            </x-primary-button>
+                        </form>
+                    @endif
+                @else
+                <x-primary-button class="flex gap-1 disabled bg-slate-600 hover:bg-slate-800 focus:bg-slate-900 focus:ring-slate-600">
+                    <span class="material-symbols-rounded">
+                        heart_broken
+                    </span>
+                    Not Eligible
+                </x-primary-button>
+                @endif
             @endif
-
-
-            {{-- <x-primary-button class="flex gap-1">
-                <span class="material-symbols-rounded">
-                    handshake
-                </span>
-                Apply
-            </x-primary-button> --}}
         </div>
     </div>
 </x-card-base>
