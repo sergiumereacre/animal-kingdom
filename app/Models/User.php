@@ -110,7 +110,7 @@ class User extends Authenticatable
     {
         // dd($query->getQuery()->joins);
 
-        if ($can_fly ?? false) {
+        if ($can_fly != null) {
             if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
                 $query->join('animal_species', function ($join) {
                     $join->on('users.species_id', '=', 'animal_species.species_id')
@@ -125,23 +125,36 @@ class User extends Authenticatable
     public function scopeCanSwim($query, $can_swim)
     {
 
-        if ($can_swim ?? false) {
-            // dd((int) request('can_swim'));
+        $result = request('can_swim');
+        // dd( $result);
+
+        // dd($result);
+
+        if ($can_swim != null) {
+        // if ($can_swim ?? false) {
 
             if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
-                $query->join('animal_species', function ($join) {
+
+                // dd($result);
+                $results = $query->join('animal_species', function ($join) use($result) {
                     $join->on('users.species_id', '=', 'animal_species.species_id')
-                        ->where('can_swim', '=', (int) request('can_swim'));
+                        ->where('can_swim', '=', request('can_swim'));
                 });
             } else {
-                $query->where('can_swim', '=', (int) request('can_swim'));
+
+                $results = $query->where('can_swim', '=', (int) request('can_swim'));
+
+                // dd($results);
             }
+        }
+        else{
+            // dd("NOPE!!");
         }
     }
 
     public function scopeCanClimb($query, $can_climb)
     {
-        if ($can_climb ?? false) {
+        if ($can_climb != null) {
             if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
                 $query->join('animal_species', function ($join) {
                     $join->on('users.species_id', '=', 'animal_species.species_id')
@@ -169,7 +182,7 @@ class User extends Authenticatable
 
     public function scopeProducesToxins($query, $produces_toxins)
     {
-        if ($produces_toxins ?? false) {
+        if ($produces_toxins != null) {
             if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
                 $query->join('animal_species', function ($join) {
                     $join->on('users.species_id', '=', 'animal_species.species_id')

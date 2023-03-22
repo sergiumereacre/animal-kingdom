@@ -40,6 +40,9 @@ class ProfileController extends Controller
     {
         $users = User::latest()->category(request('category'))->canFly(request('can_fly'))->canSwim(request('can_swim'))->canClimb(request('can_climb'))->eatingStyle(request('eating_style'))->producesToxins(request('produces_toxins'))->size(request('size'))->speed(request('speed'))->numAppendages(request('num_appendages'))->paginate(9);
 
+        $userss = User::latest()->canSwim(request('can_swim'))->get();
+        // dd($userss);
+
         // $users = User::latest()->animalTraits(request(['category', 'can_fly', 'can_swim', 'can_climb', 'eating_style', 'produces_toxins', 'size', 'speed', 'num_appendages']))->paginate(9);
         // $users = User::latest()->category(request('category'))->paginate(9);
         // dd($users);
