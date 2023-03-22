@@ -75,7 +75,9 @@
                     class="text-sm text-gray-600">{{ __('Updated.') }}</p>
             @endif
 
-            <x-primary-button>{{ __('Update') }}</x-primary-button>
+            <x-primary-button class="flex flex-row items-center gap-2"><span class="material-symbols-rounded">
+                    save
+                </span>{{ __('Save') }}</x-primary-button>
         </div>
     </form>
 </section>

@@ -155,8 +155,14 @@ class ProfileController extends Controller
         foreach ($all_skills_unproc as $skill) {
             $skill_attr = explode(":", $skill);
 
-            $skill_name = $skill_attr[0];
-            $skill_level = $skill_attr[1];
+            $skill_name = 0;
+            $skill_level = 0;
+
+            if (count($skill_attr) == 2) {
+                $skill_name = $skill_attr[0];
+                $skill_level = $skill_attr[1];
+            }
+
 
             $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
             $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);

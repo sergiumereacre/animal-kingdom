@@ -57,12 +57,18 @@
         
                     <div class="flex justify-center gap-2 md:gap-5">
                         {{-- Possibly go straight to the created organisation page? --}}
-                        <a href="{{ route('home') }}">
-                            <x-secondary-button>
+                        <a href="{{ URL::previous() }}">
+                            <x-secondary-button class="flex flex-row gap-1 items-center">
+                                <span class="material-symbols-rounded">
+                                    arrow_back
+                                    </span>
                                 {{ __('Go Back') }}
                             </x-secondary-button>
                         </a>
-                        <x-primary-button>
+                        <x-primary-button class="flex flex-row gap-2 items-center">
+                            <span class="material-symbols-rounded">
+                                home_work
+                                </span>
                             Create Organisation
                         </x-primary-button>
                     </div>

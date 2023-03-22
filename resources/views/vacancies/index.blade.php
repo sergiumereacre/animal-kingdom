@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="py-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
+    <div class="pt-12 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
         @foreach ($vacancies as $vacancy)
             @php
                 $organisation = App\Models\Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id)->first();
@@ -8,7 +8,7 @@
         @endforeach
     </div>
 
-    <div class="mt-6 p-4">
+    <div class="p-10">
         {{$vacancies->links()}}
     </div>
 </x-app-layout>
