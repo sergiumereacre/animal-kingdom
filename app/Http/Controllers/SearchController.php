@@ -57,14 +57,14 @@ class SearchController extends Controller
     //validation
     private function validateSearchRequest($searchTerms)
     {
-
+        //TODO
     }
 
     //running queries
     private function getUsers($searchTerms)
     {
         return DB::table('users')
-        ->join('organisations', 'users.organisation_id', '=', 'organisations.organisation_id')
+        ->leftJoin('organisations', 'users.organisation_id', '=', 'organisations.organisation_id')
         ->selectRaw('users.id, CONCAT_WS(\' \', organisations.organisation_name, users.first_name, users.last_name, users.bio) AS merged')
         ->get();
     }
@@ -86,7 +86,7 @@ class SearchController extends Controller
     private function replaceUsers($userResults)
     {
         $output = array();
-        $userResults = $userResults>reverse();
+        $userResults = $userResults->reverse();
         foreach($userResults as $user)
         {
             $output[] = DB::table('users')
@@ -126,7 +126,10 @@ class SearchController extends Controller
             $rankings[] = $this->rank($result, $searchTerms);
         }
         $this->trimArray($results, $rankings);
-        $this->sortArray($results, $rankings, 0, count($rankings) - 1);
+        if (count($rankings) > 1)
+        {
+            $this->sortArray($results, $rankings, 0, count($rankings) - 1);
+        }
     }
 
     private function trimArray(&$results, &$rankings)
@@ -148,7 +151,14 @@ class SearchController extends Controller
         $rank = 0;
         foreach ($searchTerms as $term)
         {
-            $rank += substr_count(strtolower($result->merged), strtolower($term));
+            if ($term != null &&$term != "")
+            {
+                $rank += substr_count(strtolower($result->merged), strtolower($term));
+            }
+            else
+            {
+                $rank++;
+            }
         }
         return $rank;
     }

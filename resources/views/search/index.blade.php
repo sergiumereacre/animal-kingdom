@@ -1,8 +1,8 @@
 
 <x-app-layout>
-    <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
+    
     <h1> users! </h1>
-    <div>
+    <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
     {{
         @unless(count($users) == 0 || $users == null)
             @foreach($users as $user)
@@ -15,7 +15,7 @@
     </div>
 
     <h1> orgs! </h1>
-    <div>
+    <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
     {{--
         @unless(count($organisations) == 0 || $organisations == null))
             @foreach($organisations as $organisation)
@@ -31,7 +31,7 @@
     </div>
 
     <h1> vacancies! </h1>
-    <div>
+    <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
     {{
         @unless(count($vacancies) == 0 || $vacancies == null))
             @foreach($vacancies as $vacancy)
