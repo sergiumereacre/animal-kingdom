@@ -143,6 +143,8 @@ Route::get('/organisations/{organisation}', [OrganisationController::class, 'sho
 
 Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index')->middleware('auth');
 
+Route::post('/users/filter', [ProfileController::class, 'filter'])->name('users.filter')->middleware('auth');
+
 Route::put('/users/{user}/toggleBan', [ProfileController::class, 'toggleBan'])->middleware('auth');
 
 Route::put('/users/{user}/toggleConnect', [ProfileController::class, 'toggleConnect'])->middleware('auth');
