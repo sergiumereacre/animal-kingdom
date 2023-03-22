@@ -22,7 +22,10 @@ module.exports = {
             },
             width: {
                 '500': '500px',
+                '400': '400px',
+                '300': '300px',
                 '250': '250px',
+                '200': '200px',
             },
             colors: {
                 transparent: 'transparent',
