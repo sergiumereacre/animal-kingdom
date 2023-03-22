@@ -6,9 +6,9 @@
             <div class="flex flex-row items-center">
                 @if (request()->routeIs('organisations.index'))
                     <!-- Search Type Input That is Hidden -->
-                    <input type="hidden" id="search-type" name="category" value="Organisations">
+                    <input type="hidden" id="main-search-type" name="category" value="Organisations">
                     <!-- Dropdown Main -->
-                    <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                    <button id="main-dropdown-button" data-dropdown-toggle="main-dropdown-search-type"
                         class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-50 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
                         type="button">
                         <span class="material-symbols-rounded text-greenButtons">home_work</span>
@@ -21,9 +21,9 @@
                     </button>
                 @elseif (request()->routeIs('users.index'))
                     <!-- Search Type Input That is Hidden -->
-                    <input type="hidden" id="search-type" name="category" value="Users">
+                    <input type="hidden" id="main-search-type" name="category" value="Users">
                     <!-- Dropdown Main -->
-                    <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                    <button id="main-dropdown-button" data-dropdown-toggle="main-dropdown-search-type"
                         class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-50 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
                         type="button">
                         <span class="material-symbols-rounded text-greenButtons">group</span>
@@ -36,9 +36,9 @@
                     </button>
                 @else
                     <!-- Search Type Input That is Hidden -->
-                    <input type="hidden" id="search-type" name="category" value="Vacancies">
+                    <input type="hidden" id="main-search-type" name="category" value="Vacancies">
                     <!-- Dropdown Main -->
-                    <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                    <button id="main-dropdown-button" data-dropdown-toggle="main-dropdown-search-type"
                         class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-50 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
                         type="button">
                         <span class="material-symbols-rounded text-greenButtons">work</span>
@@ -96,17 +96,17 @@
                 <div class="relative w-full">
                     @if (request()->routeIs('organisations.index'))
                         <!-- Search Input -->
-                        <input type="search" id="navbar-search" name="search"
+                        <input type="search" id="main-navbar-search" name="search"
                             class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search in Organisations" required>
                     @elseif (request()->routeIs('users.index'))
                         <!-- Search Input -->
-                        <input type="search" id="navbar-search" name="search"
+                        <input type="search" id="main-navbar-search" name="search"
                             class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search in Users" required>
                     @else
                         <!-- Search Input -->
-                        <input type="search" id="navbar-search" name="search"
+                        <input type="search" id="main-navbar-search" name="search"
                             class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search in Vacancies" required>
                     @endif
