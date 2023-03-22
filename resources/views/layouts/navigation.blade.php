@@ -16,23 +16,56 @@
 
             <!-- Search Bar -->
             <div class="flex items-center min-w-max">
-                <form class="hidden md:block" method="GET" action="{{route('search')}}" enctype="multipart/form-data">
+                <form class="hidden md:block" method="GET" action="{{ route('search') }}"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="flex flex-row items-center">
-                        <!-- Search Type Input That is Hidden -->
-                        <input type="hidden" id="search-type" name="category" value="Vacancies">
-                        <!-- Dropdown Main -->
-                        <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
-                            class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
-                            type="button">
-                            <span class="material-symbols-rounded text-greenButtons">work</span>
-                            Vacancies <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
+                        @if (request()->routeIs('organisations.index'))
+                            <!-- Search Type Input That is Hidden -->
+                            <input type="hidden" id="search-type" name="category" value="Organisations">
+                            <!-- Dropdown Main -->
+                            <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                                class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                                type="button">
+                                <span class="material-symbols-rounded text-greenButtons">home_work</span>
+                                Organisations <svg aria-hidden="true" class="w-4 h-4" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        @elseif (request()->routeIs('users.index'))
+                            <!-- Search Type Input That is Hidden -->
+                            <input type="hidden" id="search-type" name="category" value="Users">
+                            <!-- Dropdown Main -->
+                            <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                                class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                                type="button">
+                                <span class="material-symbols-rounded text-greenButtons">group</span>
+                                Users <svg aria-hidden="true" class="w-4 h-4" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        @else
+                            <!-- Search Type Input That is Hidden -->
+                            <input type="hidden" id="search-type" name="category" value="Vacancies">
+                            <!-- Dropdown Main -->
+                            <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                                class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                                type="button">
+                                <span class="material-symbols-rounded text-greenButtons">work</span>
+                                Vacancies <svg aria-hidden="true" class="w-4 h-4" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        @endif
                         <!-- Dropdown Contents -->
                         <div id="dropdown-search-type"
                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40">
@@ -77,10 +110,22 @@
                         </div>
                         <!-- Serarch Contents -->
                         <div class="relative w-200 md:w-250 lg:w-400">
-                            <!-- Search Input -->
-                            <input type="search" id="navbar-search" name="search"
-                                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
-                                placeholder="Search in Vacancies" required>
+                            @if (request()->routeIs('organisations.index'))
+                                <!-- Search Input -->
+                                <input type="search" id="navbar-search" name="search"
+                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                    placeholder="Search in Organisations" required>
+                            @elseif (request()->routeIs('users.index'))
+                                <!-- Search Input -->
+                                <input type="search" id="navbar-search" name="search"
+                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                    placeholder="Search in Users" required>
+                            @else
+                                <!-- Search Input -->
+                                <input type="search" id="navbar-search" name="search"
+                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                    placeholder="Search in Vacancies" required>
+                            @endif
                             <!-- Search Buttons -->
                             <button type="submit"
                                 class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-greenButtons rounded-r-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
