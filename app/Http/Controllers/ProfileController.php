@@ -269,13 +269,13 @@ class ProfileController extends Controller
 
         // $users = User::where('id', '=', 1)->or;
 
-        $users = User::where(function (Builder $query) {
-            $query->select('category')
-            ->from('animal_species')
-            ->whereColumn('animal_species.species_id', 'users.id')
-        }, $request->category_requirement);
+        // $users = User::where(function (Builder $query) {
+        //     $query->select('category')
+        //     ->from('animal_species')
+        //     ->whereColumn('animal_species.species_id', 'users.id')
+        // }, $request->category_requirement);
 
-        dd($users);
+        // dd($users);
         
 
         return view('profile.index', [
