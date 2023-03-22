@@ -30,25 +30,25 @@
                 <p class="text-sm text-gray-700">{{ $organisation->description }}</p>
             </div>
             <div class="flex flex-col items-center pb-5 pt-2 gap-3 mx-10 md:items-start md:mx-0 md:ml-5 md:mr-10">
-                <!-- Time Created -->
+                <!-- Location -->
                 <div class="flex flex-row items-center gap-2">
-                    <span class="material-symbols-rounded">schedule</span>
-                    <p class="text-sm text-gray-700">{{ $organisation->time_created }}</p>
-                </div>
-                <!-- Phone -->
-                <div class="flex flex-row items-center gap-2">
-                    <span class="material-symbols-rounded">call</span>
-                    <p class="text-sm text-gray-700">{{ $organisation->contact_number }}</p>
+                    <span class="material-symbols-rounded text-gray-800">location_on</span>
+                    <p class="text-sm text-gray-700">{{ $organisation->address }}</p>
                 </div>
                 <!-- Email -->
                 <div class="flex flex-row items-center gap-2">
-                    <span class="material-symbols-rounded">mail</span>
+                    <span class="material-symbols-rounded text-gray-800">mail</span>
                     <p class="text-sm text-gray-700">{{ $organisation->email }}</p>
                 </div>
-                <!-- Location -->
+                <!-- Phone -->
                 <div class="flex flex-row items-center gap-2">
-                    <span class="material-symbols-rounded">location_on</span>
-                    <p class="text-sm text-gray-700">{{ $organisation->address }}</p>
+                    <span class="material-symbols-rounded text-gray-800">call</span>
+                    <p class="text-sm text-gray-700">{{ $organisation->contact_number }}</p>
+                </div>
+                <!-- Time Created -->
+                <div class="flex flex-row items-center gap-2">
+                    <span class="material-symbols-rounded text-gray-800">schedule</span>
+                    <p class="text-sm text-gray-700">{{ $organisation->time_created }}</p>
                 </div>
             </div>
             <!-- Remove or Edit Button -->

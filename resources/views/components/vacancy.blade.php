@@ -20,7 +20,7 @@
                 ${{ $vacancy->salary_range_upper }}</p>
         </div>
         <!-- Job Description -->
-        <div class="py-5 md:mr-2">
+        <div class="py-5 md:mr-5">
             <p class="px-5 md:px-0 text-sm text-gray-700">{{ $vacancy->vacancy_description }}</p>
         </div>
         <!-- Skills -->
