@@ -38,8 +38,11 @@ class ProfileController extends Controller
 
     public function index()
     {
+        $users = User::latest()->category(request('category'))->canFly(request('can_fly'))->paginate(9);
+        // $users = User::latest()->category(request('category'))->paginate(9);
+        dd($users);
         return view('profile.index', [
-            'users' => User::paginate(9)
+            'users' => $users
         ]);
     }
 
@@ -280,7 +283,7 @@ class ProfileController extends Controller
             ->whereColumn('animal_species.species_id', 'users.species_id');
         }, $request->category_requirement)->get();
 
-        dd($users);
+        // dd($users);
         
 
         return view('profile.index', [

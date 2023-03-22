@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -72,26 +74,42 @@ class User extends Authenticatable
         return $this->belongsTo(Organisation::class, 'organisation_id', 'organisation_id');
     }
 
-    public function organisations(): HasMany{
+    public function organisations(): HasMany
+    {
         // return $this->hasMany(Organisation::class, 'id', 'owner_id');
         return $this->hasMany(Organisation::class, 'owner_id');
     }
 
-    public function skillsUsers(): HasMany{
+    public function skillsUsers(): HasMany
+    {
         return $this->hasMany(SkillsUser::class, 'user_id');
-
     }
 
-    public function connections(): HasMany{
+    public function connections(): HasMany
+    {
         return $this->hasMany(Connection::class, 'first_user_id');
     }
 
-    public function users(): BelongsToMany{
+    public function users(): BelongsToMany
+    {
         return $this->belongsToMany(User::class, 'connections', 'id', 'first_user_id');
         // User::all()->where()
     }
 
-    public function scopeCategory($query){
-        
+    public function scopeCategory($query, $category)
+    {
+        if ($category ?? false) {
+            $query->join('animal_species', function ($join) {
+                $join->on('users.species_id', '=', 'animal_species.species_id')
+                    ->where('category', '=', request('category'));
+            });
+        }
+    }
+
+    public function scopeCanFly($query, $fly_req)
+    {
+        if ($fly_req ?? false) {
+            $query->where('can_fly', '=', request('can_fly'));
+        }
     }
 }
