@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VacancyController;
 use App\Models\Connection;
 use App\Models\Organisation;
@@ -21,11 +22,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    //vacancy search
+    $searchString='operator';
     $results = DB::table('vacancies')
-            ->join('organisations', 'vacancies.organisation_id', '=', 'organisations.organisation_id')
-            ->selectRaw('vacancies.vacancy_id, CONCAT_WS(\' \', organisations.organisation_name, vacancies.vacancy_title, vacancies.vacancy_description) AS vacancy')
-            ->havingRaw('vacancy LIKE \'%operator%\'')
-            ->get();
+    ->join('organisations', 'vacancies.organisation_id', '=', 'organisations.organisation_id')
+    ->selectRaw('vacancies.vacancy_id, CONCAT_WS(\' \', organisations.organisation_name, vacancies.vacancy_title, vacancies.vacancy_description) AS merged')
+    ->havingRaw('merged LIKE \'%operator%\'')
+    ->get();
+    print($results[2]->merged);
     dd($results);
     return view('welcome');
 });
@@ -133,8 +137,6 @@ Route::get('/settings', function () {
 
 // ========== SEARCH ==========
 
-Route::get('/search', [SearchController::class, 'create']);
-
-Route::post('/search', [SearchController::class, 'query']);
+Route::get('/search', [SearchController::class, 'query'])->name('search');
 
 // ========== SEARCH ==========

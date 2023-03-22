@@ -1,3 +1,5 @@
+@props(['vacancy'])
+
 <x-card-base class="md:flex md:flex-row">
     <!-- Company Logo and Name -->
     <div class="flex flex-col items-center py-5 md:px-5 md:pt-11">
@@ -8,12 +10,12 @@
     <div>
         <!-- Job Title and Salary Range -->
         <div class="flex flex-col items-center md:flex-row md:pt-10">
-            <h1 class="font-bold text-2xl">Job Title</h1>
-            <p class="pt-5 md:pt-0 font-bold text-greenButtons md:ml-auto md:mr-10">$49,000- $56,000</p>
+            <h1 class="font-bold text-2xl">{{$vacancy->vacancy_title}}</h1>
+            <p class="pt-5 md:pt-0 font-bold text-greenButtons md:ml-auto md:mr-10">${{$vacancy->salary_range_lower." ".$vacancy->salary_range_upper}}</p>
         </div>
         <!-- Job Description -->
         <div class="py-5">
-            <p class="px-5 md:px-0 text-sm text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus interdum augue efficitur, auctor massa sit amet, efficitur tortor. Phasellus a odio fringilla, varius nisl non, condimentum purus. Donec sed nisl dictum, cursus dolor sit amet, mollis magna. Pellentesque blandit augue eget tellus gravida, rhoncus volutpat justo congue. Sed mollis auctor malesuada. Aenean ac tempus mauris, nec condimentum tortor. Pellentesque mauris ligula, aliquet sit amet iaculis at, efficitur eu enim. Duis posuere neque quis eros accumsan, vitae pulvinar ex mattis. Quisque mattis dictum nisl vitae elementum. Vivamus ac nibh eleifend eros elementum commodo a id orci. Nam id gravida ex, ut cursus ante. Aenean aliquet, nulla et luctus tempor, ligula augue egestas odio, ac volutpat ligula ex sed mi. Morbi vitae bibendum massa, sit amet aliquet orci.</p>
+            <p class="px-5 md:px-0 text-sm text-gray-700">{{$vacancy->vacancy_description}}</p>
         </div>
         <!-- Skills and Buttons -->
         <div class="pb-5 flex flex-col items-center md:flex-row">
