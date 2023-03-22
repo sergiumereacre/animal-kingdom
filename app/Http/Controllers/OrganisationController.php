@@ -71,10 +71,10 @@ class OrganisationController extends Controller
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, Organisation $organisation)
     {
-
-        return view('organisations.edit');
+        //dd($organisation->email);
+        return view('organisations.edit',['organisation' => $organisation]);
         // return view('organisations.edit', ['organisation' => $organisation]);
     }
 
