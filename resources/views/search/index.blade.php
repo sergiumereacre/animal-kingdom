@@ -26,7 +26,7 @@
                 @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
                     @break
                 @endif
-                <x-company-full :organisation="$organisation"></x-company-full>
+                <x-organisation-card :organisation="$organisation"></x-organisation-card>
             @endforeach
         @else
             <p>No organisations found</p>
@@ -43,7 +43,10 @@
                 @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
                     @break
                 @endif
-                <x-vacancy :vacancy="$vacancy"></x-vacancy>
+                @php
+                    $organisation = App\Models\Organisation::all()->where('organisation_id', '=', $vacancy->organisation_id)->first();
+                @endphp
+                <x-vacancy :vacancy="$vacancy" :organisation="$organisation" />
             @endforeach
         @else
             <p>No users found</p>

@@ -23,15 +23,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //vacancy search
-    $searchString='operator';
-    $results = DB::table('vacancies')
-    ->join('organisations', 'vacancies.organisation_id', '=', 'organisations.organisation_id')
-    ->selectRaw('vacancies.vacancy_id, CONCAT_WS(\' \', organisations.organisation_name, vacancies.vacancy_title, vacancies.vacancy_description) AS merged')
-    ->havingRaw('merged LIKE \'%operator%\'')
-    ->get();
-    print($results[2]->merged);
-    dd($results);
     return view('welcome');
 });
 
