@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
+    const USERS = 'users';
+    const ORGANISATIONS = 'organisations';
+    const VACANCIES = 'vacancies';
+    const DISPLAY_LIMIT = 8;
+
     public function query(Request $request)
     {
         //TODO: validate $request
@@ -17,33 +22,46 @@ class SearchController extends Controller
         //TODO: extend search to have toggleable skills
 
         $searchString = $request->input('search');
-        if ($searchString == null) $searchString = "";
+        if ($searchString == null) $searchString = '';
         $searchTerms = explode(' ', $searchString);
 
+        $category = $request->input('category');
+        $userResults = null;
+        $organisationResults = null;
+        $vacancyResults = null;
+
         //user search
-        $userResults = $this->getUsers($searchTerms);
-        if (count($userResults) > 0)
+        if ($category != SearchController::ORGANISATIONS && $category != SearchController::VACANCIES)
         {
-            $this->sortResults($userResults, $searchTerms);
-            $userResults = $this->replaceUsers($userResults);
+            $userResults = $this->getUsers($searchTerms);
+            if (count($userResults) > 0)
+            {
+                $count = $this->sortResults($userResults, $searchTerms);
+                if ($count > 0) $userResults = $this->replaceUsers($userResults);
+            }
         }
 
         //organisation search
-        $organisationResults = $this->getVacancies($searchTerms);
-        if (count($organisationResults) > 0)
+        if ($category != SearchController::USERS && $category != SearchController::VACANCIES)
         {
-            $this->sortResults($organisationResults, $searchTerms);
-            $organisationResults = $this->replaceVacancies($organisationResults);
+            $organisationResults = $this->getOrganisations($searchTerms);
+            if (count($organisationResults) > 0)
+            {
+                $count = $this->sortResults($organisationResults, $searchTerms);
+                if ($count > 0) $organisationResults = $this->replaceOrganisations($organisationResults);
+            }
         }
-
         //vacancy search
-        $vacancyResults = $this->getVacancies($searchTerms);
-        if (count($vacancyResults) > 0)
+        if ($category != SearchController::USERS && $category != SearchController::ORGANISATIONS)
         {
-            $this->sortResults($vacancyResults, $searchTerms);
-            $vacancyResults = $this->replaceVacancies($vacancyResults);
+            $vacancyResults = $this->getVacancies($searchTerms);
+            if (count($vacancyResults) > 0)
+            {
+                $count = $this->sortResults($vacancyResults, $searchTerms);
+                if ($count > 0) $vacancyResults = $this->replaceVacancies($vacancyResults);
+            }
         }
-        
+    
         return view('search.index', ['users' => $userResults, 'organisations' => $organisationResults,'vacancies' => $vacancyResults]);
     }
 
@@ -99,9 +117,9 @@ class SearchController extends Controller
         $organisationResults = $organisationResults->reverse();
         foreach($organisationResults as $organisation)
         {
-            $output[] = DB::table('organisation')
+            $output[] = DB::table('organisations')
             ->select('*')
-            ->where('organisation.organisation_id', '=', $organisation->organisation_id)
+            ->where('organisations.organisation_id', '=', $organisation->organisation_id)
             ->get()[0];
         }
         return $output;
@@ -135,6 +153,7 @@ class SearchController extends Controller
         {
             $this->sortArray($results, $rankings, 0, count($rankings) - 1);
         }
+        return count($rankings);
     }
 
     private function trimArray(&$results, &$rankings)
@@ -156,7 +175,7 @@ class SearchController extends Controller
         $rank = 0;
         foreach ($searchTerms as $term)
         {
-            if ($term != null &&$term != "")
+            if ($term != null && $term != "")
             {
                 $rank += substr_count(strtolower($result->merged), strtolower($term));
             }
