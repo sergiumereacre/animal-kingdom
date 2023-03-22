@@ -13,7 +13,7 @@
     <div class="md:w-screen">
         <!-- Job Title and Salary Range -->
         <div class="flex flex-col items-center md:flex-row md:pt-5">
-            <h1 class="font-bold text-2xl"><a
+            <h1 class="font-bold text-2xl text-center md:text-left"><a
                     href="/vacancies/{{ $vacancy->vacancy_id }}">{{ $vacancy->vacancy_title }}</a> </h1>
             <p class="pt-5 md:pt-0 font-bold text-greenButtons md:ml-auto md:mr-10">${{ $vacancy->salary_range_lower }}
                 -

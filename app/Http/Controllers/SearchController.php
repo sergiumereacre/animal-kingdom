@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    const USERS = 'users';
-    const ORGANISATIONS = 'organisations';
-    const VACANCIES = 'vacancies';
+    const USERS = 'Users';
+    const ORGANISATIONS = 'Organisations';
+    const VACANCIES = 'Vacancies';
     const DISPLAY_LIMIT = 8;
 
     public function query(Request $request)
@@ -25,6 +25,7 @@ class SearchController extends Controller
         $searchTerms = explode(' ', $searchString);
 
         $category = $request->input('category');
+        // dd($category);
         $userResults = null;
         $organisationResults = null;
         $vacancyResults = null;
