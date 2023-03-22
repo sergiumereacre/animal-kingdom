@@ -121,7 +121,8 @@
         <div>
             <div class="mt-4">
                 <x-input-label for="skills">Specify skills using the selections and button bellow.</x-input-label>
-                <x-text-input id="skills_list" type="text" name="skills" class="block mt-1 w-full"></x-text-input>
+                <x-text-input id="skills_list" type="text" name="skills" class="block mt-1 w-full">
+                </x-text-input>
             </div>
             <div class="mt-4 flex flex-col items-center gap-4">
                 @php
@@ -144,7 +145,8 @@
                     </x-select>
                 </div>
                 <div class="flex flex-col items-center">
-                    <p id="skills_error" hidden class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't
+                    <p id="skills_error" hidden class="text-center text-white bg-redButtons w-max px-2 rounded-lg">
+                        Can't
                         have duplicate
                         skills.</p>
                 </div>
@@ -170,8 +172,8 @@
             <div class="mt-4">
                 <x-input-label for="qualifications">Specify qualifications using the selection and button bellow.
                 </x-input-label>
-                <x-text-input id="qualifications_list" type="text" name="qualifications" class="block mt-1 w-full"
-                    placeholder="" value="{{ old('qualifications') }}"></x-text-input>
+                <x-text-input id="qualifications_list" type="text" name="qualifications"
+                    class="block mt-1 w-full" placeholder="" value="{{ old('qualifications') }}"></x-text-input>
             </div>
             <div class="mt-4 flex flex-col items-center gap-4">
                 @php
@@ -217,8 +219,10 @@
             </a>
 
             <x-primary-button
-                class="ml-4 bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                {{ __('Register') }}
+                class="ml-4 bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 flex gap-1">
+                <span class="material-symbols-rounded">
+                    design_services</span>
+                {{ __('Sign Up') }}
             </x-primary-button>
         </div>
     </form>

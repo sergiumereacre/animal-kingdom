@@ -42,12 +42,18 @@
             <div class="">
                 <!-- Sign up button that leads them to register page-->
                 <a href="{{ route('register') }}">
-                    <x-secondary-button class="ml-3">
+                    <x-secondary-button class="ml-3 flex gap-1">
+                        <span class="material-symbols-rounded">
+                            design_services
+                            </span>
                         {{ __('Sign Up') }}
                     </x-secondary-button>
                 </a>
                 <!-- Login button. -->
-                <x-primary-button class="ml-3">
+                <x-primary-button class="ml-3 flex gap-1">
+                    <span class="material-symbols-rounded">
+                        login
+                        </span>
                     {{ __('Log In') }}
                 </x-primary-button>
             </div>
