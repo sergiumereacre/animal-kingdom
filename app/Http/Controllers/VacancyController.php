@@ -20,10 +20,10 @@ class VacancyController extends Controller
 {
     // Some sort of index page for vacancies?
     public function index()
-    {
+    {   
         // return vacancies inlcuding their respective organisations
         return view('vacancies.index', [
-            'vacancies' => Vacancy::all(),
+            'vacancies' => Vacancy::paginate(8),
         ]);
     }
 

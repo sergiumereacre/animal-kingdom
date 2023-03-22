@@ -291,7 +291,7 @@
 
                     <div class="flex justify-center gap-2 md:gap-5">
                         {{-- Possibly go straight to the created organisation page? --}}
-                        <a href="{{ route('home') }}">
+                        <a href="{{ URL::previous() }}">
                             <x-secondary-button>
                                 {{ __('Go Back') }}
                             </x-secondary-button>

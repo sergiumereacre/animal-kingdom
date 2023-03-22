@@ -58,7 +58,7 @@ Route::get('/home', function () {
         'past_vacancies' => $past_vacancies,
         'past_organisations' => $past_organisations,
     ]);
-})->middleware(['auth', 'verified'])->name('home');
+})->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
@@ -86,7 +86,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 // Choose Controller class along with whatever method
-Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('vacancies.index');
+Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('home');
 
 // The convention is that if you want to do ANYTHING with stuff, prefix the path with 'vacancies'
 // Using the auth middleware, you'll be sent to a login page if you want to get to certain paths

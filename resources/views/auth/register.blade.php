@@ -14,9 +14,8 @@
                                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
                             </path>
                         </svg>
-                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag
-                            and drop</p>
-                        <p class="text-xs text-gray-500">SVG, PNG, JPG (MAX. 800x400px)</p>
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span></p>
+                        <p class="text-xs text-gray-500">SVG, PNG, JPG and GIF</p>
                     </div>
                     <input id="profile_pic" type="file" name="profile_pic" class="hidden" />
                 </label>
@@ -26,7 +25,7 @@
 
 
         <!-- First Name -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="first_name" :value="__('First Name*')" />
             <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first-name')"
                 required autofocus autocomplete="first_name" />
@@ -107,109 +106,109 @@
                 $all_species = \App\Models\AnimalSpecies::all();
                 // dd($all_species);
             @endphp
-            <select name="species_id" id="species_id" required
-                class="select w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-md shadow-lg">
+            <x-select name="species_id" id="species_id" required class="select w-full">
                 <option selected value="">What type of species?</option>
 
                 @foreach ($all_species as $species)
                     <option value="{{ $species->species_id }}">{{ ucfirst($species->species_name) }}</option>
                 @endforeach
-            </select>
+            </x-select>
 
             <x-input-error :messages="$errors->get('species_id')" class="mt-2" />
 
         </div>
 
         <div>
-            <label for="skills">All skills you have. Please specify skill level with colon and
-                separate with commas</label>
-            <input id="skills_list" type="text" name="skills" placeholder="" value="{{ old('skills') }}">
-        </div>
-        <div>
-            <label for="skills_select">Select skills here</label>
-
-            @php
-                $skills = App\Models\Skill::all();
-            @endphp
-
-            <select id="skill_name" name="skills_select" id="skills_select">
-                @foreach ($skills as $skill)
-                    <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
-                @endforeach
-            </select>
-
-            <label for="skills_level_select">Select skill level here</label>
-            <select id="skill_level" name="skills_level_select" id="skills_level_select">
-                <option value="BEGINNER">Beginner</option>
-                <option value="INTERMEDIATE">Intermediate</option>
-                <option value="EXPERT">Expert</option>
-            </select>
-
-            <p id="skills_error" hidden>Can't have duplicate skills</p>
-
-            <button onclick="addSkill()" type="button">Add Skill</button>
-        </div>
-
-        <script>
-            function addSkill() {
-                var skills_error = document.getElementById('skills_error');
-                var skill_name = document.getElementById('skill_name').value;
-                var skill_level = document.getElementById('skill_level').value;
-
-                if (document.getElementById('skills_list').value.includes(skill_name)) {
-                    skills_error.style.display = "block";
-                } else {
-                    document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
-                    skills_error.style.display = "none";
+            <div class="mt-4">
+                <x-input-label for="skills">Specify skills using the selections and button bellow.</x-input-label>
+                <x-text-input id="skills_list" type="text" name="skills" class="block mt-1 w-full"></x-text-input>
+            </div>
+            <div class="mt-4 flex flex-col items-center gap-4">
+                @php
+                    $skills = App\Models\Skill::all();
+                @endphp
+                <div class="block mt-1 w-full">
+                    <x-input-label for="skills_select">Select skills here.</x-input-label>
+                    <x-select id="skill_name" name="skills_select" class="block mt-1 w-full">
+                        @foreach ($skills as $skill)
+                            <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
+                        @endforeach
+                    </x-select>
+                </div>
+                <div class="block mt-1 w-full">
+                    <x-input-label for="skills_level_select">Select skill level here.</x-input-label>
+                    <x-select id="skill_level" name="skills_level_select" class="block mt-1 w-full">
+                        <option value="BEGINNER">Beginner</option>
+                        <option value="INTERMEDIATE">Intermediate</option>
+                        <option value="EXPERT">Expert</option>
+                    </x-select>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p id="skills_error" hidden class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't
+                        have duplicate
+                        skills.</p>
+                </div>
+                <x-input-error :messages="$errors->get('skills')" class="mt-2" />
+                <x-secondary-button onclick="addSkill()" type="button">Add Skill</x-secondary-button>
+            </div>
+            <script>
+                function addSkill() {
+                    var skills_error = document.getElementById('skills_error');
+                    var skill_name = document.getElementById('skill_name').value;
+                    var skill_level = document.getElementById('skill_level').value;
+                    if (document.getElementById('skills_list').value.includes(skill_name)) {
+                        skills_error.style.display = "block";
+                    } else {
+                        document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+                        skills_error.style.display = "none";
+                    }
                 }
-            }
-        </script>
-
-        @error('skills')
-            <p>{{ $message }}</p>
-        @enderror
-
-        <div>
-            <label for="qualifications">All qualifications you have. Please separate with commas</label>
-            <input id="qualifications_list" type="text" name="qualifications" placeholder=""
-                value="{{ old('qualifications') }}">
-        </div>
-        <div>
-            <label for="qualifications_select">Select qualifications here</label>
-
-            @php
-                $qualifications = App\Models\Qualification::all();
-            @endphp
-
-            <select id="qualification_name" name="qualifications_select" id="qualifications_select">
-                @foreach ($qualifications as $qualification)
-                    <option value="{{ $qualification->qualification_name }}">{{ $qualification->qualification_name }}
-                    </option>
-                @endforeach
-            </select>
-
-            <p id="qualifications_error" hidden>Can't have duplicate qualifications</p>
-
-            <button onclick="addQualification()" type="button">Add Qualification</button>
+            </script>
         </div>
 
-        <script>
-            function addQualification() {
-                var qualifications_error = document.getElementById('qualifications_error');
-                var qualification_name = document.getElementById('qualification_name').value;
-
-                if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
-                    qualifications_error.style.display = "block";
-                } else {
-                    document.getElementById('qualifications_list').value += qualification_name.concat(",");
-                    qualifications_error.style.display = "none";
+        <div>
+            <div class="mt-4">
+                <x-input-label for="qualifications">Specify qualifications using the selection and button bellow.
+                </x-input-label>
+                <x-text-input id="qualifications_list" type="text" name="qualifications" class="block mt-1 w-full"
+                    placeholder="" value="{{ old('qualifications') }}"></x-text-input>
+            </div>
+            <div class="mt-4 flex flex-col items-center gap-4">
+                @php
+                    $qualifications = App\Models\Qualification::all();
+                @endphp
+                <div class="block mt-1 w-full">
+                    <x-input-label for="qualifications_select">Select qualifications here.</x-input-label>
+                    <x-select id="qualification_name" name="qualifications_select" class="block mt-1 w-full">
+                        @foreach ($qualifications as $qualification)
+                            <option value="{{ $qualification->qualification_name }}">
+                                {{ $qualification->qualification_name }}
+                            </option>
+                        @endforeach
+                    </x-select>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p id="qualifications_error" hidden
+                        class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't
+                        have duplicate
+                        qualifications.</p>
+                </div>
+                <x-input-error :messages="$errors->get('qualifications')" class="mt-2" />
+                <x-secondary-button onclick="addQualification()" type="button">Add Qualification</x-secondary-button>
+            </div>
+            <script>
+                function addQualification() {
+                    var qualifications_error = document.getElementById('qualifications_error');
+                    var qualification_name = document.getElementById('qualification_name').value;
+                    if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
+                        qualifications_error.style.display = "block";
+                    } else {
+                        document.getElementById('qualifications_list').value += qualification_name.concat(",");
+                        qualifications_error.style.display = "none";
+                    }
                 }
-            }
-        </script>
-
-        @error('qualifications')
-            <p>{{ $message }}</p>
-        @enderror
+            </script>
+        </div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="text-sm text-greenButtons hover:text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-greenButtons"

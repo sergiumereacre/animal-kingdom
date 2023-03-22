@@ -7,7 +7,9 @@
 <x-card-base>
     <!-- Company Logo And Name -->
     <div class="flex flex-col items-center py-5 md:px-5 md:pt-5">
-        <img class="w-36 h-36 mb-3 rounded-full shadow-lg" src="{{$organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png')}}" alt="Company Logo" />
+        <img class="w-36 h-36 mb-3 rounded-full shadow-lg"
+            src="{{ $organisation->picture ? asset('storage/' . $organisation->picture) : asset('img/logo.png') }}"
+            alt="Company Logo" />
         <span class="text-sm text-black"><a
                 href="/organisations/{{ $vacancy->organisation_id }}">{{ $organisation->organisation_name }}</a></span>
     </div>
@@ -27,180 +29,165 @@
         <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
             <p class="font-medium text-black md:p-5 md:w-44">Job Description:</p>
             <p class="md:px-0 md:w-500 text-sm text-gray-700">
-                @if ($vacancy->vacancy_description == "")
+                @if ($vacancy->vacancy_description == '')
                     None
                 @endif
                 {{ $vacancy->vacancy_description }}
             </p>
         </div>
 
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Time Created:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">{{ $vacancy->time_created }}</p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Category Requirement:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-                @php
-                    $var = $vacancy->category_requirement;
-                    
-                    if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Fly?</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-
-                @php
-                    $var = $vacancy->can_fly_requirement;
-                    
-                    if (!is_null($var)) {
-                        if ($var == true) {
-                            echo 'Yes';
+        <!-- Lots of questions -->
+        <div class="grid md:grid-cols-2 gap-5 pb-5">
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Time Created:</p>
+                <p class="md:px-0 text-sm text-gray-700">{{ $vacancy->time_created }}</p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Category Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->category_requirement;
+            
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
                         } else {
-                            echo 'No';
+                            echo $no_matter;
                         }
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Swim?</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-                @php
-                    $var = $vacancy->can_swim_requirement;
-                    
-                    if (!is_null($var)) {
-                        if ($var == true) {
-                            echo 'Yes';
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Fly?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->can_fly_requirement;
+            
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
                         } else {
-                            echo 'No';
+                            echo $no_matter;
                         }
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Climb?</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-                @php
-                    $var = $vacancy->can_climb_requirement;
-                    
-                    if (!is_null($var)) {
-                        if ($var == true) {
-                            echo 'Yes';
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Swim?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->can_swim_requirement;
+            
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
                         } else {
-                            echo 'No';
+                            echo $no_matter;
                         }
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Produce Toxins?</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-
-                @php
-                    $var = $vacancy->produces_toxins_requirement;
-                    
-                    if (!is_null($var)) {
-                        if ($var == true) {
-                            echo 'Yes';
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Climb?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->can_climb_requirement;
+            
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
                         } else {
-                            echo 'No';
+                            echo $no_matter;
                         }
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Eating Style Requirement:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-                @php
-                    $var = $vacancy->eating_style_requirement;
-                    
-                    if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Size Requirement:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-                @php
-                    $var = $vacancy->size_requirement;
-                    
-                    if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">Speed Requirement:</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-                @php
-                    $var = $vacancy->speed_requirement;
-                    
-                    if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
-        </div>
-
-        <div class="px-5 pb-5 flex flex-col md:flex-row items-center">
-            <p class="font-medium text-black md:p-5 md:w-44">How Many Appendages Should Applicants Have?</p>
-            <p class="md:px-0 md:w-500 text-sm text-gray-700">
-
-                @php
-                    $var = $vacancy->num_appendages_requirement;
-                    
-                    if (!is_null($var)) {
-                        echo ucfirst(strtolower($var));
-                    } else {
-                        echo $no_matter;
-                    }
-                @endphp
-            </p>
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Should Applicants be Able to Produce Toxins?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->produces_toxins_requirement;
+            
+                        if (!is_null($var)) {
+                            if ($var == true) {
+                                echo 'Yes';
+                            } else {
+                                echo 'No';
+                            }
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Eating Style Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->eating_style_requirement;
+            
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Size Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->size_requirement;
+            
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44">Speed Requirement:</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->speed_requirement;
+            
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
+            <div class="px-5 flex flex-col md:flex-row items-center">
+                <p class="font-medium text-black md:p-5 md:w-44 text-center md:text-left">How Many Appendages Should Applicants Have?</p>
+                <p class="md:px-0 text-sm text-gray-700">
+                    @php
+                        $var = $vacancy->num_appendages_requirement;
+            
+                        if (!is_null($var)) {
+                            echo ucfirst(strtolower($var));
+                        } else {
+                            echo $no_matter;
+                        }
+                    @endphp
+                </p>
+            </div>
         </div>
 
         <!-- Skills Needed and Buttons -->
-        <div class="pb-5 px-5 flex flex-col items-center md:flex-row">
+        <div class="pb-5 px-5 flex flex-col items-center md:flex-row md:flex-wrap">
             <div class="flex items-center pb-5 gap-3 md:gap-0 flex-row md:pb-0">
 
                 @php
@@ -267,25 +254,28 @@
                     @endif
                 </div>
             </div>
+        </div>
 
+        <!-- Remove and Apply Buttons -->
+        <div class="flex flex-row items-center justify-center pb-4 gap-3 md:justify-end md:mr-5">
+            @if ($organisation->owner_id == auth()->id())
+                <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    {{-- <button>Delete Vacancy</button> --}}
+                    <x-remove-button>
+                        <span class="material-symbols-rounded">delete_forever</span>
+                        Remove
+                    </x-remove-button>
+                </form>
+            @endif
 
-
-            <!-- Remove and Apply Buttons -->
-            <div class="flex flex-row gap-3 md:ml-auto md:mr-5">
-                @if ($organisation->owner_id == auth()->id())
-                    <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        {{-- <button>Delete Vacancy</button> --}}
-                        <x-remove-button>
-                            Remove
-                        </x-remove-button>
-                    </form>
-                @endif
-                <x-primary-button>
-                    Apply
-                </x-primary-button>
-            </div>
+            <x-primary-button class="flex gap-1">
+                <span class="material-symbols-rounded">
+                    handshake
+                </span>
+                Apply
+            </x-primary-button>
         </div>
     </div>
 </x-card-base>
