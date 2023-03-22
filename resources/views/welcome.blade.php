@@ -31,8 +31,10 @@
         @if (Route::has('login'))
             <div class="flex flex-row items-center justify-center gap-3 z-10">
                 @auth
-                    <a href="{{ route('home') }}">
-                        <x-primary-button>
+                    <a href="{{ route('home') }}" class="flex items-center">
+                        <x-primary-button class="flex gap-1 flex-row items-center">
+                            <span class="material-symbols-rounded">
+                                home</span>
                             {{ __('Home') }}
                         </x-primary-button>
                     </a>
