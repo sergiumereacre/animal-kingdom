@@ -66,7 +66,7 @@ class OrganisationController extends Controller
 
         Organisation::create($formFields);
 
-        return redirect('/home');
+        return redirect('/home')->with('message','Organisation created successfully!');
 
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
@@ -81,6 +81,27 @@ class OrganisationController extends Controller
     // Attempt to update organisation
     public function update(Request $request, Organisation $organisation)
     {
+        $formFields = $request->validate([
+            'organisation_name' => 'required'
+        ]);
+
+        // Stores in the logo folder in public
+        if ($request->hasFile('picture')) {
+            $formFields['picture'] = $request->file('picture')->store('logos', 'public');
+        }
+
+        $formFields['owner_id'] = auth()->id();
+        $formFields['address'] = $request->address;
+        $formFields['email'] = $request->email;
+        $formFields['contact_number'] = $request->contact_number;
+        $formFields['description'] = $request->description;
+
+
+        $organisation->create($formFields);
+
+        return back()->with('message','Organisation updated successfully!');
+
+        // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
 
     // Attempt to delete organisation

@@ -3,7 +3,7 @@
         <x-card-base>
             <form method="POST" action="/organisations{{$organisation->id}}" enctype="multipart/form-data" class="p-10 flex flex-col items-center gap-5">
                 @csrf
-                @method('PUT')
+                @method_field('PUT')
                 <!-- Form Title -->
                 <div>
                     <p class="font-bold text-2xl md:text-3xl">Edit {{$organisation -> organisation_name}}</p>

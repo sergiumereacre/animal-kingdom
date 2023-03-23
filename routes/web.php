@@ -124,9 +124,14 @@ Route::post('/organisations', [OrganisationController::class, 'store'])->middlew
 
 Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
 
-Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->middleware('auth');
 
-Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth');
+// Edit organisation
+Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->name('organisations.update');
+
+// Update organisation
+//Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth'); 
+
+Route::put('/organisations', [OrganisationController::class, 'update'])->name('organisation.update');
 
 
 Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
@@ -150,3 +155,4 @@ Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show
 Route::get('/settings', function () {
     return view('settings');
 })->name('settings');
+
