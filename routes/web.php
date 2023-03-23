@@ -102,7 +102,7 @@ Route::get('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->m
 
 // Updating Vacancy, Edit Submit to Update
 // Edit shows the form, update does the actual updating
-Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->middleware('auth');
+Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('vacancy.update');
 
 // Deletes vacancies
 Route::delete('/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->middleware('auth');
@@ -129,7 +129,6 @@ Route::delete('/organisations/{organisation}', [OrganisationController::class, '
 Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->name('organisations.update');
 
 // Update organisation
-//Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth'); 
 
 Route::put('/organisations', [OrganisationController::class, 'update'])->name('organisation.update');
 

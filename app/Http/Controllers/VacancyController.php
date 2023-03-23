@@ -20,7 +20,7 @@ class VacancyController extends Controller
     {   
         // return vacancies inlcuding their respective organisations
         return view('vacancies.index', [
-            'vacancies' => Vacancy::paginate(8),
+            'vacancies' => Vacancy::paginate(6),
         ]);
     }
 
@@ -177,10 +177,10 @@ class VacancyController extends Controller
         // return redirect()->back();
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, Vacancy $vacancy)
     {
-
-        return view('vacancies.edit');
+        //dd($vacancy -> vacancy_title);
+       // return view('vacancies.edit');
         return view('vacancies.edit', ['vacancy' => $vacancy]);
     }
 

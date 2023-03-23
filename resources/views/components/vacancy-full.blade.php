@@ -268,6 +268,13 @@
                         Remove
                     </x-remove-button>
                 </form>
+
+                <a href="/vacancies/{{ $vacancy->vacancy_id }}/edit">
+                    <x-secondary-button class="flex gap-2">
+                        <span class="material-symbols-rounded">edit</span>
+                        Edit
+                    </x-secondary-button>
+                </a>
             @endif
 
             <x-primary-button class="flex gap-1">
