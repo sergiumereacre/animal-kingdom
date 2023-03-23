@@ -133,7 +133,7 @@
                         Edit
                     </x-secondary-button>
                 </a>
-            @endif
+            {{-- @endif --}}
 
 
                 <!-- Check if the owner owns this organisation dont show apply button.-->
