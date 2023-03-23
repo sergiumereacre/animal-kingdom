@@ -66,7 +66,9 @@ class OrganisationController extends Controller
 
         Organisation::create($formFields);
 
-        return redirect('/home')->with('message','Organisation created successfully!');
+
+
+        return redirect('/home')->with('success','Organisation created successfully!');
 
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
