@@ -131,12 +131,12 @@ class User extends Authenticatable
         // dd($result);
 
         if ($can_swim != null) {
-        // if ($can_swim ?? false) {
+            // if ($can_swim ?? false) {
 
             if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
 
                 // dd($result);
-                $results = $query->join('animal_species', function ($join) use($result) {
+                $results = $query->join('animal_species', function ($join) use ($result) {
                     $join->on('users.species_id', '=', 'animal_species.species_id')
                         ->where('can_swim', '=', request('can_swim'));
                 });
@@ -146,8 +146,7 @@ class User extends Authenticatable
 
                 // dd($results);
             }
-        }
-        else{
+        } else {
             // dd("NOPE!!");
         }
     }
@@ -282,22 +281,41 @@ class User extends Authenticatable
 
             $query->join('skills_users', function ($join) {
                 $join->on('skills', function ($join) {
-                        $join->on('skills.skill_id', '=', 'skills_users.skill_id');
-                    
+                    $join->on('skills.skill_id', '=', 'skills_users.skill_id');
                 });
             });
 
             foreach ($all_skills as $name => $level) {
 
-            //     $query->where(['skill_name', '=', $name],
-            // ['skill_level', '=', $level]);
-            // $query->where('skill_name', '=', $name)->where(
-            // 'skill_level', '=', $level);
+                //     $query->where(['skill_name', '=', $name],
+                // ['skill_level', '=', $level]);
+                // $query->where('skill_name', '=', $name)->where(
+                // 'skill_level', '=', $level);
 
             }
 
             // dd($query);
 
+        }
+    }
+
+    public function scopeQualifications($query, $quals)
+    {
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", request()->qualifications));
+
+// dd($all_quals);
+
+        if ($quals ?? false) {
+            $query->join('qualifications_users', function ($join) {
+                $join->on('id', '=', 'qualifications_users.user_id');
+
+            });
+
+            $query->join('qualifications', function ($join) use ($all_quals) {
+                $join->on('qualifications.qualification_id', '=', 'qualifications_users.qualification_id')->whereIn('qualification_name', $all_quals);
+
+            });
         }
     }
 

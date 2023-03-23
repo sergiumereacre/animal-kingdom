@@ -447,6 +447,13 @@
                             final_query.href += "skills=" + skills.value + "&";
                         }
 
+                        
+                        var quals = document.getElementById("qualifications_list");
+                        console.log("Value: " + quals.value);
+                        if (quals.value != "NULL") {
+                            final_query.href += "qualifications=" + quals.value + "&";
+                        }
+
                         console.log(final_query);
 
                     }
