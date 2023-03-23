@@ -70,6 +70,7 @@ class OrganisationController extends Controller
 
         return redirect('/home')->with('success','Organisation created successfully!');
 
+
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
 
@@ -121,7 +122,7 @@ class OrganisationController extends Controller
 
         $organisation->delete();
         // return redirect('/users/'.auth()->id());
-        return redirect('home');
+        return redirect()->route('home');
     }
 
 

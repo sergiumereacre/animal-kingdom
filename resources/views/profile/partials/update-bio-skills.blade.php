@@ -43,19 +43,16 @@
                 
                 $final_text_quals = '';
                 $quals_users = App\Models\QualificationsUser::all()->where('user_id', '=', auth()->id());
-
-                
                 
                 foreach ($quals_users as $qual_user) {
                     $qual_name = App\Models\Qualification::where('qualification_id', '=', $qual_user->qualification_id)->first()->qualification_name;
                 
-                
-                
-                    $current_qual_text = $qual_name.',';
+                    $current_qual_text = $qual_name . ',';
                     $final_text_quals = $final_text_quals . $current_qual_text;
                 }
-
+                
                 // dd($final_text_quals);
+                
             @endphp
 
             <x-input-label for="skills">This box bellow is used for adding skills.</x-input-label>
@@ -232,7 +229,9 @@
                     class="text-sm text-gray-600">{{ __('Updated.') }}</p>
             @endif
 
-            <x-primary-button>{{ __('Update') }}</x-primary-button>
+            <x-primary-button class="flex flex-row items-center gap-2"><span class="material-symbols-rounded">
+                    save
+                </span>{{ __('Save') }}</x-primary-button>
         </div>
 
     </form>

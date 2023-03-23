@@ -13,14 +13,14 @@
     <div class="md:w-screen">
         <!-- Job Title and Salary Range -->
         <div class="flex flex-col items-center md:flex-row md:pt-5">
-            <h1 class="font-bold text-2xl"><a
+            <h1 class="font-bold text-2xl text-center md:text-left"><a
                     href="/vacancies/{{ $vacancy->vacancy_id }}">{{ $vacancy->vacancy_title }}</a> </h1>
             <p class="pt-5 md:pt-0 font-bold text-greenButtons md:ml-auto md:mr-10">${{ $vacancy->salary_range_lower }}
                 -
                 ${{ $vacancy->salary_range_upper }}</p>
         </div>
         <!-- Job Description -->
-        <div class="py-5 md:mr-2">
+        <div class="py-5 md:mr-5">
             <p class="px-5 md:px-0 text-sm text-gray-700">{{ $vacancy->vacancy_description }}</p>
         </div>
         <!-- Skills -->
@@ -102,6 +102,15 @@
                 @else
                     <x-qualification>None</x-qualification>
                 @endif
+
+                @php
+                    $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
+                @endphp
+
+                <!-- Check if the owner owns this organisation dont show apply button.-->
+                {{-- @if ($organisation->owner_id != auth()->id()) --}}
+
+
             </div>
         </div>
         <!-- Remove and Apply Buttons -->
@@ -117,6 +126,7 @@
                     </x-remove-button>
                 </form>
 
+
                 <a href="/vacancies/{{ $vacancy->vacancy_id }}/edit">
                     <x-secondary-button class="flex gap-2">
                         <span class="material-symbols-rounded">edit</span>
@@ -125,15 +135,60 @@
                 </a>
             @endif
 
-            <!-- Check if the owner owns this organisation dont show apply button.-->
-            @if ($organisation->owner_id != auth() -> id())
-                <x-primary-button class="flex gap-1">
+
+                <!-- Check if the owner owns this organisation dont show apply button.-->
+                {{-- @if ($organisation->owner_id != auth()->id()) --}}
+                {{-- <x-primary-button class="flex gap-1">
                     <span class="material-symbols-rounded">
                         handshake
                     </span>
                     Apply
+                </x-primary-button> --}}
+            @else
+                @php
+                    $is_eligible = checkEligibility(auth()->user(), $vacancy);
+                    // dd($is_eligible);
+                @endphp
+
+                @if ($is_eligible)
+                    @if ($user_vacancy)
+                        <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/unapply">
+                            @csrf
+                            @method('PUT')
+                            <x-primary-button class="flex gap-1">
+                                <span class="material-symbols-rounded">
+                                    handshake
+                                </span>
+                                Unapply
+                            </x-primary-button>
+                        </form>
+                    @else
+                        <form method="POST" action="/vacancies/{{ $vacancy->vacancy_id }}/apply">
+                            @csrf
+                            @method('PUT')
+
+                            <x-primary-button class="flex gap-1">
+                                <span class="material-symbols-rounded">
+                                    handshake
+                                </span>
+                                Apply
+                            </x-primary-button>
+                        </form>
+                    @endif
+                @else
+                <x-primary-button class="flex gap-1 disabled bg-slate-600 hover:bg-slate-800 focus:bg-slate-900 focus:ring-slate-600">
+                    <span class="material-symbols-rounded">
+                        heart_broken
+                    </span>
+                    Not Eligible
                 </x-primary-button>
+                @endif
+
+
             @endif
+
+
+
         </div>
     </div>
 </x-card-base>

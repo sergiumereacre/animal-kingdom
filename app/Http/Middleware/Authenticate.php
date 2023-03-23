@@ -15,11 +15,11 @@ class Authenticate extends Middleware
     {
         $current_user = User::all()->find(auth()->id());
 
-        if ($current_user->is_banned) {
+        if ($current_user && $current_user->is_banned) {
             abort(403, 'Unauthorized Action, you\'re banned!! Contact your superiors');
         }
 
-        dd($current_user);
+        // dd($current_user);
         // if()
 
         return $request->expectsJson() ? null : route('login');

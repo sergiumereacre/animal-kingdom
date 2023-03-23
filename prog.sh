@@ -10,6 +10,8 @@ FLAG_REFRESH="refresh"
 SAIL="./vendor/bin/sail"
 
 if [[ "$FLAG" = "$FLAG_START" ]]; then
+    echo "setting sail up"
+    $SAIL up -d
     echo "running npm dev"
     $SAIL npm run dev
 

@@ -17,7 +17,12 @@
 
 
             @if ($user->is_admin)
-                <p class="text-xl text-gray-700 font-thin text-center">This user is an admin</p>
+                <div class="flex flex-row gap-1 items-center mt-3 bg-red-800 p-1 rounded-md">
+                    <span class="material-symbols-rounded text-white">
+                        admin_panel_settings
+                    </span>
+                    <p class="text-xs text-white font-bold text-center">Administrator</p>
+                </div>
             @endif
         </div>
         <!-- Connect Button -->
@@ -42,8 +47,8 @@
                         @csrf
                         @method('PUT')
                         <x-remove-button class="flex items-center gap-2"><span class="material-symbols-rounded">
-                            person_remove
-                        </span>{{ __('Disconnect') }}</x-remove-button>
+                                person_remove
+                            </span>{{ __('Disconnect') }}</x-remove-button>
 
                     </form>
                 @else
@@ -51,10 +56,16 @@
                         @csrf
                         @method('PUT')
                         <x-primary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
-                            person_add
-                        </span>{{ __('Connect') }}</x-primary-button>
+                                person_add
+                            </span>{{ __('Connect') }}</x-primary-button>
                     </form>
                 @endif
+            @else
+                <a href="/profile/edit">
+                    <x-secondary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
+                            edit
+                        </span>{{ __('Edit Profile') }}</x-secondary-button>
+                </a>
             @endif
         </div>
         <!-- Profile info section -->

@@ -16,11 +16,13 @@ use App\Models\Vacancy;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Illuminate\Database\Query\Builder;
 
 class ProfileController extends Controller
 {
@@ -155,8 +157,14 @@ class ProfileController extends Controller
         foreach ($all_skills_unproc as $skill) {
             $skill_attr = explode(":", $skill);
 
-            $skill_name = $skill_attr[0];
-            $skill_level = $skill_attr[1];
+            $skill_name = 0;
+            $skill_level = 0;
+
+            if (count($skill_attr) == 2) {
+                $skill_name = $skill_attr[0];
+                $skill_level = $skill_attr[1];
+            }
+
 
             $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
             $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
@@ -253,6 +261,31 @@ class ProfileController extends Controller
     {
         $user->update(['is_banned' => !$user->is_banned]);
         return redirect()->back();
+    }
+
+    public function filter(Request $request){
+
+        // Category requirement. Going through each user. For each user, get their species. After that, check against category
+
+        // $users = User::where('id', '=', 1)->or;
+
+        $users = User::where(function (Builder $query) {
+            $query->select('category')
+            ->from('animal_species')
+            ->whereColumn('animal_species.species_id', 'users.species_id');
+        }, $request->category_requirement)
+        ->where(function (Builder $query) {
+            $query->select('category')
+            ->from('animal_species')
+            ->whereColumn('animal_species.species_id', 'users.species_id');
+        }, $request->category_requirement)->get();
+
+        dd($users);
+        
+
+        return view('profile.index', [
+            'users' => User::paginate(9)
+        ]);
     }
 
     public function toggleConnect(User $user)

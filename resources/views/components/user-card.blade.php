@@ -12,11 +12,19 @@
 
 <x-card-base class="md:flex md:flex-row md:max-w-xl">
     <!-- Avatar and Current Positon -->
-    <div class="flex flex-col items-center py-5 md:mx-5 md:pt-10 md:min-w-fit">
+    <div class="flex flex-col items-center py-5 md:mx-5 md:m-auto md:min-w-fit">
         <img class="w-36 h-36 object-fill mb-3 rounded-full shadow-lg aspect-square"
             src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png') }}"
             alt="Company Logo" />
         <span class="text-md text-gray-800 font-bold text-center">{{ $user->username }}</span>
+        @if ($user->is_admin)
+            <div class="flex flex-row gap-1 items-center mt-3 bg-red-800 p-1 rounded-md">
+                    <span class="material-symbols-rounded text-white">
+                        admin_panel_settings
+                    </span>
+                    <p class="text-xs text-white font-bold text-center">Administrator</p>
+            </div>
+        @endif
     </div>
     <div class="md:mr-5 md:max-w-sm">
         <!--User Name and Location-->

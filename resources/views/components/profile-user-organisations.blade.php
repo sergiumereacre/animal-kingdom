@@ -24,7 +24,7 @@
                         <form action="/organisations/{{ $organisation->organisation_id }}" class="pt-2 md:ml-auto" method="post">
                             @csrf
                             @method('DELETE')
-                            <x-remove-button><span class="material-symbols-rounded">delete</span></x-remove-button>
+                            <x-remove-button class="flex flex-row gap-1 items-center"><span class="material-symbols-rounded">delete</span>Remove</x-remove-button>
                         </form>
                         @endif
                     </div>
@@ -35,7 +35,10 @@
 
             @if ($user->id == auth()->id())
                 <a href="/organisations/create">
-                    <x-primary-button>
+                    <x-primary-button class="flex flex-row gap-2 items-center">
+                        <span class="material-symbols-rounded">
+                            home_work
+                            </span>
                         {{ __('Create New') }}
                     </x-primary-button>
                 </a>

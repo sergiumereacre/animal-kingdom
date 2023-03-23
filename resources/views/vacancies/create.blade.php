@@ -21,6 +21,12 @@
                     </div>
 
                     <div>
+                        <x-input-label for="vacancy_description">Vacancy Description</x-input-label>
+                        <textarea name="vacancy_description" id="vacancy_description" rows="10" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" placeholder="Description Details.">{{ old('vacancy_description') }}</textarea>
+                        <x-input-error class="mt-2" :messages="$errors->get('vacancy_description')" />
+                    </div>
+
+                    <div>
                         <x-input-label for="organisation_id">What organisation will this vacancy be under?
                         </x-input-label>
                         <x-select name="organisation_id" id="organisation_id" class="mt-1 block w-full">
@@ -283,20 +289,20 @@
                         }
                     </script>
 
-                    <div>
-                        <x-input-label for="vacancy_description">Vacancy Description</x-input-label>
-                        <textarea name="vacancy_description" id="vacancy_description" rows="10" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" placeholder="Description Details.">{{ old('vacancy_description') }}</textarea>
-                        <x-input-error class="mt-2" :messages="$errors->get('vacancy_description')" />
-                    </div>
-
                     <div class="flex justify-center gap-2 md:gap-5">
                         {{-- Possibly go straight to the created organisation page? --}}
                         <a href="{{ URL::previous() }}">
-                            <x-secondary-button>
+                            <x-secondary-button class="flex flex-row gap-1 items-center">
+                                <span class="material-symbols-rounded">
+                                    arrow_back
+                                    </span>
                                 {{ __('Go Back') }}
                             </x-secondary-button>
                         </a>
-                        <x-primary-button>
+                        <x-primary-button class="flex flex-row gap-2 items-center">
+                            <span class="material-symbols-rounded">
+                                work
+                                </span>
                             Create Vacancy
                         </x-primary-button>
                     </div>

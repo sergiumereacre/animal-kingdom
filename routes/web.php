@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\VacancyController;
 use App\Models\AnimalSpecies;
 use App\Models\Vacancy;
@@ -61,11 +62,11 @@ Route::get('/home', function () {
 })->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile')->middleware('auth');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+    Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal')->middleware('auth');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
     Route::delete('/users/{user}', [ProfileController::class, 'destroyOther'])->middleware('auth');
 
     // For viewing other users, possibly some exclusive to admins
@@ -86,7 +87,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 // Choose Controller class along with whatever method
-Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('home');
+Route::get('/vacancies/index', [VacancyController::class, 'index'])->name('home')->middleware('auth');
 
 // The convention is that if you want to do ANYTHING with stuff, prefix the path with 'vacancies'
 // Using the auth middleware, you'll be sent to a login page if you want to get to certain paths
@@ -98,7 +99,10 @@ Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth
 // Show Edit Form
 Route::get('/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->middleware('auth');
 
-Route::get('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->middleware('auth');
+Route::put('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->middleware('auth');
+
+Route::put('/vacancies/{vacancy}/unapply', [VacancyController::class, 'unapply'])->middleware('auth');
+
 
 // Updating Vacancy, Edit Submit to Update
 // Edit shows the form, update does the actual updating
@@ -112,11 +116,11 @@ Route::get('/vacancies/manage', [VacancyController::class, 'manage'])->middlewar
 
 // Make sure {vacancy} and Vacancy $vacancy match up
 // Make sure to put this towards the bottom if you plan to do other stuff with vacancies
-Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show']);
+Route::get('/vacancies/{vacancy}', [VacancyController::class, 'show'])->middleware('auth');
 
 // ========== ORGANISATIONS ================
 
-Route::get('/organisations/index', [OrganisationController::class, 'index'])->name('organisations.index');
+Route::get('/organisations/index', [OrganisationController::class, 'index'])->name('organisations.index')->middleware('auth');
 
 Route::get('/organisations/create', [OrganisationController::class, 'create'])->middleware('auth');
 
@@ -135,23 +139,31 @@ Route::put('/organisations', [OrganisationController::class, 'update'])->name('o
 
 Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
 
-Route::get('/organisations/{organisation}', [OrganisationController::class, 'show']);
+Route::get('/organisations/{organisation}', [OrganisationController::class, 'show'])->middleware('auth');
 
 // ========== ORGANISATIONS ================
 
 // ========== USERS ================
 
-Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index');
+Route::get('/users/index', [ProfileController::class, 'index'])->name('users.index')->middleware('auth');
+
+Route::post('/users/filter', [ProfileController::class, 'filter'])->name('users.filter')->middleware('auth');
 
 Route::put('/users/{user}/toggleBan', [ProfileController::class, 'toggleBan'])->middleware('auth');
 
 Route::put('/users/{user}/toggleConnect', [ProfileController::class, 'toggleConnect'])->middleware('auth');
 
-Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show');
+Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show')->middleware('auth');
 
 // ========== USERS ================
 
 Route::get('/settings', function () {
     return view('settings');
-})->name('settings');
+})->name('settings')->middleware('auth');
+
+// ========== SEARCH ==========
+
+Route::get('/search', [SearchController::class, 'query'])->name('search');
+
+// ========== SEARCH ==========
 
