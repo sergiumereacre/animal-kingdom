@@ -175,7 +175,7 @@
         <div id="filter-dropdown-filter-type"
             class="hidden absolute w-fit mt-2 origin-top-right bg-white border divide-y divide-gray-100 md:rounded-2xl focus:outline-none"
             role="menu" aria-orientation="vertical" aria-labelledby="filter-dropdown-button">
-            <div>
+            <div class="p-10 flex flex-col items-center gap-5">
                 <div class="flex flex-col gap-5 md:w-full">
 
                     <div>
