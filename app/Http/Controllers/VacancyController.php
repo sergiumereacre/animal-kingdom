@@ -13,7 +13,10 @@ use App\Models\SkillsVacancy;
 use App\Models\UsersVacancy;
 use App\Models\Vacancy;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
@@ -22,11 +25,40 @@ class VacancyController extends Controller
     // Some sort of index page for vacancies?
     public function index()
     {
+        $vacancies = Vacancy::category(request('category'))->canFly(request('can_fly'))->canSwim(request('can_swim'))->canClimb(request('can_climb'))->eatingStyle(request('eating_style'))->producesToxins(request('produces_toxins'))->size(request('size'))->speed(request('speed'))->numAppendages(request('num_appendages'))->paginate(8);
+
         // return vacancies inlcuding their respective organisations
         return view('vacancies.index', [
-            'vacancies' => Vacancy::paginate(6),
+            'vacancies' => $vacancies,
         ]);
+    }
 
+    public function recommended()
+    {
+        $vacancies = Vacancy::all();
+
+        // dd($vacancies);
+
+
+        foreach ($vacancies as $key => $vacancy) {
+            if (!checkEligibility(auth()->user(), $vacancy)) {
+                // dd($vacancy);
+                unset($vacancies[$key]);
+            }
+        }
+
+        // dd($vacancies);
+        // return vacancies inlcuding their respective organisations
+        return view('vacancies.index', [
+            'vacancies' => $this->paginateCollection($vacancies, 9),
+        ]);
+    }
+
+    public function paginateCollection($items, $perPage = 9, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     // Showing individual vacancy

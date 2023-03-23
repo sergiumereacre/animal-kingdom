@@ -176,13 +176,13 @@
         <div id="filter-dropdown-filter-type"
             class="hidden absolute w-fit mt-2 origin-top-right bg-white border divide-y divide-gray-100 md:rounded-2xl focus:outline-none"
             role="menu" aria-orientation="vertical" aria-labelledby="filter-dropdown-button">
-            <form method="POST" action="/users/filter" enctype="multipart/form-data"
-                class="p-10 flex flex-col items-center gap-5">
-                @csrf
+            <div>
                 <div class="flex flex-col gap-5 md:w-full">
+
                     <div>
-                        <x-input-label for="category_requirement">Category Requirement</x-input-label>
-                        <x-select name="category_requirement" id="category_requirement" class="mt-1 block w-full">
+                        <x-input-label for="category_requirement">Category</x-input-label>
+                        <x-select onchange="updateQuery()" name="category_requirement" id="category_requirement"
+                            class="mt-1 block w-full">
                             <option value="NULL">None</option>
                             <option value="MAMMAL">Mammal</option>
                             <option value="REPTILE">Reptile</option>
@@ -195,7 +195,8 @@
 
                     <div>
                         <x-input-label for="can_fly_requirement">Should applicants be able to fly?</x-input-label>
-                        <x-select name="can_fly_requirement" id="can_fly_requirement" class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="can_fly_requirement" id="can_fly_requirement"
+                            class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -205,7 +206,8 @@
 
                     <div>
                         <x-input-label for="can_swim_requirement">Should applicants be able to swim?</x-input-label>
-                        <x-select name="can_swim_requirement" id="can_swim_requirement" class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="can_swim_requirement" id="can_swim_requirement"
+                            class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -215,7 +217,8 @@
 
                     <div>
                         <x-input-label for="can_climb_requirement">Should applicants be able to climb?</x-input-label>
-                        <x-select name="can_climb_requirement" id="can_climb_requirement" class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="can_climb_requirement" id="can_climb_requirement"
+                            class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -225,8 +228,8 @@
 
                     <div>
                         <x-input-label for="eating_style_requirement">Eating Style Requirement</x-input-label>
-                        <x-select name="eating_style_requirement" id="eating_style_requirement"
-                            class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="eating_style_requirement"
+                            id="eating_style_requirement" class="mt-1 block w-full">
                             <option value="NULL">None</option>
                             <option value="HERBIVORE">Herbivore</option>
                             <option value="CARNIVORE">Carnivore</option>
@@ -238,8 +241,8 @@
                     <div>
                         <x-input-label for="produces_toxins_requirement">Should applicants be able to produce toxins?
                         </x-input-label>
-                        <x-select name="produces_toxins_requirement" id="produces_toxins_requirement"
-                            class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="produces_toxins_requirement"
+                            id="produces_toxins_requirement" class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="1">Yes</option>
                             <option value="0">No</option>
@@ -249,7 +252,8 @@
 
                     <div>
                         <x-input-label for="size_requirement">Size Requirement</x-input-label>
-                        <x-select name="size_requirement" id="size_requirement" class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="size_requirement" id="size_requirement"
+                            class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="SMALL">Small</option>
                             <option value="MEDIUM">Medium</option>
@@ -260,7 +264,8 @@
 
                     <div>
                         <x-input-label for="speed_requirement">Speed Requirement</x-input-label>
-                        <x-select name="speed_requirement" id="speed_requirement" class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="speed_requirement" id="speed_requirement"
+                            class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="SLOW">Slow</option>
                             <option value="MEDIUM">Medium</option>
@@ -272,8 +277,8 @@
                     <div>
                         <x-input-label for="num_appendages_requirement">How many appendages should applicants have?
                         </x-input-label>
-                        <x-select name="num_appendages_requirement" id="num_appendages_requirement"
-                            class="mt-1 block w-full">
+                        <x-select onchange="updateQuery()" name="num_appendages_requirement"
+                            id="num_appendages_requirement" class="mt-1 block w-full">
                             <option value="NULL">Doesn't matter</option>
                             <option value="NONE">No Appendages</option>
                             <option value="FEW">Few Appendages, e.g., 4</option>
@@ -315,7 +320,8 @@
 
                         <div class="flex flex-col items-center">
                             <p id="skills_error" hidden
-                                class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't have duplicate
+                                class="text-center text-white bg-redButtons w-max px-2 rounded-lg">
+                                Can't have duplicate
                                 skills.</p>
                         </div>
 
@@ -324,21 +330,6 @@
                             </x-primary-button>
                         </div>
                     </div>
-
-                    <script>
-                        function addSkill() {
-                            var skills_error = document.getElementById('skills_error');
-                            var skill_name = document.getElementById('skill_name').value;
-                            var skill_level = document.getElementById('skill_level').value;
-
-                            if (document.getElementById('skills_list').value.includes(skill_name)) {
-                                skills_error.style.display = "block";
-                            } else {
-                                document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
-                                skills_error.style.display = "none";
-                            }
-                        }
-                    </script>
 
                     @error('skills')
                         <p>{{ $message }}</p>
@@ -381,20 +372,6 @@
                         </div>
                     </div>
 
-                    <script>
-                        function addQualification() {
-                            var qualifications_error = document.getElementById('qualifications_error');
-                            var qualification_name = document.getElementById('qualification_name').value;
-
-                            if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
-                                qualifications_error.style.display = "block";
-                            } else {
-                                document.getElementById('qualifications_list').value += qualification_name.concat(",");
-                                qualifications_error.style.display = "none";
-                            }
-                        }
-                    </script>
-
                     @error('qualifications')
                         <p>{{ $message }}</p>
                     @enderror
@@ -402,15 +379,110 @@
 
                     <div class="flex justify-center gap-2 md:gap-5">
                         {{-- Possibly go straight to the created organisation page? --}}
-                        <x-primary-button class="flex flex-row gap-2 items-center">
-                            <span class="material-symbols-rounded">
-                                work
-                            </span>
-                            Search with filters
-                        </x-primary-button>
+                        <a id="final_query" href="/users/index/?=">
+                            <x-primary-button class="flex flex-row gap-2 items-center">
+                                <span class="material-symbols-rounded">
+                                    work
+                                </span>
+                                Search with filters
+                            </x-primary-button>
+                        </a>
+
                     </div>
                 </div>
-            </form>
+
+                <script>
+                    var final_query = document.getElementById("final_query");
+
+                    function updateQuery() {
+                        final_query.href = "/users/index/?";
+                        var cat = document.getElementById("category_requirement");
+                        if (cat.value != "NULL") {
+                            final_query.href += "category=" + cat.value + "&";
+                        }
+
+                        var fly = document.getElementById("can_fly_requirement");
+                        if (fly.value != "NULL") {
+                            final_query.href += "can_fly=" + fly.value + "&";
+                        }
+
+                        var swim = document.getElementById("can_swim_requirement");
+                        if (swim.value != "NULL") {
+                            final_query.href += "can_swim=" + swim.value + "&";
+                        }
+
+                        var climb = document.getElementById("can_climb_requirement");
+                        if (climb.value != "NULL") {
+                            final_query.href += "can_climb=" + climb.value + "&";
+                        }
+
+                        var eating_style = document.getElementById("eating_style_requirement");
+                        if (eating_style.value != "NULL") {
+                            final_query.href += "eating_style=" + eating_style.value + "&";
+                        }
+
+                        var produces_toxins = document.getElementById("produces_toxins_requirement");
+                        if (produces_toxins.value != "NULL") {
+                            final_query.href += "produces_toxins=" + produces_toxins.value + "&";
+                        }
+
+                        var size = document.getElementById("size_requirement");
+                        if (size.value != "NULL") {
+                            final_query.href += "size=" + size.value + "&";
+                        }
+
+                        var speed = document.getElementById("speed_requirement");
+                        if (speed.value != "NULL") {
+                            final_query.href += "speed=" + speed.value + "&";
+                        }
+
+                        var num_appendages = document.getElementById("num_appendages_requirement");
+                        if (num_appendages.value != "NULL") {
+                            final_query.href += "num_appendages=" + num_appendages.value + "&";
+                        }
+
+                        var skills = document.getElementById("skills_list");
+                        console.log("Value: " + skills.value);
+                        if (skills.value != "NULL") {
+                            final_query.href += "skills=" + skills.value + "&";
+                        }
+
+                        console.log(final_query);
+
+                    }
+
+                    function addSkill() {
+                        var skills_error = document.getElementById('skills_error');
+                        var skill_name = document.getElementById('skill_name').value;
+                        var skill_level = document.getElementById('skill_level').value;
+
+                        if (document.getElementById('skills_list').value.includes(skill_name)) {
+                            skills_error.style.display = "block";
+                        } else {
+                            document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
+                            skills_error.style.display = "none";
+                        }
+                        updateQuery();
+
+                    }
+
+                    function addQualification() {
+
+                        var qualifications_error = document.getElementById('qualifications_error');
+                        var qualification_name = document.getElementById('qualification_name').value;
+
+                        if (document.getElementById('qualifications_list').value.includes(qualification_name)) {
+                            qualifications_error.style.display = "block";
+                        } else {
+                            document.getElementById('qualifications_list').value += qualification_name.concat(",");
+                            qualifications_error.style.display = "none";
+                        }
+                        updateQuery();
+
+                    }
+                </script>
+
+            </div>
         </div>
     </div>
 
