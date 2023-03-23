@@ -52,6 +52,10 @@ class RegisteredUserController extends Controller
         $formFields['contact_number'] = $request->contact_number;
         $formFields['species_id'] = $request->species_id;
 
+        
+
+        $formFields['password'] = Hash::make($request->password);
+
         // $user = User::create([
         //     'first_name' => $request->first_name,
         //     // 'second_name' => $request->second_name,
