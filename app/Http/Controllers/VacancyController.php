@@ -22,9 +22,11 @@ class VacancyController extends Controller
     // Some sort of index page for vacancies?
     public function index()
     {
+        $vacancies = Vacancy::category(request('category'))->canFly(request('can_fly'))->canSwim(request('can_swim'))->canClimb(request('can_climb'))->eatingStyle(request('eating_style'))->producesToxins(request('produces_toxins'))->size(request('size'))->speed(request('speed'))->numAppendages(request('num_appendages'))->paginate(8);
+
         // return vacancies inlcuding their respective organisations
         return view('vacancies.index', [
-            'vacancies' => Vacancy::paginate(8),
+            'vacancies' => $vacancies,
         ]);
 
     }

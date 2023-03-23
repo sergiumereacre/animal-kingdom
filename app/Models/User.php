@@ -236,6 +236,71 @@ class User extends Authenticatable
         }
     }
 
+    public function scopeSkills($query, $skills)
+    {
+        $all_skills_unproc = array_filter(explode(",", $skills));
+
+        $all_skills = [];
+
+        // Processing skills. This basically creates an array where a user's skill is mapped to their level
+        foreach ($all_skills_unproc as $skill) {
+            $skill_attr = explode(":", $skill);
+
+            $skill_name = 0;
+            $skill_level = 0;
+
+            if (count($skill_attr) == 2) {
+                $skill_name = $skill_attr[0];
+                $skill_level = $skill_attr[1];
+            }
+
+
+            $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
+            $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
+
+            if ($level_exists && $name_exists) {
+                $all_skills[$skill_name] = $skill_level;
+            }
+        }
+
+        // dd($all_skills);
+
+        if ($skills ?? false) {
+            // if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
+            //     $query->join('animal_species', function ($join) {
+            //         $join->on('users.species_id', '=', 'animal_species.species_id')
+            //             ->where('num_appendages', '=', request('num_appendages'));
+            //     });
+            // } else {
+            //     $query->where('num_appendages', '=', request('num_appendages'));
+            // }
+
+            // $query->join('skills_users', function ($join) {
+            //     $join->on('users.id', '=', 'skills_users.user_id')
+            //         ->where('num_appendages', '=', request('num_appendages'));
+            // });
+
+            $query->join('skills_users', function ($join) {
+                $join->on('skills', function ($join) {
+                        $join->on('skills.skill_id', '=', 'skills_users.skill_id');
+                    
+                });
+            });
+
+            foreach ($all_skills as $name => $level) {
+
+            //     $query->where(['skill_name', '=', $name],
+            // ['skill_level', '=', $level]);
+            // $query->where('skill_name', '=', $name)->where(
+            // 'skill_level', '=', $level);
+
+            }
+
+            // dd($query);
+
+        }
+    }
+
     // public function scopeAnimalTraits($query, array $filters){
     //     foreach ($filters as $trait) {
     //         if ($trait ?? false) {

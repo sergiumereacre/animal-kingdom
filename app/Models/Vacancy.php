@@ -53,4 +53,80 @@ class Vacancy extends Model
     {
         return $this->belongsTo(Organisation::class, 'organisation_id', 'organisation_id');
     }
+
+    public function scopeCategory($query, $category)
+    {
+        if ($category ?? false) {
+            $query->where('category_requirement', '=', request('category'));
+        }
+    }
+
+    public function scopeCanFly($query, $can_fly)
+    {
+
+        if ($can_fly != null) {
+
+            $query->where('can_fly_requirement', '=', request('can_fly'));
+
+        }
+    }
+
+    public function scopeCanSwim($query, $can_swim)
+    {
+
+        $result = request('can_swim');
+
+        if ($can_swim != null) {
+
+            $query->where('can_swim_requirement', '=', request('can_swim'));
+
+        }
+    }
+
+    public function scopeCanClimb($query, $can_climb)
+    {
+        if ($can_climb != null) {
+            $query->where('can_climb_requirement', '=', request('can_climb'));
+
+        }
+    }
+
+    public function scopeEatingStyle($query, $eating_style)
+    {
+        if ($eating_style ?? false) {
+            $query->where('eating_style_requirement', '=', request('eating_style'));
+
+        }
+    }
+
+    public function scopeProducesToxins($query, $produces_toxins)
+    {
+        if ($produces_toxins != null) {
+            $query->where('produces_toxins_requirement', '=', request('produces_toxins'));
+
+        }
+    }
+
+    public function scopeSize($query, $size)
+    {
+        if ($size ?? false) {
+            $query->where('size_requirement', '=', request('size'));
+        }
+    }
+
+    public function scopeSpeed($query, $speed)
+    {
+        if ($speed ?? false) {
+            $query->where('speed_requirement', '=', request('speed'));
+
+        }
+    }
+
+    public function scopeNumAppendages($query, $num_appendages)
+    {
+        if ($num_appendages ?? false) {
+            $query->where('num_appendages_requirement', '=', request('num_appendages'));
+
+        }
+    }
 }

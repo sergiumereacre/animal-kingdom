@@ -64,8 +64,8 @@
             <div>
                 <x-input-label for="produces_toxins_requirement">Should applicants be able to produce toxins?
                 </x-input-label>
-                <x-select onchange="updateQuery()" name="produces_toxins_requirement"
-                    id="produces_toxins_requirement" class="mt-1 block w-full">
+                <x-select onchange="updateQuery()" name="produces_toxins_requirement" id="produces_toxins_requirement"
+                    class="mt-1 block w-full">
                     <option value="NULL">Doesn't matter</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -114,8 +114,8 @@
                 <x-input-label for="skills">All skills applicants should have. Please specify skill level
                     with colon and
                     separate with commas.</x-input-label>
-                <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full"
-                    placeholder="" value="{{ old('skills') }}"></x-text-input>
+                <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full" placeholder=""
+                    value="{{ old('skills') }}"></x-text-input>
             </div>
 
             <div class="flex flex-col gap-5">
@@ -219,48 +219,54 @@
             function updateQuery() {
                 final_query.href = "/users/index/?";
                 var cat = document.getElementById("category_requirement");
-                if (cat.value != "NULL"){
+                if (cat.value != "NULL") {
                     final_query.href += "category=" + cat.value + "&";
                 }
 
                 var fly = document.getElementById("can_fly_requirement");
-                if (fly.value != "NULL"){
+                if (fly.value != "NULL") {
                     final_query.href += "can_fly=" + fly.value + "&";
                 }
 
                 var swim = document.getElementById("can_swim_requirement");
-                if (swim.value != "NULL"){
+                if (swim.value != "NULL") {
                     final_query.href += "can_swim=" + swim.value + "&";
                 }
 
                 var climb = document.getElementById("can_climb_requirement");
-                if (climb.value != "NULL"){
+                if (climb.value != "NULL") {
                     final_query.href += "can_climb=" + climb.value + "&";
                 }
 
                 var eating_style = document.getElementById("eating_style_requirement");
-                if (eating_style.value != "NULL"){
+                if (eating_style.value != "NULL") {
                     final_query.href += "eating_style=" + eating_style.value + "&";
                 }
 
                 var produces_toxins = document.getElementById("produces_toxins_requirement");
-                if (produces_toxins.value != "NULL"){
+                if (produces_toxins.value != "NULL") {
                     final_query.href += "produces_toxins=" + produces_toxins.value + "&";
                 }
 
                 var size = document.getElementById("size_requirement");
-                if (size.value != "NULL"){
+                if (size.value != "NULL") {
                     final_query.href += "size=" + size.value + "&";
                 }
 
                 var speed = document.getElementById("speed_requirement");
-                if (speed.value != "NULL"){
+                if (speed.value != "NULL") {
                     final_query.href += "speed=" + speed.value + "&";
                 }
 
                 var num_appendages = document.getElementById("num_appendages_requirement");
-                if (num_appendages.value != "NULL"){
+                if (num_appendages.value != "NULL") {
                     final_query.href += "num_appendages=" + num_appendages.value + "&";
+                }
+
+                var skills = document.getElementById("skills_list");
+                console.log("Value: " + skills.value);
+                if (skills.value != "NULL") {
+                    final_query.href += "skills=" + skills.value + "&";
                 }
 
                 console.log(final_query);
@@ -268,7 +274,6 @@
             }
 
             function addSkill() {
-                updateQuery();
                 var skills_error = document.getElementById('skills_error');
                 var skill_name = document.getElementById('skill_name').value;
                 var skill_level = document.getElementById('skill_level').value;
@@ -279,10 +284,11 @@
                     document.getElementById('skills_list').value += skill_name.concat(":", skill_level, ",");
                     skills_error.style.display = "none";
                 }
+                updateQuery();
+
             }
 
             function addQualification() {
-                updateQuery();
 
                 var qualifications_error = document.getElementById('qualifications_error');
                 var qualification_name = document.getElementById('qualification_name').value;
@@ -293,6 +299,8 @@
                     document.getElementById('qualifications_list').value += qualification_name.concat(",");
                     qualifications_error.style.display = "none";
                 }
+                updateQuery();
+
             }
         </script>
 
