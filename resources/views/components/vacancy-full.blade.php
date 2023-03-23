@@ -272,6 +272,13 @@
                         Remove
                     </x-remove-button>
                 </form>
+                <a href="/vacancies/{{ $vacancy->vacancy_id }}/edit">
+                    <x-secondary-button class="flex gap-2">
+                        <span class="material-symbols-rounded">edit</span>
+                        Edit
+                    </x-secondary-button>
+                </a>
+
             @else
                 @php
                     $is_eligible = checkEligibility(auth()->user(), $vacancy);
@@ -312,7 +319,7 @@
                         Not Eligible
                     </x-primary-button>
                 @endif
-
+                
 
             @endif
 

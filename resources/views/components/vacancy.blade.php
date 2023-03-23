@@ -125,7 +125,16 @@
                         Remove
                     </x-remove-button>
                 </form>
-                {{-- @endif --}}
+
+
+                <a href="/vacancies/{{ $vacancy->vacancy_id }}/edit">
+                    <x-secondary-button class="flex gap-2">
+                        <span class="material-symbols-rounded">edit</span>
+                        Edit
+                    </x-secondary-button>
+                </a>
+            @endif
+
 
                 <!-- Check if the owner owns this organisation dont show apply button.-->
                 {{-- @if ($organisation->owner_id != auth()->id()) --}}

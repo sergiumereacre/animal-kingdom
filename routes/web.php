@@ -106,7 +106,7 @@ Route::put('/vacancies/{vacancy}/unapply', [VacancyController::class, 'unapply']
 
 // Updating Vacancy, Edit Submit to Update
 // Edit shows the form, update does the actual updating
-Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->middleware('auth');
+Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('vacancy.update');
 
 // Deletes vacancies
 Route::delete('/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->middleware('auth');
@@ -128,9 +128,13 @@ Route::post('/organisations', [OrganisationController::class, 'store'])->middlew
 
 Route::delete('/organisations/{organisation}', [OrganisationController::class, 'destroy'])->middleware('auth');
 
-Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->middleware('auth');
 
-Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->middleware('auth');
+// Edit organisation
+Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->name('organisations.update');
+
+// Update organisation
+
+Route::put('/organisations', [OrganisationController::class, 'update'])->name('organisation.update');
 
 
 Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
@@ -162,3 +166,4 @@ Route::get('/settings', function () {
 Route::get('/search', [SearchController::class, 'query'])->name('search');
 
 // ========== SEARCH ==========
+

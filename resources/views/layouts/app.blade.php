@@ -38,6 +38,7 @@
 
         </main>
     </div>
+    <x-flash-message />
 </body>
 <footer class="bg-white shadow">
     <div class="w-full container mx-auto p-4 md:px-6 md:py-8">
