@@ -99,6 +99,8 @@ Route::post('/vacancies', [VacancyController::class, 'store'])->middleware('auth
 // Show Edit Form
 Route::get('/vacancies/{vacancy}/edit', [VacancyController::class, 'edit'])->middleware('auth');
 
+Route::get('/vacancies/recommended', [VacancyController::class, 'recommended'])->middleware('auth');
+
 Route::put('/vacancies/{vacancy}/apply', [VacancyController::class, 'apply'])->middleware('auth');
 
 Route::put('/vacancies/{vacancy}/unapply', [VacancyController::class, 'unapply'])->middleware('auth');

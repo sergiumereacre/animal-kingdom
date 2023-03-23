@@ -210,6 +210,15 @@
                     </x-primary-button>
                 </a>
 
+                <a id="recommended" href="/vacancies/recommended">
+                    <x-primary-button class="flex flex-row gap-2 items-center">
+                        <span class="material-symbols-rounded">
+                            work
+                        </span>
+                        Get Suitable Vacancies
+                    </x-primary-button>
+                </a>
+
             </div>
         </div>
 

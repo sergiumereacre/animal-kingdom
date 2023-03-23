@@ -27,6 +27,10 @@ function checkEligibility(User $user, $vacancy)
 
     $eligible = true;
 
+    if($organisation->owner_id == $user->id){
+        $eligible = false;
+    }
+
     if ($vacancy->category_requirement && $vacancy->category_requirement != $species->category) {
         $eligible = false;
     }
