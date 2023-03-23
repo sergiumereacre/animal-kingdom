@@ -265,34 +265,15 @@ class User extends Authenticatable
         // dd($all_skills);
 
         if ($skills ?? false) {
-            // if ($query->getQuery()->joins == null || count($query->getQuery()->joins) == 0) {
-            //     $query->join('animal_species', function ($join) {
-            //         $join->on('users.species_id', '=', 'animal_species.species_id')
-            //             ->where('num_appendages', '=', request('num_appendages'));
-            //     });
-            // } else {
-            //     $query->where('num_appendages', '=', request('num_appendages'));
-            // }
-
-            // $query->join('skills_users', function ($join) {
-            //     $join->on('users.id', '=', 'skills_users.user_id')
-            //         ->where('num_appendages', '=', request('num_appendages'));
-            // });
-
             $query->join('skills_users', function ($join) {
-                $join->on('skills', function ($join) {
-                    $join->on('skills.skill_id', '=', 'skills_users.skill_id');
-                });
+                $join->on('id', '=', 'skills_users.user_id');
+
             });
 
-            foreach ($all_skills as $name => $level) {
+            $query->join('skills', function ($join) use ($all_skills) {
+                $join->on('skills.skill_id', '=', 'skills_users.skill_id')->whereIn('skill_name', $all_skills);
 
-                //     $query->where(['skill_name', '=', $name],
-                // ['skill_level', '=', $level]);
-                // $query->where('skill_name', '=', $name)->where(
-                // 'skill_level', '=', $level);
-
-            }
+            });
 
             // dd($query);
 
@@ -314,6 +295,10 @@ class User extends Authenticatable
 
             $query->join('qualifications', function ($join) use ($all_quals) {
                 $join->on('qualifications.qualification_id', '=', 'qualifications_users.qualification_id')->whereIn('qualification_name', $all_quals);
+
+                // foreach ($all_quals as $qual) {
+                //     $join->orWhereIn('qualification_name', $qual);
+                // }
 
             });
         }
