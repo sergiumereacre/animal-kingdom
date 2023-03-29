@@ -254,29 +254,58 @@ class User extends Authenticatable
             }
 
 
-            $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
+            $name_exists = Skill::all()->where('skill_name', '=', $skill_name)->first();
+            $skill_id = $name_exists->skill_id;
             $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
 
             if ($level_exists && $name_exists) {
-                $all_skills[$skill_name] = $skill_level;
+                // $all_skills[$skill_name] = $skill_level;
+                $all_skills[$skill_id] = $skill_level;
             }
         }
 
+
+        // dd($vacancy_skills);
+
+
         // dd($all_skills);
 
+        $eligible_users = [];
+
+
         if ($skills ?? false) {
-            $query->join('skills_users', function ($join) {
-                $join->on('id', '=', 'skills_users.user_id');
 
-            });
+            // Checking all users
+            foreach (User::all() as $user) {
+                $eligible = false;
+                $user_skills = SkillsUser::all()->where('user_id', '=', $user->id);
 
-            $query->join('skills', function ($join) use ($all_skills) {
-                $join->on('skills.skill_id', '=', 'skills_users.skill_id')->whereIn('skill_name', $all_skills);
+                // For each user, iterate through all required skills
+                foreach ($all_skills as $skill_id => $skill_level) {
+                    $eligible = false;
+                    // Compare required skill to all user skills to see if a match exists
+                    foreach ($user_skills as $user_skill) {
+                        if ($skill_id == $user_skill->skill_id) {
+                            if (!$skill_level || $skill_level == $user_skill->skill_level) {
+                                $eligible = true;
+                                break;
+                            }
+                        }
+                    }
 
-            });
+                    if (!$eligible) {
+                        break;
+                    }
+                }
+
+                if ($eligible) {
+                    $eligible_users[] = $user->id;
+                }
+            }
+
+            $query->whereIn('id', $eligible_users);
 
             // dd($query);
-
         }
     }
 
@@ -285,22 +314,46 @@ class User extends Authenticatable
         // Processing qualifications
         $all_quals = array_filter(explode(",", request()->qualifications));
 
-// dd($all_quals);
+        $qual_ids = [];
+
+        foreach ($all_quals as $qual_name) {
+            $name_exists = Qualification::all()->where('qualification_name', '=', $qual_name)->first();
+            $qual_id = $name_exists->qualification_id;
+            $qual_ids[] = $qual_id;
+        }
+
+
+        // dd($all_quals);
 
         if ($quals ?? false) {
-            $query->join('qualifications_users', function ($join) {
-                $join->on('id', '=', 'qualifications_users.user_id');
 
-            });
+            // Checking all users
+            foreach (User::all() as $user) {
+                $eligible = false;
+                $user_quals = QualificationsUser::all()->where('user_id', '=', $user->id);
 
-            $query->join('qualifications', function ($join) use ($all_quals) {
-                $join->on('qualifications.qualification_id', '=', 'qualifications_users.qualification_id')->whereIn('qualification_name', $all_quals);
+                // For each user, iterate through all required skills
+                foreach ($qual_ids as $qual_id) {
+                    $eligible = false;
+                    // Compare required skill to all user skills to see if a match exists
+                    foreach ($user_quals as $user_qual) {
+                        if ($qual_id == $user_qual->qualification_id) {
+                            $eligible = true;
+                            break;
+                        }
+                    }
 
-                // foreach ($all_quals as $qual) {
-                //     $join->orWhereIn('qualification_name', $qual);
-                // }
+                    if (!$eligible) {
+                        break;
+                    }
+                }
 
-            });
+                if ($eligible) {
+                    $eligible_users[] = $user->id;
+                }
+            }
+            $query->whereIn('id', $eligible_users);
+
         }
     }
 

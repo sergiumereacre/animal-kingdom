@@ -87,8 +87,10 @@ function checkEligibility(User $user, $vacancy)
 
             foreach ($user_skills as $user_skill) {
                 if (!$vacancy_skill->skill_level || $vacancy_skill->skill_id == $user_skill->skill_id) {
-                    $eligible = true;
-                    break;
+                    if($vacancy_skill->skill_level == $user_skill->skill_level){
+                        $eligible = true;
+                        break;
+                    }
                 }
             }
         }
