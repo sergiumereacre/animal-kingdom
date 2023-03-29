@@ -461,6 +461,12 @@
                             final_query.href += "skills=" + skills.value + "&";
                         }
 
+                        var quals = document.getElementById("qualifications_list");
+                        console.log("Value: " + quals.value);
+                        if (quals.value != "NULL") {
+                            final_query.href += "qualifications=" + quals.value + "&";
+                        }
+
                         console.log(final_query);
 
                     }
@@ -498,9 +504,9 @@
 
             </div>
         </div>
-       
 
-   
+
+
     </div>
 
     <div class="pt-10 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
@@ -516,7 +522,7 @@
     <div class="p-10">
         {{ $vacancies->links() }}
     </div>
-{{-- 
+{{--
     <div class="pt-5 md:pt-10 px-12 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
     </div> --}}
 </x-app-layout>

@@ -129,4 +129,120 @@ class Vacancy extends Model
 
         }
     }
+
+    public function scopeSkills($query, $skills)
+    {
+        $all_skills_unproc = array_filter(explode(",", $skills));
+
+        $all_skills = [];
+
+        // Processing skills. This basically creates an array where a user's skill is mapped to their level
+        foreach ($all_skills_unproc as $skill) {
+            $skill_attr = explode(":", $skill);
+
+            $skill_name = 0;
+            $skill_level = 0;
+
+            if (count($skill_attr) == 2) {
+                $skill_name = $skill_attr[0];
+                $skill_level = $skill_attr[1];
+            }
+
+
+            $name_exists = Skill::all()->where('skill_name', '=', $skill_name)->first();
+            $skill_id = $name_exists->skill_id;
+            $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
+
+            if ($level_exists && $name_exists) {
+                // $all_skills[$skill_name] = $skill_level;
+                $all_skills[$skill_id] = $skill_level;
+            }
+        }
+
+
+
+        $eligible_vacancies = [];
+
+
+        if ($skills ?? false) {
+
+            foreach (Vacancy::all() as $vacancy) {
+                $eligible = false;
+                $vacancy_skills = SkillsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+
+                foreach ($all_skills as $skill_id => $skill_level) {
+                    $eligible = false;
+                    foreach ($vacancy_skills as $vacancy_skill) {
+                        if ($skill_id == $vacancy_skill->skill_id) {
+                            if (!$skill_level || $skill_level == $vacancy_skill->skill_level) {
+                                $eligible = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!$eligible) {
+                        break;
+                    }
+                }
+
+                if ($eligible) {
+                    $eligible_vacancies[] = $vacancy->vacancy_id;
+                }
+            }
+
+            $query->whereIn('vacancy_id', $eligible_vacancies);
+
+            // dd($query);
+        }
+    }
+
+    public function scopeQualifications($query, $quals)
+    {
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", request()->qualifications));
+
+        $qual_ids = [];
+
+        foreach ($all_quals as $qual_name) {
+            $name_exists = Qualification::all()->where('qualification_name', '=', $qual_name)->first();
+            $qual_id = $name_exists->qualification_id;
+            $qual_ids[] = $qual_id;
+        }
+
+        $eligible_vacancies = [];
+        // dd($all_quals);
+
+        if ($quals ?? false) {
+
+            // Checking all users
+            foreach (Vacancy::all() as $vacancy) {
+                $eligible = false;
+                $vacancy_quals = QualificationsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+
+                // For each user, iterate through all required skills
+                foreach ($qual_ids as $qual_id) {
+                    $eligible = false;
+                    // Compare required skill to all user skills to see if a match exists
+                    foreach ($vacancy_quals as $vacancy_qual) {
+                        if ($qual_id == $vacancy_qual->qualification_id) {
+                            $eligible = true;
+                            break;
+                        }
+                    }
+
+                    if (!$eligible) {
+                        break;
+                    }
+                }
+
+                if ($eligible) {
+                    $eligible_vacancies[] = $vacancy->vacancy_id;
+                }
+            }
+            // dd($eligible_vacancies);
+            $query->whereIn('vacancy_id', $eligible_vacancies);
+
+        }
+    }
 }
