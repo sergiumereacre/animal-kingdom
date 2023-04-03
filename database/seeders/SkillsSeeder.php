@@ -13,7 +13,12 @@ class SkillsSeeder extends Seeder
      */
     public function run(): void
     {
-        Skill::factory(10)->create();
+        \App\Models\Skill::factory(10)->create();
+        
+        Skill::factory()->create([
+            'skill_name' => 'Gambling',
+            'skill_description' => 'A user\'s proficiency in the art of leaving their fate to Lady Luck.'
+        ]);
 
     }
 }

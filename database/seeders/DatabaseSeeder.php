@@ -31,8 +31,5 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
         ]);
 
-
-
-
     }
 }
