@@ -15,10 +15,24 @@ class SkillsSeeder extends Seeder
     {
         \App\Models\Skill::factory(10)->create();
         
-        Skill::factory()->create([
-            'skill_name' => 'Gambling',
-            'skill_description' => 'A user\'s proficiency in the art of leaving their fate to Lady Luck.'
-        ]);
+        $data = [
+            [
+                'skill_name' => 'Gambling',
+                'skill_description' => 'A user\'s proficiency in the art of leaving their fate to Lady Luck.'    
+            ],
+            [
+                'skill_name' => 'Java',
+                'skill_description' => 'A user\'s proficiency in the Java programming language.'    
+            ],
+        ];
+
+
+        Skill::insert($data);
+
+        // Skill::factory()->create([
+        //     'skill_name' => 'Gambling',
+        //     'skill_description' => 'A user\'s proficiency in the art of leaving their fate to Lady Luck.'
+        // ]);
 
     }
 }

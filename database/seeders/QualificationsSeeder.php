@@ -15,9 +15,17 @@ class QualificationsSeeder extends Seeder
     {
         Qualification::factory(10)->create();
 
-        Qualification::factory()->create([
-            'qualification_name' => 'Licensed Forklifter',
-            'qualification_description' => 'A license issued by the National Forklift Administration.'
-        ]);
+        $data = [
+            [
+                'qualification_name' => 'Licensed Forklifter',
+                'qualification_description' => 'A license issued by the National Forklift Administration.'
+            ],
+            [
+                'qualification_name' => 'BSc Computer Science',
+                'qualification_description' => 'A Bachelor\'s degree in Computer Science.'
+            ],
+        ];
+
+        Qualification::insert($data);
     }
 }
