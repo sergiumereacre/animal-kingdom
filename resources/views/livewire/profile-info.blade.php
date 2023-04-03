@@ -1,4 +1,4 @@
-@props(['user', 'species', 'connections_num'])
+{{-- @props(['user', 'species', 'connections_num']) --}}
 
 <x-card-base class="max-w-md w-full h-max md:max-w-md">
     <div class="py-10 px-16 flex flex-col items-center gap-5">
@@ -9,6 +9,8 @@
             <img class="h-56 w-56 rounded-full shadow-lg border-greenButtons border-4"
                 src="{{ $user->profile_pic ? asset('storage/' . $user->profile_pic) : asset('img/logo.png') }}"
                 alt="Company Logo" />
+            {{-- <h1>{{$counter}}</h1> --}}
+
             <h1 class="text-4xl text-black font-black text-center p-5">{{ $user->first_name }} {{ $user->last_name }}
             </h1>
             {{-- <p class="text-xl text-gray-700 font-thin text-center">Software Engineer</p> --}}
@@ -43,22 +45,21 @@
         <div>
             @if ($user->id != auth()->id())
                 @if ($connection)
-                    <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
-                        @csrf
-                        @method('PUT')
-                        <x-remove-button class="flex items-center gap-2"><span class="material-symbols-rounded">
-                                person_remove
-                            </span>{{ __('Disconnect') }}</x-remove-button>
+   
 
-                    </form>
+                    <x-remove-button class="flex items-center gap-2" wire:click="refreshConnections({{$user}})">  <a
+                        href="{{ route('user.toggle-connect', $user) }}"></a><span class="material-symbols-rounded">
+                            person_remove
+                        </span>{{ __('Disconnect') }}</x-remove-button>
                 @else
-                    <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
-                        @csrf
-                        @method('PUT')
-                        <x-primary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
-                                person_add
-                            </span>{{ __('Connect') }}</x-primary-button>
-                    </form>
+                    <x-primary-button wire:click="refreshConnections({{$user}})" class="flex items-center gap-2">
+                        <a
+                        href="{{ route('user.toggle-connect', $user) }}"></a><span class="material-symbols-rounded">
+                            person_add
+                        </span>{{ __('Connect') }}
+                    </x-primary-button>
+
+                  
                 @endif
             @else
                 <a href="/profile/edit">

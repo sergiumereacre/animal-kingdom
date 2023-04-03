@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Vacancy;
 use App\Models\Organisation;
 use App\Models\AnimalSpecies;
+use App\Models\Connection;
 use App\Models\QualificationsUser;
 use App\Models\QualificationsVacancy;
 use App\Models\SkillsUser;
@@ -129,4 +130,26 @@ function checkEligibility(User $user, $vacancy)
 
     return $eligible;
 }
-?>
+
+function toggleConnect(User $user)
+    {
+        
+        // dd('Testing function');
+        $connection = Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
+            ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
+            ->first();
+
+        if ($connection) {
+            $connection->delete();
+        } else {
+            Connection::create([
+                'first_user_id' => auth()->id(),
+                'second_user_id' => $user->id,
+                'time_created' => Carbon::now(),
+            ]);
+        }
+
+
+        // $user->update(['is_banned' => !$user->is_banned]);
+        // return redirect()->back();
+    }

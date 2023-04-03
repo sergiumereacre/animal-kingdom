@@ -298,7 +298,8 @@ class ProfileController extends Controller
 
     public function toggleConnect(User $user)
     {
-
+        
+        dd('Testing function');
         $connection = Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
             ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
             ->first();
@@ -315,6 +316,6 @@ class ProfileController extends Controller
 
 
         // $user->update(['is_banned' => !$user->is_banned]);
-        return redirect()->back();
+        // return redirect()->back();
     }
 }

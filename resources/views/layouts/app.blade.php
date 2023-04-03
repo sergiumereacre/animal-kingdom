@@ -16,6 +16,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased">
@@ -39,6 +41,8 @@
         </main>
     </div>
     <x-flash-message />
+
+    @livewireScripts
 </body>
 <footer class="bg-white shadow">
     <div class="w-full container mx-auto p-4 md:px-6 md:py-8">

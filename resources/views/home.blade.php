@@ -23,6 +23,7 @@
                         <x-profile-qualifications :quals="$quals"></x-profile-qualifications>
                     </div>
                     <x-profile-connections :connected_users="$connected_users" class=" min-h-full"></x-profile-connections>
+                    {{-- <livewire:profile-connections :connected_users="$connected_users" class=" min-h-full"/> --}}
                 </div>
                 <x-profile-user-organisations :user="$user"></x-profile-user-organisations>
             </div>

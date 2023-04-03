@@ -13,6 +13,8 @@
 
 
         <div class="flex flex-col lg:flex-row gap-5">
+            <livewire:profile-info :user="$user" :species="$species" connections_num="{{ $connected_users->count() }}" class=" min-h-full"/>
+
             <x-profile-info :user="$user" :species="$species" connections_num="{{ $connected_users->count() }}">
             </x-profile-info>
             <div class="flex flex-col items-center gap-5">
@@ -25,6 +27,10 @@
                         <x-profile-qualifications :quals="$quals"></x-profile-qualifications>
                     </div>
                     <x-profile-connections :connected_users="$connected_users"></x-profile-connections>
+
+                    
+                    <livewire:profile-connections :user="$user" class=" min-h-full"/>
+
                 </div>
                 <x-profile-user-organisations :user="$user"></x-profile-user-organisations>
             </div>

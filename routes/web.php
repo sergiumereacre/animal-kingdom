@@ -153,7 +153,7 @@ Route::post('/users/filter', [ProfileController::class, 'filter'])->name('users.
 
 Route::put('/users/{user}/toggleBan', [ProfileController::class, 'toggleBan'])->middleware('auth');
 
-Route::put('/users/{user}/toggleConnect', [ProfileController::class, 'toggleConnect'])->middleware('auth');
+Route::put('/users/{user}/toggleConnect', [ProfileController::class, 'toggleConnect'])->middleware('auth')->name('user.toggle-connect');
 
 Route::get('/users/{user}', [ProfileController::class, 'show'])->name('user.show')->middleware('auth');
 
