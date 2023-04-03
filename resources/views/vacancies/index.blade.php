@@ -416,7 +416,7 @@
                     <div class="flex justify-center gap-2 md:gap-5">
                         {{-- Possibly go straight to the created organisation page? --}}
                         <a id="final_query" href="/vacancies/index/?=">
-                            <x-primary-button class="flex flex-row gap-2 items-center bg-gray-600 hover:bg-gray-800">
+                            <x-primary-button class="flex flex-row gap-2 items-center">
                                 <span class="material-symbols-rounded">
                                     filter_alt
                                 </span>

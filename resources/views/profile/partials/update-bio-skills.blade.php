@@ -106,11 +106,51 @@
 
             <div>
                 <x-input-label for="skills_level_select">Select skill level.</x-input-label>
-                <x-select id="skill_level" name="skills_level_select" class="mt-1 block w-full">
-                    <option value="BEGINNER">Beginner</option>
-                    <option value="INTERMEDIATE">Intermediate</option>
-                    <option value="EXPERT">Expert</option>
-                </x-select>
+                <ul
+                    id="skill_level" name="skills_level_select" value="BEGINNER"
+                    class="items-center w-full text-sm font-medium text-gray-900 bg-white border flex shadow-sm border-gray-300 rounded-lg">
+                    <li
+                        class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                        <div class="flex flex-row items-center pl-3">
+                            <input id="horizontal-list-radio-beginner" type="radio" checked
+                                value="BEGINNER" name="list-radio"
+                                class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
+                            <label for="horizontal-list-radio-beginner"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Beginner</label>
+                        </div>
+                    </li>
+                    <li
+                        class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-intermediate" type="radio" value="INTERMEDIATE"
+                                name="list-radio"
+                                class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
+                            <label for="horizontal-list-radio-intermediate"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Intermediate</label>
+                        </div>
+                    </li>
+                    <li
+                        class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                        <div class="flex items-center pl-3">
+                            <input id="horizontal-list-radio-expert" type="radio"
+                                value="EXPERT" name="list-radio"
+                                class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
+                            <label for="horizontal-list-radio-expert"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Expert</label>
+                        </div>
+                    </li>
+                </ul>
+                <script>
+                    // Make default value of skill level BEGINNER
+                    document.getElementById('skill_level').value = 'BEGINNER';
+                    // If radio button is clicked, update the value of skill level
+                    document.querySelectorAll('input[name="list-radio"]').forEach((el) => {
+                        el.addEventListener('click', (e) => {
+                            document.getElementById('skill_level').value = e.target.value;
+                        });
+                    });
+                </script>
+
             </div>
 
             <div class="flex flex-col items-center">
@@ -199,8 +239,8 @@
             </div>
 
             <div class="flex flex-col items-center">
-                <x-primary-button onclick="addQualification()" type="button">Add Qualification
-                </x-primary-button>
+                <x-secondary-button onclick="addQualification()" type="button">Add Qualification
+                </x-secondary-button>
             </div>
         </div>
 

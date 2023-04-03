@@ -7,21 +7,33 @@
             <div class="flex items-center justify-center w-full">
                 <label for="profile_pic"
                     class="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-80 hover:bg-gray-100">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                            </path>
-                        </svg>
-                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span></p>
-                        <p class="text-xs text-gray-500">SVG, PNG, JPG and GIF</p>
-                    </div>
-                    <input id="profile_pic" type="file" name="profile_pic" class="hidden" />
+                        <img class="w-40 h-40 rounded-xl" id="profile_pic_preview" src="{{ asset('img/logo.png') }}"
+                            alt="Rounded avatar">
+                    <input id="profile_pic" type="file" name="profile_pic" class="hidden"
+                        onchange="validateFileType()" accept="image/png, image/gif, image/jpeg" />
                 </label>
             </div>
             <x-input-error class="mt-2" :messages="$errors->get('profile_pic')" />
         </div>
+
+        <script>
+            // Method that validates the file input to only be jpeg png or gif
+            function validateFileType() {
+                var profile_pic = document.getElementById("profile_pic").value;
+                var idxDot = profile_pic.lastIndexOf(".") + 1;
+                var extFile = profile_pic.substr(idxDot, profile_pic.length).toLowerCase();
+                if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" || extFile == "gif") {
+                    // Change preview image to the uploaded image
+                    var oFReader = new FileReader();
+                    oFReader.readAsDataURL(document.getElementById("profile_pic").files[0]);
+                    oFReader.onload = function(oFREvent) {
+                        document.getElementById("profile_pic_preview").src = oFREvent.target.result;
+                    };
+                } else {
+                    alert("Only jpg/jpeg, png and gif files are allowed!");
+                }
+            }
+        </script>
 
 
         <!-- First Name -->
