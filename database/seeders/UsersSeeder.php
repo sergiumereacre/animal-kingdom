@@ -21,6 +21,7 @@ class UsersSeeder extends Seeder
     {
         \App\Models\User::factory()
         ->has(Organisation::factory()->count(3), 'organisations')
+        ->has(SkillsUser::factory()->count(8), 'skillsUsers')
         ->create([
             'username' => 'test',
             'email' => 'test@test.com',
@@ -43,6 +44,7 @@ class UsersSeeder extends Seeder
         \App\Models\User::factory(10)
         ->has(Organisation::factory()->count(3)
         ->has(Vacancy::factory()->count(4), 'vacancies'), 'organisations')
+        ->has(SkillsUser::factory()->count(3), 'skillsUsers')
         ->create([
             'password' => Hash::make('test'),
         ]);
