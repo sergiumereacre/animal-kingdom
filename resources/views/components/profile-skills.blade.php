@@ -1,6 +1,6 @@
 @props(['skills'])
 
-<x-card-base class="max-w-md w-ful md:max-w-2xl">
+<x-card-base class="max-w-md w-full md:max-w-2xl">
     <div class="p-10">
         <!-- User avatar and name -->
         <div class="flex flex-col">

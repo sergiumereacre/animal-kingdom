@@ -1,6 +1,6 @@
 @props(['vacancy','user'])
 
-<x-card-base class="max-w-md w-full md:max-w-6xl">
+<x-card-base class="max-w-md w-full md:max-w-7xl">
     <div class="flex flex-col p-10">
         <!-- Card Name -->
         <h1 class="text-3xl text-black font-black pb-3">Organisations Owned</h1>

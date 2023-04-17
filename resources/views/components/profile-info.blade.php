@@ -1,6 +1,6 @@
 @props(['user', 'species', 'connections_num'])
 
-<x-card-base class="max-w-md w-full h-max md:max-w-md">
+<x-card-base class="max-w-md w-full h-max md:max-w-sm">
     <div class="py-10 px-16 flex flex-col items-center gap-5">
         <!-- User avatar and name -->
         <div class="flex flex-col items-center">
