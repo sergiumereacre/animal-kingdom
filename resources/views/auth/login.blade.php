@@ -45,7 +45,7 @@
                     <x-secondary-button class="ml-3 flex gap-1">
                         <span class="material-symbols-rounded">
                             design_services
-                            </span>
+                        </span>
                         {{ __('Sign Up') }}
                     </x-secondary-button>
                 </a>
@@ -53,10 +53,11 @@
                 <x-primary-button class="ml-3 flex gap-1">
                     <span class="material-symbols-rounded">
                         login
-                        </span>
+                    </span>
                     {{ __('Log In') }}
                 </x-primary-button>
             </div>
         </div>
     </form>
+
 </x-guest-layout>
