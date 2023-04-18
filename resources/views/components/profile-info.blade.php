@@ -29,15 +29,12 @@
 
         {{-- Check if connection exists --}}
         @php
-            // $connections = Illuminate\Support\Facades\DB::table('connections')
-            // ->where(['first_user_id' => auth()->id(), 'second_user_id' => $user->id])
-            // ->orWhere(['first_user_id' => $user->id, 'second_user_id' => auth()->id()])->get();
-            
+
             // Check if connection exists
             $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
                 ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
                 ->first();
-            
+
         @endphp
 
         <div>

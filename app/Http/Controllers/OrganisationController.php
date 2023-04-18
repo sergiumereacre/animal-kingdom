@@ -19,15 +19,6 @@ class OrganisationController extends Controller
         ]);
     }
 
-    // Showing individual organisation
-    // public function show(Organisation $organisation){
-    //     // return view('organisations.show');
-
-    //     return view('organisation.show', [
-    //         'organisation' => $organisation
-    //     ]);
-    // }
-
     // REMEMBER TO SWITCH ALL REQUESTS TO ORGANISATIONS FOR DEPENDENCY INJECTION
 
     public function show(Organisation $organisation)
@@ -78,7 +69,6 @@ class OrganisationController extends Controller
     {
         //dd($organisation->email);
         return view('organisations.edit',['organisation' => $organisation]);
-        // return view('organisations.edit', ['organisation' => $organisation]);
     }
 
     // Attempt to update organisation

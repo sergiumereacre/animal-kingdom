@@ -1,7 +1,5 @@
 @props(['connected_users'])
 
-
-
 <x-card-base class="max-w-md md:w-max md:max-w-md">
     <div class="p-10">
         <!-- User avatar and name -->
