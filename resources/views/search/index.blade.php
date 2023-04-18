@@ -11,8 +11,8 @@
                     <button id="main-dropdown-button" data-dropdown-toggle="main-dropdown-search-type"
                         class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
                         type="button">
-                        <span class="material-symbols-rounded text-greenButtons">work</span>
-                        Vacancies <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                        <span class="material-symbols-rounded text-greenButtons">pets</span>
+                        All <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -23,6 +23,18 @@
                     <div id="main-dropdown-search-type"
                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40">
                         <ul id="main-list" class="py-2 text-sm text-gray-700" aria-labelledby="main-dropdown-button">
+                            <li>
+                                <button type="button" id="All"
+                                    class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    role="menuitem">
+                                    <div class="inline-flex items-center gap-2">
+                                        <span class="material-symbols-rounded text-greenButtons">
+                                            pets
+                                        </span>
+                                        All
+                                    </div>
+                                </button>
+                            </li>
                             <li>
                                 <button type="button"
                                     class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

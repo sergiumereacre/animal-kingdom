@@ -18,8 +18,8 @@
             {{-- <x-profile-info :user="$user" :species="$species" connections_num="{{ $connected_users->count() }}">
             </x-profile-info> --}}
             <div class="flex flex-col items-center gap-5">
-                <div class="flex lg:flex-row items-center gap-5 flex-col">
-                    <div class="flex flex-col items-center gap-5">
+                <div class="flex lg:flex-row items-center gap-5 flex-col w-full">
+                    <div class="flex flex-col items-center gap-5 w-full">
                         <x-profile-bio :bio="$user->bio"></x-profile-bio>
 
 

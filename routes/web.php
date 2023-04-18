@@ -68,20 +68,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal')->middleware('auth');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
     Route::delete('/users/{user}', [ProfileController::class, 'destroyOther'])->middleware('auth');
-
-    // For viewing other users, possibly some exclusive to admins
-    // Route::get('/users/index', [ProfileController::class, 'index']);
-
-    // Route::get('/users/{organisation}/edit', [ProfileController::class, 'edit'])->middleware('auth');
-
-    // Route::put('/users/{organisation}', [ProfileController::class, 'update'])->middleware('auth');
-
-    // Route::delete('/users/{organisation}', [ProfileController::class, 'destroy'])->middleware('auth');
-
-    // Route::get('/users/manage', [ProfileController::class, 'manage'])->middleware('auth');
-
-    // Route::get('/organisations/{organisation}', [ProfileController::class, 'show']);
-
 });
 
 require __DIR__ . '/auth.php';

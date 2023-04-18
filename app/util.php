@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Models\Vacancy;
 use App\Models\Organisation;
 use App\Models\AnimalSpecies;
 use App\Models\Connection;
@@ -9,8 +8,6 @@ use App\Models\QualificationsUser;
 use App\Models\QualificationsVacancy;
 use App\Models\SkillsUser;
 use App\Models\SkillsVacancy;
-use App\Models\UsersVacancy;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 function checkEligibility(User $user, $vacancy)

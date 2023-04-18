@@ -17,7 +17,7 @@
             <x-input-label for="bio">Profile Bio</x-input-label>
             <textarea name="bio" id="bio" rows="6" type="text"
                 class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
-                required autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
+                autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
 
@@ -27,32 +27,32 @@
             @php
                 $final_text_skills = '';
                 $skills_users = App\Models\SkillsUser::all()->where('user_id', '=', auth()->id());
-                
+
                 // We need to get the level and name of each
                 foreach ($skills_users as $skill_user) {
                     $skill_name = App\Models\Skill::where('skill_id', '=', $skill_user->skill_id)->first()->skill_name;
-                
+
                     // dd($skill_name);
-                
+
                     $skill_level = $skill_user->skill_level;
-                
+
                     $current_skill_text = $skill_name . ':' . $skill_level . ',';
                     $final_text_skills = $final_text_skills . $current_skill_text;
                     // dd($current_skill_text);
                 }
-                
+
                 $final_text_quals = '';
                 $quals_users = App\Models\QualificationsUser::all()->where('user_id', '=', auth()->id());
-                
+
                 foreach ($quals_users as $qual_user) {
                     $qual_name = App\Models\Qualification::where('qualification_id', '=', $qual_user->qualification_id)->first()->qualification_name;
-                
+
                     $current_qual_text = $qual_name . ',';
                     $final_text_quals = $final_text_quals . $current_qual_text;
                 }
-                
+
                 // dd($final_text_quals);
-                
+
             @endphp
 
             <x-input-label for="skills">This box bellow is used for adding skills.</x-input-label>

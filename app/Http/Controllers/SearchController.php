@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organisation;
-use App\Models\Vacancy;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,15 +14,11 @@ class SearchController extends Controller
 
     public function query(Request $request)
     {
-        //TODO: validate $request
-        //TODO: extend search to have toggleable skills
-
         $searchString = $request->input('search');
         if ($searchString == null) $searchString = '';
         $searchTerms = explode(' ', $searchString);
 
         $category = $request->input('category');
-        // dd($category);
         $userResults = null;
         $organisationResults = null;
         $vacancyResults = null;
@@ -61,15 +54,8 @@ class SearchController extends Controller
                 if ($count > 0) $vacancyResults = $this->replaceVacancies($vacancyResults);
             }
         }
-    
+
         return view('search.index', ['users' => $userResults, 'organisations' => $organisationResults,'vacancies' => $vacancyResults]);
-    }
-
-
-    //validation
-    private function validateSearchRequest($searchTerms)
-    {
-        //TODO
     }
 
     //running queries
