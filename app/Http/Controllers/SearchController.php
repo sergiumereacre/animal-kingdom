@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organisation;
-use App\Models\Vacancy;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -57,7 +54,7 @@ class SearchController extends Controller
                 if ($count > 0) $vacancyResults = $this->replaceVacancies($vacancyResults);
             }
         }
-    
+
         return view('search.index', ['users' => $userResults, 'organisations' => $organisationResults,'vacancies' => $vacancyResults]);
     }
 
