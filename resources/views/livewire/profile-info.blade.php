@@ -34,18 +34,18 @@
             // $connections = Illuminate\Support\Facades\DB::table('connections')
             // ->where(['first_user_id' => auth()->id(), 'second_user_id' => $user->id])
             // ->orWhere(['first_user_id' => $user->id, 'second_user_id' => auth()->id()])->get();
-            
+
             // Check if connection exists
             $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
                 ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
                 ->first();
-            
+
         @endphp
 
         <div>
             @if ($user->id != auth()->id())
                 @if ($connection)
-   
+
 
                     <x-remove-button class="flex items-center gap-2" wire:click="refreshConnections({{$user}})">  <a
                         href="{{ route('user.toggle-connect', $user) }}"></a><span class="material-symbols-rounded">
@@ -59,7 +59,7 @@
                         </span>{{ __('Connect') }}
                     </x-primary-button>
 
-                  
+
                 @endif
             @else
                 <a href="/profile/edit">

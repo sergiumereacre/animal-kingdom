@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
+// Use livewire in views folder
+
+
 class ProfileInfo extends Component
 {
     public $user;
@@ -44,8 +47,6 @@ class ProfileInfo extends Component
     public function render()
     {
 
-
-        // dd($all_connected_users);
         return view('livewire.profile-info');
     }
 }
