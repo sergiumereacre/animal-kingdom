@@ -13,7 +13,8 @@ class SearchController extends Controller
     const USERS = 'Users';
     const ORGANISATIONS = 'Organisations';
     const VACANCIES = 'Vacancies';
-    const DISPLAY_LIMIT = 8;
+    const ALL = 'All';
+    const DISPLAY_LIMIT = 16;
 
     public function query(Request $request)
     {
@@ -58,7 +59,7 @@ class SearchController extends Controller
             }
         }
     
-        return view('search.index', ['users' => $userResults, 'organisations' => $organisationResults,'vacancies' => $vacancyResults]);
+        return view('search.index', ['users' => $userResults, 'organisations' => $organisationResults,'vacancies' => $vacancyResults, 'category' => $category]);
     }
 
     //running queries

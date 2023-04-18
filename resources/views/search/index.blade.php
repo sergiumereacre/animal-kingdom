@@ -144,7 +144,7 @@
             <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
                 @unless(count($users) == 0)
                     @foreach($users as $count => $user)
-                        @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
+                        @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count && $category == App\Http\Controllers\SearchController::ALL)
                             @break
                         @endif
                         <x-user-card :user="$user"/>
@@ -174,7 +174,7 @@
             <div class="py-10 px-10 flex flex-col items-center md:flex-row md:justify-center gap-5 md:flex-wrap">
                 @unless(count($organisations) == 0)
                     @foreach($organisations as $count => $organisation)
-                        @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
+                        @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count && $category == App\Http\Controllers\SearchController::ALL)
                             @break
                         @endif
                         <x-organisation-card :organisation="$organisation"></x-organisation-card>
@@ -204,7 +204,7 @@
             <div class="flex flex-col items-center md:flex-row md:justify-center gap-10 md:flex-wrap">
                 @unless(count($vacancies) == 0)
                     @foreach($vacancies as $count => $vacancy)
-                        @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count)
+                        @if(App\Http\Controllers\SearchController::DISPLAY_LIMIT <= $count && $category == App\Http\Controllers\SearchController::ALL)
                             @break
                         @endif
                         @php
