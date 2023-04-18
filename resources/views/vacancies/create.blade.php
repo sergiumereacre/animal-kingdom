@@ -286,6 +286,16 @@
                                 alert("Invalid salary range. Please make sure that the lower salary range is less than the upper range.");
                                 return false;
                             }
+
+                            if (salary_lower < 0) {
+                                alert("Invalid salary range. Please make sure that the lower salary range is greater than 0.");
+                                return false;
+                            }
+
+                            if (salary_upper > 1000000) {
+                                alert("Invalid salary range. Please make sure that the upper salary range is below 1,000,000.");
+                                return false;
+                            }
                         }
                     </script>
 
