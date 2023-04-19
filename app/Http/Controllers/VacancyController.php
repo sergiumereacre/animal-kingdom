@@ -231,14 +231,19 @@ class VacancyController extends Controller
     {
         $organisation = Organisation::find($vacancy->organisation_id);
 
+        // dd(auth()->user()->is_admin);
+
         // dd($organisation);
         // Make sure logged in user is owner
-        if ($organisation->owner_id != auth()->id()) {
+        if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
+            $vacancy->delete();
+        }
+        else{
             abort(403, 'Unauthorized Action, you\'re not the owner!!');
         }
 
-        $vacancy->delete();
-        return redirect('/organisations/' . $organisation->organisation_id);
+        // return redirect('/organisations/' . $organisation->organisation_id);
+        return redirect()->back();
     }
 
     // Redirect to manage page
