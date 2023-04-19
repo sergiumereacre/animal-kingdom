@@ -14,6 +14,6 @@ class OrganisationsSeeder extends Seeder
      */
     public function run(): void
     {
-
+        
     }
 }

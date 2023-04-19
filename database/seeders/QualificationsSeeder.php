@@ -14,5 +14,12 @@ class QualificationsSeeder extends Seeder
     public function run(): void
     {
         Qualification::factory(10)->create();
+
+        $data = [
+            [    'qualification_name' => 'Bachelor',
+            ]
+
+        ];
+                Qualification::insert($data);
     }
 }
