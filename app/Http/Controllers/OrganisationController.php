@@ -84,6 +84,9 @@ class OrganisationController extends Controller
     // Attempt to update organisation
     public function update(Request $request, Organisation $organisation)
     {
+
+
+        
         $formFields = $request->validate([
             'organisation_name' => 'required'
         ]);

@@ -85,6 +85,11 @@ class User extends Authenticatable
         return $this->hasMany(SkillsUser::class, 'user_id');
     }
 
+    public function qualificationsUsers(): HasMany
+    {
+        return $this->hasMany(QualificationsUser::class, 'user_id');
+    }
+
     public function connections(): HasMany
     {
         return $this->hasMany(Connection::class, 'first_user_id');

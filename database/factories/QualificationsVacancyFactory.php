@@ -23,7 +23,7 @@ class QualificationsVacancyFactory extends Factory
     public function definition(): array
     {
         return [
-            'qualifications_vacancies_id' => $this->faker->word,
+            //'qualifications_vacancies_id' => $this->faker->word,
             'qualification_id' => Qualification::factory()->create()->qualification_id,
             'vacancy_id' => Vacancy::factory()->create()->vacancy_id,
         ];

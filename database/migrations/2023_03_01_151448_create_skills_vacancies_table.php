@@ -22,6 +22,7 @@ class CreateSkillsVacanciesTable extends Migration
             // $table->increments('skill_id')->nullable();
             $table->integer('skill_id')->unsigned();
             $table->foreign('skill_id')->references('skill_id')->on('skills');
+            
             $table->integer('vacancy_id')->unsigned();
             $table->foreign('vacancy_id')->references('vacancy_id')->on('vacancies');
             $table->enum('skill_level', $skill_level)->nullable();

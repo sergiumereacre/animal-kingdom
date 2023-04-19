@@ -24,7 +24,7 @@ class VacancyFactory extends Factory
         return [
             // 'vacancy_id' => $this->faker->word,
             'time_created' => $this->faker->dateTime(),
-            // 'organisation_id' => Organisation::factory()->create()->organisation_id,
+            //'organisation_id' => Organisation::factory()->create()->organisation_id,
             'organisation_id' => 1,
             'vacancy_title' => $this->faker->jobTitle(),
             'vacancy_description' => $this->faker->text,

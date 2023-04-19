@@ -4,14 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+
 
 class Vacancy extends Model
 {
-    use HasFactory;
+    use HasFactory, HasEagerLimit;
 
     protected $primaryKey = 'vacancy_id';
     public $timestamps = false;
+    protected $guarded = [];
 
     /**
      * The attributes that are mass assignable.
@@ -53,6 +58,17 @@ class Vacancy extends Model
     {
         return $this->belongsTo(Organisation::class, 'organisation_id', 'organisation_id');
     }
+
+    public function skillsVacancy(): hasMany
+    {
+        return $this->hasMany(SkillsVacancy::class, 'vacancy_id');
+    }
+
+    public function qualificationsVacancy(): hasMany
+    {
+        return $this->hasMany(QualificationsVacancy::class, 'vacancy_id');
+    }
+
 
     public function scopeCategory($query, $category)
     {
@@ -196,6 +212,8 @@ class Vacancy extends Model
             // dd($query);
         }
     }
+
+    
 
     public function scopeQualifications($query, $quals)
     {

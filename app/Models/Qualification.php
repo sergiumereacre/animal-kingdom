@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Qualification extends Model
 {
@@ -23,4 +24,12 @@ class Qualification extends Model
         'qualification_name',
         'qualification_description',
     ];
+
+    public function qualificationsUsers(): HasMany{
+        return $this->hasMany(QualificationsUser::class, 'qualification_id');
+    }
+
+    public function qualificationsVacancies(): HasMany{
+        return $this->hasMany(QualificationsVacancy::class, 'qualification_id');
+    }
 }
