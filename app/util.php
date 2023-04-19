@@ -9,6 +9,8 @@ use App\Models\SkillsUser;
 use App\Models\SkillsVacancy;
 use Illuminate\Support\Facades\DB;
 
+const deleteError = 'Unauthorized Action, you don\'t have the right to delete!!';
+
 function checkEligibility(User $user, $vacancy)
 {
     $organisation = Organisation::find($vacancy->organisation_id);

@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 
 class VacancyController extends Controller
 {
@@ -239,11 +238,12 @@ class VacancyController extends Controller
             $vacancy->delete();
         }
         else{
-            abort(403, 'Unauthorized Action, you\'re not the owner!!');
+            abort(403, deleteError);
         }
 
         // return redirect('/organisations/' . $organisation->organisation_id);
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('/vacancies/index');
     }
 
     // Redirect to manage page

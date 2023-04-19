@@ -59,16 +59,14 @@ class OrganisationController extends Controller
 
 
 
-        return redirect('/home')->with('success','Organisation created successfully!');
+        return redirect('/home')->with('success', 'Organisation created successfully!');
 
-
-        // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
 
     public function edit(Request $request, Organisation $organisation)
     {
         //dd($organisation->email);
-        return view('organisations.edit',['organisation' => $organisation]);
+        return view('organisations.edit', ['organisation' => $organisation]);
     }
 
     // Attempt to update organisation
@@ -92,7 +90,7 @@ class OrganisationController extends Controller
 
         $organisation->create($formFields);
 
-        return back()->with('message','Organisation updated successfully!');
+        return back()->with('message', 'Organisation updated successfully!');
 
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
@@ -100,17 +98,18 @@ class OrganisationController extends Controller
     // Attempt to delete organisation
     public function destroy(Organisation $organisation)
     {
-        // Make sure logged in user is owner
-        if ($organisation->owner_id != auth()->id()) {
-            abort(403, 'Unauthorized Action, you\'re not the owner!!');
+        // Make sure logged in user is owner or admin
+        if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
+            // Deleting custom picture from organisation
+            if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
+                Storage::disk('public')->delete($organisation->picture);
+            }
+
+            $organisation->delete();
+        } else {
+            abort(403, deleteError);
         }
 
-        // Deleting custom picture from organisation
-        if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
-            Storage::disk('public')->delete($organisation->picture);
-        }
-
-        $organisation->delete();
         // return redirect('/users/'.auth()->id());
         return redirect()->route('home');
     }
