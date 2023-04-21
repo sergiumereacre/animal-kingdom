@@ -1,14 +1,16 @@
 <x-app-layout>
 <div class="py-12 flex flex-col items-center max-w-2xl mx-auto">
         <x-card-base>
-            <form method="POST" action="/vacancies/{{$vacancy->id}}" enctype="multipart/form-data" onsubmit="return validateForm()"
+            <form method="POST" action="/vacancies/{{$vacancy->vacancy_id}}" enctype="multipart/form-data" onsubmit="return validateForm()"
                 class="p-10 flex flex-col items-center gap-5">
                 @csrf
-                @method_field('PUT')
+                @method('PUT')
                 <!-- Form Title -->
                 <div>
                     <p class="font-bold text-2xl md:text-3xl">Edit Vacancy: {{$vacancy->vacancy_title}} </p>
                 </div>
+
+                <input type="hidden" name="organisation_id" value="{{$vacancy->organisation_id}}">
 
                 <div class="flex flex-col gap-5 md:w-full">
                     <div>
@@ -22,12 +24,22 @@
                     <div>
                         <x-input-label for="category_requirement">Category Requirement</x-input-label>
                         <x-select name="category_requirement" id="category_requirement" class="mt-1 block w-full">
+@php
+    // Generate a list of all the categories, and set the selected one to the current category
+    $categories = array("MAMMAL", "REPTILE", "AMPHIBIAN", "AVIAN", "FISH");
+    // $selectedCategory = $vacancy->category_requirement;
+
+@endphp
+
                             <option value="NULL">None</option>
-                            <option value="MAMMAL">Mammal</option>
-                            <option value="REPTILE">Reptile</option>
-                            <option value="AMPHIBIAN">Amphibian</option>
-                            <option value="AVIAN">Avian</option>
-                            <option value="FISH">Fish</option>
+
+                            @foreach ($categories as $category)
+                                @if ($category == $vacancy->category_requirement)
+                                    <option value="{{$category}}" selected>{{ucfirst(strtolower($category))}}</option>
+                                @else
+                                    <option value="{{$category}}">{{ucfirst(strtolower($category))}}</option>
+                                @endif
+                            @endforeach
                         </x-select>
                         <x-input-error class="mt-2" :messages="$errors->get('category_requirement')" />
                     </div>

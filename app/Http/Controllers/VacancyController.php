@@ -94,11 +94,22 @@ class VacancyController extends Controller
     public function store(Request $request)
     {
         // dd($request->vacancy_title);
-        // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
 
-        // By default, files will be stored in the app folder in the storage folder
-        // $request->file('logo')->store();
+        $formFields = VacancyController::generateVacancyFormField($request);
 
+        // Make sure that the attributes in the model class are added to the fillable array! OR...
+        // If we're all good, you can just call the create() method of the model and that will generate an entry in the database
+        $vacancy = Vacancy::create($formFields);
+
+        VacancyController::updateVacancySkillsQualifications($request, $vacancy);
+
+        // return redirect('/home');
+        return redirect('/organisations/' . $request->organisation_id);
+        // return redirect()->back();
+    }
+
+    private static function generateVacancyFormField(Request $request)
+    {
         // Handy way to validate form stuff using the validate() method
         $formFields = $request->validate(
             [
@@ -114,6 +125,8 @@ class VacancyController extends Controller
         );
 
         $formFields = $request->all();
+
+        // dd($request->input('category_requirement', 1));
 
         // dd($formFields['salary_range_lower']);
         $formFields['category_requirement'] = $request->input('category_requirement', 1);
@@ -164,12 +177,12 @@ class VacancyController extends Controller
 
         $formFields['time_created'] = Carbon::now();
 
+        // dd($formFields);
+        return $formFields;
+    }
 
-        // If we're all good, you can just call the create() method of the model and that will generate an entry in the database
-
-        // Make sure that the attributes in the model class are added to the fillable array! OR...
-        $vacancy = Vacancy::create($formFields);
-
+    private static function updateVacancySkillsQualifications(Request $request, Vacancy $vacancy)
+    {
         $all_skills_unproc = array_filter(explode(",", $request->skills));
 
         $all_skills = [];
@@ -206,23 +219,39 @@ class VacancyController extends Controller
                 'qualification_id' => $qual_id,
             ]);
         }
-
-
-        // return redirect('/home');
-        return redirect('/organisations/' . $request->organisation_id);
-        // return redirect()->back();
     }
 
     public function edit(Request $request, Vacancy $vacancy)
     {
         //dd($vacancy -> vacancy_title);
-       // return view('vacancies.edit');
+        // return view('vacancies.edit');
         return view('vacancies.edit', ['vacancy' => $vacancy]);
     }
 
     // Attempt to update vacancy
     public function update(Request $request, Vacancy $vacancy)
     {
+        $organisation = Organisation::find($vacancy->organisation_id);
+
+        // dd($organisation);
+
+        if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
+            // dd($vacancy);
+            // $request->organisation_id = $vacancy->organisation_id;
+
+            
+            $formFields = VacancyController::generateVacancyFormField($request);
+            // Make sure that the attributes in the model class are added to the fillable array! OR...
+            // If we're all good, update vacancy
+            $vacancy->update($formFields);
+            // dd($vacancy);
+
+            VacancyController::updateVacancySkillsQualifications($request, $vacancy);
+        } else {
+            abort(403, 'Can\'t update vacancy');
+        }
+
+        return back()->with('message', 'Vacancy updated successfully!');
     }
 
     // Attempt to delete vacancy
@@ -236,8 +265,7 @@ class VacancyController extends Controller
         // Make sure logged in user is owner
         if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
             $vacancy->delete();
-        }
-        else{
+        } else {
             abort(403, deleteError);
         }
 
@@ -246,7 +274,7 @@ class VacancyController extends Controller
         return redirect('/vacancies/index');
     }
 
-   
+
 
     public function apply(Vacancy $vacancy)
     {
