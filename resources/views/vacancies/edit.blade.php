@@ -212,10 +212,27 @@
                         </x-input-label>
                         <x-select name="num_appendages_requirement" id="num_appendages_requirement"
                             class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="NONE">No Appendages</option>
-                            <option value="FEW">Few Appendages, e.g., 4</option>
-                            <option value="MANY">Many Appendages</option>
+
+                            @if ($vacancy->num_appendages_requirement == 'NULL')
+                                <option value="NULL" selected>Doesn't matter</option>
+                            @else
+                                <option value="NULL">Doesn't matter</option>
+                            @endif
+                            @if ($vacancy->num_appendages_requirement == 'NONE')
+                                <option value="NONE" selected>No Appendages</option>
+                            @else
+                                <option value="NONE">No Appendages</option>
+                            @endif
+                            @if ($vacancy->num_appendages_requirement == 'FEW')
+                                <option value="FEW" selected>Few Appendages, e.g., 4</option>
+                            @else
+                                <option value="FEW">Few Appendages, e.g., 4</option>
+                            @endif
+                            @if ($vacancy->num_appendages_requirement == 'MANY')
+                                <option value="MANY" selected>Many Appendages</option>
+                            @else
+                                <option value="MANY">Many Appendages</option>
+                            @endif
                         </x-select>
                         <x-input-error class="mt-2" :messages="$errors->get('num_appendages_requirement')" />
                     </div>
@@ -374,7 +391,7 @@
                         <x-input-label for="vacancy_description">Vacancy Description</x-input-label>
                         <textarea name="vacancy_description" id="vacancy_description" rows="10"
                             class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
-                            placeholder="Description Details.">{{ $vacancy->vacacny_description }}</textarea>
+                            placeholder="Description Details.">{{ $vacancy->vacancy_description }}</textarea>
                         <x-input-error class="mt-2" :messages="$errors->get('vacancy_description')" />
                     </div>
 
