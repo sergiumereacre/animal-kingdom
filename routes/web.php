@@ -99,8 +99,6 @@ Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('
 // Deletes vacancies
 Route::delete('/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->middleware('auth');
 
-// Manage vacancies
-Route::get('/vacancies/manage', [VacancyController::class, 'manage'])->middleware('auth');
 
 // Make sure {vacancy} and Vacancy $vacancy match up
 // Make sure to put this towards the bottom if you plan to do other stuff with vacancies
@@ -124,8 +122,6 @@ Route::get('/organisations/{organisation}/edit', [OrganisationController::class,
 
 Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->name('organisation.update');
 
-
-Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
 
 Route::get('/organisations/{organisation}', [OrganisationController::class, 'show'])->middleware('auth');
 

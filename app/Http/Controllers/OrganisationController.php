@@ -130,17 +130,4 @@ class OrganisationController extends Controller
     }
 
 
-    // Redirect to manage page
-    public function manage()
-    {
-        return view('organisations.manage');
-
-        // Eventually, we should be able to map a user's organisations to the organisations variable
-        return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
-
-
-
-        // Eventually, we should be able to map a user's organisations to the organisations variable
-        return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
-    }
 }

@@ -66,7 +66,7 @@
             <p class="md:px-0 md:w-500 text-sm text-gray-700 mx-2">{{ $organisation->size }}</p>
         </div>
         <!-- Remove Button -->
-        @if ($owner->id == auth()->id())
+        @if ($owner->id == auth()->id() || auth()->user()->is_admin)
             <div class="px-5 pb-5 flex flex-row items-center justify-center gap-3 md:items-end md:justify-end">
                 <form action="/organisations/{{ $organisation->organisation_id }}" method="post">
                     @csrf

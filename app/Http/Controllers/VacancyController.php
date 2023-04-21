@@ -246,14 +246,7 @@ class VacancyController extends Controller
         return redirect('/vacancies/index');
     }
 
-    // Redirect to manage page
-    public function manage()
-    {
-        return view('vacancies.manage');
-
-        // Eventually, we should be able to map a user's vacancies to the vacancies variable
-        return view('vacancies.manage', ['vacancies' => auth()->user()->vacancies()->get()]);
-    }
+   
 
     public function apply(Vacancy $vacancy)
     {
