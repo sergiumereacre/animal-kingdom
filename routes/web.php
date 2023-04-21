@@ -122,7 +122,7 @@ Route::get('/organisations/{organisation}/edit', [OrganisationController::class,
 
 // Update organisation
 
-Route::put('/organisations', [OrganisationController::class, 'update'])->name('organisation.update');
+Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->name('organisation.update');
 
 
 Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');

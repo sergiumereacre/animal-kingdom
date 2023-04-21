@@ -60,7 +60,6 @@ class OrganisationController extends Controller
 
 
         return redirect('/home')->with('success', 'Organisation created successfully!');
-
     }
 
     public function edit(Request $request, Organisation $organisation)
@@ -72,26 +71,42 @@ class OrganisationController extends Controller
     // Attempt to update organisation
     public function update(Request $request, Organisation $organisation)
     {
-        $formFields = $request->validate([
-            'organisation_name' => 'required'
-        ]);
+        // dd($organisation->organisation_id);
+        // Make sure logged in user is owner or admin
+        if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
+            // Deleting custom picture from organisation
+            if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
+                Storage::disk('public')->delete($organisation->picture);
+            }
 
-        // Stores in the logo folder in public
-        if ($request->hasFile('picture')) {
-            $formFields['picture'] = $request->file('picture')->store('logos', 'public');
+            $formFields = $request->validate([
+                'organisation_name' => 'required'
+            ]);
+
+            // Stores in the logo folder in public
+            if ($request->hasFile('picture')) {
+                $formFields['picture'] = $request->file('picture')->store('logos', 'public');
+            }
+
+            // $formFields['owner_id'] = auth()->id();
+            $formFields['address'] = $request->address;
+            $formFields['email'] = $request->email;
+            $formFields['contact_number'] = $request->contact_number;
+            $formFields['description'] = $request->description;
+
+
+            $organisation->update($formFields);
+
+
+            // $organisation->delete();
+        } else {
+            abort(403, 'Can\'t update organisation');
         }
-
-        $formFields['owner_id'] = auth()->id();
-        $formFields['address'] = $request->address;
-        $formFields['email'] = $request->email;
-        $formFields['contact_number'] = $request->contact_number;
-        $formFields['description'] = $request->description;
-
-
-        $organisation->create($formFields);
 
         return back()->with('message', 'Organisation updated successfully!');
 
+
+        // return view('organisations.manage')->with('message', 'Organisation updated successfully!');
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
 
