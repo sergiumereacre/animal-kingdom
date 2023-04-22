@@ -15,9 +15,12 @@
 
         <div>
             <x-input-label for="bio">Profile Bio</x-input-label>
-            <textarea name="bio" id="bio" rows="6" type="text"
+            {{-- <textarea name="bio" id="bio" rows="6" type="text"
                 class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
-                autocomplete="bio">{{ old('bio', $user->bio) }}</textarea>
+                autocomplete="bio">{{ old('bio', $user->bio) }}</textarea> --}}
+                <textarea name="bio" id="bio" rows="6" type="text"
+                class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
+                autocomplete="bio">{{ ($user->bio) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
         </div>
 

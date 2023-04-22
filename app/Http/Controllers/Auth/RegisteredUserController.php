@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProfileController;
 use App\Models\Qualification;
 use App\Models\QualificationsUser;
 use App\Models\Skill;
@@ -56,70 +57,59 @@ class RegisteredUserController extends Controller
 
         $formFields['password'] = Hash::make($request->password);
 
-        // $user = User::create([
-        //     'first_name' => $request->first_name,
-        //     // 'second_name' => $request->second_name,
-        //     'last_name' => $request->last_name,
-        //     'username' => $request->username,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'address' => $request->address,
-        //     'contact_number' => $request->contact_number,
-        //     'species_id' => $request->species_id,
-        //     'profile_pic' = $profile_pic,
-        // ]);
-
         $user = User::create($formFields);
 
 
-        $all_skills_unproc = array_filter(explode(",", $request->skills));
+        // $all_skills_unproc = array_filter(explode(",", $request->skills));
 
-        $all_skills = [];
+        // $all_skills = [];
 
-        // Processing skills. This basically creates an array where a user's skill is mapped to their level
-        foreach ($all_skills_unproc as $skill) {
-            $skill_attr = explode(":", $skill);
+        // // Processing skills. This basically creates an array where a user's skill is mapped to their level
+        // foreach ($all_skills_unproc as $skill) {
+        //     $skill_attr = explode(":", $skill);
 
-            $skill_name = $skill_attr[0];
-            $skill_level = $skill_attr[1];
+        //     $skill_name = $skill_attr[0];
+        //     $skill_level = $skill_attr[1];
 
-            $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
-            $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
+        //     $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
+        //     $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
 
-            if ($level_exists && $name_exists) {
-                $all_skills[$skill_name] = $skill_level;
-            }
-        }
+        //     if ($level_exists && $name_exists) {
+        //         $all_skills[$skill_name] = $skill_level;
+        //     }
+        // }
 
 
-        foreach ($all_skills as $skill_name => $skill_level) {
-            $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
+        // foreach ($all_skills as $skill_name => $skill_level) {
+        //     $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
         
 
-            $skill_user = SkillsUser::create([
-                'user_id' => $user->id,
-                'skill_id' => $skill_id,
-                'skill_level' => $skill_level,
-            ]);
-        }
+        //     $skill_user = SkillsUser::create([
+        //         'user_id' => $user->id,
+        //         'skill_id' => $skill_id,
+        //         'skill_level' => $skill_level,
+        //     ]);
+        // }
 
-        // Processing qualifications
-        $all_quals = array_filter(explode(",", $request->qualifications));
+        // // Processing qualifications
+        // $all_quals = array_filter(explode(",", $request->qualifications));
 
-        foreach ($all_quals as $qual_name) {
-            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name);
+        // foreach ($all_quals as $qual_name) {
+        //     $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name);
 
-            if (count($qual_id) != 0) {
-                $qual_id = $qual_id->first()->qualification_id;
-                $qual_user = QualificationsUser::create([
-                    'user_id' => $user->id,
-                    'qualification_id' => $qual_id,
-                    // Date picker here?
-                    'date_obtained' => Carbon::now(),
-                ]);
-            }
-        }
+        //     if (count($qual_id) != 0) {
+        //         $qual_id = $qual_id->first()->qualification_id;
+        //         $qual_user = QualificationsUser::create([
+        //             'user_id' => $user->id,
+        //             'qualification_id' => $qual_id,
+        //             // Date picker here?
+        //             'date_obtained' => Carbon::now(),
+        //         ]);
+        //     }
+        // }
+
+        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications, $user);
 
         event(new Registered($user));
 

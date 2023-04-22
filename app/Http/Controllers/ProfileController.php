@@ -146,8 +146,10 @@ class ProfileController extends Controller
         }
 
         $formFields = $request->validate([
-            'bio' => 'required',
+            // 'bio' => 'required',
         ]);
+
+        $formFields['bio'] = $request->bio;
 
         $all_skills_users = SkillsUser::all()->where('user_id', '=', auth()->id());
 
@@ -167,14 +169,14 @@ class ProfileController extends Controller
             $qual_user->delete();
         }
 
-        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications);
+        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications, auth()->user());
 
         $request->user()->update($formFields);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    public static function addSkillsAndQualifications($skills, $qualifications)
+    public static function addSkillsAndQualifications($skills, $qualifications, $user)
     {
         // Processing qualifications
         $all_quals = array_filter(explode(",", $qualifications));
@@ -216,7 +218,7 @@ class ProfileController extends Controller
                 $skill_id = $skill->first()->skill_id;
 
                 $skill_user = SkillsUser::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => $user->id,
                     'skill_id' => $skill_id,
                     'skill_level' => $skill_level,
                 ]);
@@ -229,7 +231,7 @@ class ProfileController extends Controller
             if (count($qual_id) != 0) {
                 $qual_id = $qual_id->first()->qualification_id;
                 $qual_user = QualificationsUser::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => $user->id,
                     'qualification_id' => $qual_id,
                     // Date picker here?
                     'date_obtained' => Carbon::now(),
