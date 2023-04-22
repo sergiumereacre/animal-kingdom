@@ -37,7 +37,7 @@
             
         @endphp
 
-        <div>
+        <div class="flex flex-col gap-2 items-center">
             {{-- You can't connect to yourself --}}
             @if ($user->id != auth()->id())
                 @if ($connection)

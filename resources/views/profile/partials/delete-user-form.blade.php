@@ -9,7 +9,7 @@
         </p>
     </header>
 
-    <div class="flex justify-end">
+    <div class="flex justify-end gap-2">
         @if (auth()->user()->id != $user->id)
             {{-- <form action="/users/{{ $user->id }}" method="post">
                 @csrf
