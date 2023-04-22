@@ -6,6 +6,39 @@
                 @csrf
                 @method('PUT')
                 <!-- Form Title -->
+
+                {{-- Getting value for skills as text --}}
+                @php
+                    $final_text_skills = '';
+                    $skills_vacancies = App\Models\SkillsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+                    
+                    // We need to get the level and name of each
+                    foreach ($skills_vacancies as $skills_vacancy) {
+                        $skill_name = App\Models\Skill::where('skill_id', '=', $skills_vacancy->skill_id)->first()->skill_name;
+                    
+                        // dd($skill_name);
+                    
+                        $skill_level = $skills_vacancy->skill_level;
+                    
+                        $current_skill_text = $skill_name . ':' . $skill_level . ',';
+                        $final_text_skills = $final_text_skills . $current_skill_text;
+                        // dd($current_skill_text);
+                    }
+                    
+                    $final_text_quals = '';
+                    $quals_vacancies = App\Models\QualificationsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+                    
+                    foreach ($quals_vacancies as $quals_vacancy) {
+                        $qual_name = App\Models\Qualification::where('qualification_id', '=', $quals_vacancy->qualification_id)->first()->qualification_name;
+                    
+                        $current_qual_text = $qual_name . ',';
+                        $final_text_quals = $final_text_quals . $current_qual_text;
+                    }
+                    
+                    // dd($final_text_quals);
+                    
+                @endphp
+
                 <div>
                     <p class="font-bold text-2xl md:text-3xl">Edit Vacancy: {{ $vacancy->vacancy_title }} </p>
                 </div>
@@ -242,7 +275,7 @@
                             with colon and
                             separate with commas.</x-input-label>
                         <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full"
-                            placeholder="" value="{{ $vacancy->skills }}"></x-text-input>
+                            placeholder="" value="{{ $final_text_skills }}"></x-text-input>
                     </div>
 
                     <div class="flex flex-col gap-5">
@@ -304,7 +337,7 @@
                             with
                             commas.</x-input-label>
                         <x-text-input id="qualifications_list" type="text" name="qualifications"
-                            class="mt-1 block w-full" placeholder="" value="{{ $vacancy->qualifications }}">
+                            class="mt-1 block w-full" placeholder="" value="{{ $final_text_quals }}">
                         </x-text-input>
                     </div>
                     <div class="flex flex-col gap-5">

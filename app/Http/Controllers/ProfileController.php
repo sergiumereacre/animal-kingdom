@@ -159,10 +159,6 @@ class ProfileController extends Controller
 
         // dd($all_skills_users);
 
-
-
-
-
         $all_quals_users = QualificationsUser::all()->where('user_id', '=', auth()->id());
 
         foreach ($all_quals_users as $qual_user) {

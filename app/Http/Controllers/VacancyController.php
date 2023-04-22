@@ -199,25 +199,34 @@ class VacancyController extends Controller
 
 
         foreach ($all_skills as $skill_name => $skill_level) {
-            $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
-            $skill_user = SkillsVacancy::create([
-                'vacancy_id' => $vacancy->vacancy_id,
-                'skill_id' => $skill_id,
-                'skill_level' => $skill_level,
-            ]);
+            $skill = Skill::all()->where('skill_name', '=', $skill_name);
+
+            if (count($skill) > 0) {
+                $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
+                $skill_vacancy = SkillsVacancy::create([
+                    'vacancy_id' => $vacancy->vacancy_id,
+                    'skill_id' => $skill_id,
+                    'skill_level' => $skill_level,
+                ]);
+            }
         }
 
         // Processing qualifications
         $all_quals = array_filter(explode(",", $request->qualifications));
 
         foreach ($all_quals as $qual_name) {
-            $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name)->first()->qualification_id;
+            // Get qualification from qual_name
+            $quals = Qualification::all()->where('qualification_name', '=', $qual_name);
 
-            $qual_user = QualificationsVacancy::create([
-                'vacancy_id' => $vacancy->vacancy_id,
-                'qualification_id' => $qual_id,
-            ]);
+            if (count($quals) > 0) {
+                $qual_id = $quals->first()->qualification_id;
+
+                $qual_user = QualificationsVacancy::create([
+                    'vacancy_id' => $vacancy->vacancy_id,
+                    'qualification_id' => $qual_id,
+                ]);
+            }
         }
     }
 
@@ -239,12 +248,26 @@ class VacancyController extends Controller
             // dd($vacancy);
             // $request->organisation_id = $vacancy->organisation_id;
 
-            
+
+            $all_skills_vacancies = SkillsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+
+            foreach ($all_skills_vacancies as $skill_vacancy) {
+                $skill_vacancy->delete();
+            }
+
+            // dd($all_skills_users);
+
+            $all_quals_vacancies = QualificationsVacancy::all()->where('vacancy_id', '=', $vacancy->vacancy_id);
+
+            foreach ($all_quals_vacancies as $qual_vacancy) {
+                $qual_vacancy->delete();
+            }
+
             $formFields = VacancyController::generateVacancyFormField($request);
             // Make sure that the attributes in the model class are added to the fillable array! OR...
             // If we're all good, update vacancy
             $vacancy->update($formFields);
-            // dd($vacancy);
+            // dd($request);
 
             VacancyController::updateVacancySkillsQualifications($request, $vacancy);
         } else {
@@ -252,6 +275,8 @@ class VacancyController extends Controller
         }
 
         return back()->with('message', 'Vacancy updated successfully!');
+        // dd('hi');
+        // return redirect('/organisations/' . $organisation->organisation_id);
     }
 
     // Attempt to delete vacancy
