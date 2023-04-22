@@ -29,15 +29,16 @@
 
         {{-- Check if connection exists --}}
         @php
-
+            
             // Check if connection exists
             $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
                 ->orWhere([['first_user_id', '=', $user->id], ['second_user_id', '=', auth()->id()]])
                 ->first();
-
+            
         @endphp
 
         <div>
+            {{-- You can't connect to yourself --}}
             @if ($user->id != auth()->id())
                 @if ($connection)
                     <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
@@ -57,6 +58,15 @@
                             </span>{{ __('Connect') }}</x-primary-button>
                     </form>
                 @endif
+
+                {{-- Admins can only edit non admins --}}
+                @if (auth()->user()->is_admin && !$user->is_admin)
+                    <a href="/profile/{{ $user->id }}/edit">
+                        <x-secondary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
+                                edit
+                            </span>{{ __('Edit Profile') }}</x-secondary-button>
+                    </a>
+                @endif
             @else
                 <a href="/profile/edit">
                     <x-secondary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
@@ -64,6 +74,8 @@
                         </span>{{ __('Edit Profile') }}</x-secondary-button>
                 </a>
             @endif
+
+
         </div>
         <!-- Profile info section -->
         <div class="bg-appBackground rounded-2xl w-full p-10">

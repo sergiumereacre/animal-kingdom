@@ -36,6 +36,18 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function editOther(Request $request, User $user): View
+    {
+        if(auth()->user()->is_admin){
+            return view('profile.edit', [
+                'user' => $user,
+            ]);
+        } else{
+            abort(403);
+        }
+     
+    }
+
     public function index()
     {
         $users = User::latest()->category(request('category'))->canFly(request('can_fly'))->canSwim(request('can_swim'))->canClimb(request('can_climb'))->eatingStyle(request('eating_style'))->producesToxins(request('produces_toxins'))->size(request('size'))->speed(request('speed'))->numAppendages(request('num_appendages'))->skills(request('skills'))->qualifications(request('qualifications'))->distinct()->paginate(9);
@@ -108,7 +120,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's profile information such as name, email, etc.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -137,6 +149,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+    // Updates bio and skills and qualifications
     public function updatePersonal(ProfileUpdateRequest $request): RedirectResponse
     {
         // dd($request);
