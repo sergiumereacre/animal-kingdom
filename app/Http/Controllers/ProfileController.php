@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+
 use Illuminate\Database\Query\Builder;
 
 class ProfileController extends Controller
@@ -121,7 +123,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information such as name, email, etc.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
         // dd($request);
         ProfileController::updateHelper($request, auth()->user());
@@ -129,7 +131,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    public function updateOther(ProfileUpdateRequest $request, User $user): RedirectResponse
+    public function updateOther(Request $request, User $user): RedirectResponse
     {
         // dd('Updating other...');
         ProfileController::updateHelper($request, $user);
@@ -138,57 +140,41 @@ class ProfileController extends Controller
     }
 
     // Updates bio and skills and qualifications
-    public function updatePersonal(ProfileUpdateRequest $request): RedirectResponse
+    public function updatePersonal(Request $request): RedirectResponse
     {
-        dd($request);
 
-        if ($request->user()->id != auth()->id()) {
-            abort(403, 'Unauthorized Action,you\'re not the right user!!');
-        }
 
-        $formFields = $request->validate([
-            // 'bio' => 'required',
-        ]);
-
-        $formFields['bio'] = $request->bio;
-
-        $all_skills_users = SkillsUser::all()->where('user_id', '=', auth()->id());
-
-        foreach ($all_skills_users as $skill_user) {
-            $skill_user->delete();
-        }
-
-        // dd($all_skills_users);
-
-        $all_quals_users = QualificationsUser::all()->where('user_id', '=', auth()->id());
-
-        foreach ($all_quals_users as $qual_user) {
-            $qual_user->delete();
-        }
-
-        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications, auth()->user());
-
-        $request->user()->update($formFields);
+        ProfileController::updatePersonalHelper($request, auth()->user());
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    public static function updateHelper(ProfileUpdateRequest $request, User $user)
+    public function updateOtherPersonal(Request $request, User $user): RedirectResponse
+    {
+// dd('Updating other');
+        ProfileController::updatePersonalHelper($request, $user);
+
+        return Redirect::route('profile.editOther', $user->id)->with('status', 'profile-updated');
+    }
+
+    public static function updateHelper(Request $request, User $user)
     {
         // check if user is admin or if user is editing their own profile
-        if ($request->user()->id != auth()->id() && !auth()->user()->is_admin) {
+        if (!(auth()->user()->is_admin || $user->id == auth()->id())) {
             abort(403, 'Unauthorized Action,you\'re not the right user!!');
         }
 
 
-        dd($request);
+        // dd($request);
 
         // Check if request's email is the same as the user's email
-        $formFields = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', 'email'],
-        ]);
+        $formFields = $request->validate(
+            [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => ['required', 'email', Rule::unique(User::class)->ignore($user->id)]
+            ],
+        );
 
         $formFields['address'] = $request->address;
         $formFields['contact_number'] = $request->contact_number;
@@ -197,8 +183,40 @@ class ProfileController extends Controller
             $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
         }
 
+        $user->update($formFields);
+    }
 
-        $request->user()->update($formFields);
+    public static function updatePersonalHelper(Request $request, User $user)
+    {
+        // dd($request);
+
+          // check if user is admin or if user is editing their own profile
+          if (!(auth()->user()->is_admin || $user->id == auth()->id())) {
+            abort(403, 'Unauthorized Action,you\'re not the right user!!');
+        }
+
+        // $formFields = $request->validate([
+        //     // 'bio' => 'required',
+        // ]);
+
+        $formFields['bio'] = $request->bio;
+
+        $all_skills_users = SkillsUser::all()->where('user_id', '=', $user->id);
+
+        foreach ($all_skills_users as $skill_user) {
+            $skill_user->delete();
+        }
+
+
+        $all_quals_users = QualificationsUser::all()->where('user_id', '=', $user->id);
+
+        foreach ($all_quals_users as $qual_user) {
+            $qual_user->delete();
+        }
+
+        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications, $user);
+
+        $user->update($formFields);
     }
 
     public static function addSkillsAndQualifications($skills, $qualifications, $user)
@@ -249,6 +267,8 @@ class ProfileController extends Controller
                 ]);
             }
         }
+
+        // dd($all_quals);
 
         foreach ($all_quals as $qual_name) {
             $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name);

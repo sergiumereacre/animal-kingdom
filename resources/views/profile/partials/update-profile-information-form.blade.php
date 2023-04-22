@@ -12,9 +12,7 @@
     @if (auth()->user()->id != $user->id)
         <form method="post" enctype="multipart/form-data" action="{{ route('profile.updateOther', $user->id) }}" class="space-y-6">
 
-            @php
-                // dd(route('profile.updateOther', $user->id));
-            @endphp
+            
     @else
         <form method="post" enctype="multipart/form-data" action="{{ route('profile.update') }}" class="space-y-6">
     @endif

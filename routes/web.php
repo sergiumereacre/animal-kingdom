@@ -66,8 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{user}/edit', [ProfileController::class, 'editOther'])->name('profile.editOther')->middleware('auth');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
     Route::patch('/profile/{user}/personal', [ProfileController::class, 'updateOtherPersonal'])->name('profile.updateOtherPersonal')->middleware('auth');
-    Route::patch('/profile/{user}', [ProfileController::class, 'updateOther'])->name('profile.updateOther')->middleware('auth');
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal')->middleware('auth');
+    Route::patch('/profile/{user}', [ProfileController::class, 'updateOther'])->name('profile.updateOther')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
     Route::delete('/users/{user}', [ProfileController::class, 'destroyOther'])->middleware('auth');
