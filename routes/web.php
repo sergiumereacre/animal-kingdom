@@ -42,7 +42,7 @@ Route::get('/home', function () {
 
     $past_organisations = array();
 
-    foreach ($past_vacancies as $vacancy){
+    foreach ($past_vacancies as $vacancy) {
         $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
     }
 
@@ -65,6 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile')->middleware('auth');
     Route::get('/profile/{user}/edit', [ProfileController::class, 'editOther'])->name('profile.editOther')->middleware('auth');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
+    Route::patch('/profile/{user}/personal', [ProfileController::class, 'updateOtherPersonal'])->name('profile.updateOtherPersonal')->middleware('auth');
+    Route::patch('/profile/{user}', [ProfileController::class, 'updateOther'])->name('profile.updateOther')->middleware('auth');
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal')->middleware('auth');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
@@ -151,4 +153,3 @@ Route::get('/settings', function () {
 Route::get('/search', [SearchController::class, 'query'])->name('search');
 
 // ========== SEARCH ==========
-

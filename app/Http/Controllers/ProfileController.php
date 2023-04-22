@@ -16,7 +16,6 @@ use App\Models\Vacancy;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -38,14 +37,14 @@ class ProfileController extends Controller
 
     public function editOther(Request $request, User $user): View
     {
-        if(auth()->user()->is_admin){
+        // dd('hi');
+        if (auth()->user()->is_admin) {
             return view('profile.edit', [
                 'user' => $user,
             ]);
-        } else{
+        } else {
             abort(403);
         }
-     
     }
 
     public function index()
@@ -125,34 +124,23 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         // dd($request);
-
-        if ($request->user()->id != auth()->id()) {
-            abort(403, 'Unauthorized Action,you\'re not the right user!!');
-        }
-
-        $formFields = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', 'email'],
-        ]);
-
-        $formFields['address'] = $request->address;
-        $formFields['contact_number'] = $request->contact_number;
-
-        if ($request->hasFile('profile_pic')) {
-            $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
-        }
-
-
-        $request->user()->update($formFields);
+        ProfileController::updateHelper($request, auth()->user());
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updateOther(ProfileUpdateRequest $request, User $user): RedirectResponse
+    {
+        // dd('Updating other...');
+        ProfileController::updateHelper($request, $user);
+
+        return Redirect::route('profile.editOther', $user->id)->with('status', 'profile-updated');
     }
 
     // Updates bio and skills and qualifications
     public function updatePersonal(ProfileUpdateRequest $request): RedirectResponse
     {
-        // dd($request);
+        dd($request);
 
         if ($request->user()->id != auth()->id()) {
             abort(403, 'Unauthorized Action,you\'re not the right user!!');
@@ -183,6 +171,34 @@ class ProfileController extends Controller
         $request->user()->update($formFields);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public static function updateHelper(ProfileUpdateRequest $request, User $user)
+    {
+        // check if user is admin or if user is editing their own profile
+        if ($request->user()->id != auth()->id() && !auth()->user()->is_admin) {
+            abort(403, 'Unauthorized Action,you\'re not the right user!!');
+        }
+
+
+        dd($request);
+
+        // Check if request's email is the same as the user's email
+        $formFields = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => ['required', 'email'],
+        ]);
+
+        $formFields['address'] = $request->address;
+        $formFields['contact_number'] = $request->contact_number;
+
+        if ($request->hasFile('profile_pic')) {
+            $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
+        }
+
+
+        $request->user()->update($formFields);
     }
 
     public static function addSkillsAndQualifications($skills, $qualifications, $user)
