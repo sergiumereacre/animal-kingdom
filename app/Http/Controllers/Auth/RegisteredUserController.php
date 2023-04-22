@@ -95,6 +95,8 @@ class RegisteredUserController extends Controller
         foreach ($all_skills as $skill_name => $skill_level) {
             $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
+        
+
             $skill_user = SkillsUser::create([
                 'user_id' => $user->id,
                 'skill_id' => $skill_id,

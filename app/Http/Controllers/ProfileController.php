@@ -157,7 +157,29 @@ class ProfileController extends Controller
 
         // dd($all_skills_users);
 
-        $all_skills_unproc = array_filter(explode(",", $request->skills));
+
+
+
+
+        $all_quals_users = QualificationsUser::all()->where('user_id', '=', auth()->id());
+
+        foreach ($all_quals_users as $qual_user) {
+            $qual_user->delete();
+        }
+
+        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications);
+
+        $request->user()->update($formFields);
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public static function addSkillsAndQualifications($skills, $qualifications)
+    {
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", $qualifications));
+
+        $all_skills_unproc = array_filter(explode(",", $skills));
 
         $all_skills = [];
 
@@ -184,23 +206,21 @@ class ProfileController extends Controller
 
 
         foreach ($all_skills as $skill_name => $skill_level) {
-            $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
+            // $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
-            $skill_user = SkillsUser::create([
-                'user_id' => auth()->id(),
-                'skill_id' => $skill_id,
-                'skill_level' => $skill_level,
-            ]);
-        }
+            $skill = Skill::all()->where('skill_name', '=', $skill_name);
 
-        // Processing qualifications
-        $all_quals = array_filter(explode(",", $request->qualifications));
+            // dd($skill);
 
+            if (count($skill) > 0) {
+                $skill_id = $skill->first()->skill_id;
 
-        $all_quals_users = QualificationsUser::all()->where('user_id', '=', auth()->id());
-
-        foreach ($all_quals_users as $qual_user) {
-            $qual_user->delete();
+                $skill_user = SkillsUser::create([
+                    'user_id' => auth()->id(),
+                    'skill_id' => $skill_id,
+                    'skill_level' => $skill_level,
+                ]);
+            }
         }
 
         foreach ($all_quals as $qual_name) {
@@ -216,10 +236,6 @@ class ProfileController extends Controller
                 ]);
             }
         }
-
-        $request->user()->update($formFields);
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -271,7 +287,8 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    public function filter(Request $request){
+    public function filter(Request $request)
+    {
 
         // Category requirement. Going through each user. For each user, get their species. After that, check against category
 
@@ -279,14 +296,14 @@ class ProfileController extends Controller
 
         $users = User::where(function (Builder $query) {
             $query->select('category')
-            ->from('animal_species')
-            ->whereColumn('animal_species.species_id', 'users.species_id');
+                ->from('animal_species')
+                ->whereColumn('animal_species.species_id', 'users.species_id');
         }, $request->category_requirement)
-        ->where(function (Builder $query) {
-            $query->select('category')
-            ->from('animal_species')
-            ->whereColumn('animal_species.species_id', 'users.species_id');
-        }, $request->category_requirement)->get();
+            ->where(function (Builder $query) {
+                $query->select('category')
+                    ->from('animal_species')
+                    ->whereColumn('animal_species.species_id', 'users.species_id');
+            }, $request->category_requirement)->get();
 
         // dd($users);
 
