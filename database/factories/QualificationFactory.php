@@ -22,6 +22,7 @@ class QualificationFactory extends Factory
     {
         return [
             // 'qualification_id' => $this->faker->word,
+            'qualification_name' => $this->faker->randomElement(['Bachelor\'s', 'Master\'s', 'Doctorate', 'Diploma', 'First Aid Certificate', 'Food Safety Certificate', 'Driver\'s License', 'Garda Vetting', 'Manual Handling Certificate', 'Language Certificate' ]),
             'qualification_description' => $this->faker->text,
         ];
     }
