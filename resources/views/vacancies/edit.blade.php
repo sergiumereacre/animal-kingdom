@@ -392,7 +392,7 @@
                         <x-input-label for="salary_range_lower">Lower salary range</x-input-label>
                         <x-text-input id="salary_lower" type="number" name="salary_range_lower"
                             class="mt-1 block w-full" placeholder="" value="{{ $vacancy->salary_range_lower }}"
-                            required></x-text-input>
+                            required min="0" max="1000000"></x-text-input>
                         <x-input-error class="mt-2" :messages="$errors->get('salary_range_lower')" />
                     </div>
 
@@ -400,7 +400,7 @@
                         <x-input-label for="salary_range_upper">Upper salary range</x-input-label>
                         <x-text-input id="salary_upper" type="number" name="salary_range_upper"
                             class="mt-1 block w-full" placeholder="" value="{{ $vacancy->salary_range_upper }}"
-                            required></x-text-input>
+                            required min="0" max="1000000"></x-text-input>
                         <x-input-error class="mt-2" :messages="$errors->get('salary_range_upper')" />
                     </div>
 

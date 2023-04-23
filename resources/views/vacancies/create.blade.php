@@ -263,21 +263,36 @@
                     {{-- MUST CHECK IF SALARY RANGE IS LOWER --}}
                     <div>
                         <x-input-label for="salary_range_lower">Lower salary range</x-input-label>
-                        <x-text-input id="salary_lower" type="number" name="salary_range_lower" class="mt-1 block w-full" placeholder="" value="{{ old('salary_range_lower') }}" required></x-text-input>
+                        <x-text-input id="salary_lower" type="number" name="salary_range_lower" class="mt-1 block w-full" placeholder="" value="{{ old('salary_range_lower') }}" required min="0" max="1000000"></x-text-input>
                         <x-input-error class="mt-2" :messages="$errors->get('salary_range_lower')" />
                     </div>
 
                     <div>
                         <x-input-label for="salary_range_upper">Upper salary range</x-input-label>
-                        <x-text-input id="salary_upper" type="number" name="salary_range_upper" class="mt-1 block w-full" placeholder="" value="{{ old('salary_range_upper') }}" required></x-text-input>
+                        <x-text-input id="salary_upper" type="number" name="salary_range_upper" class="mt-1 block w-full" placeholder="" value="{{ old('salary_range_upper') }}" required min="0" max="1000000"></x-text-input>
                         <x-input-error class="mt-2" :messages="$errors->get('salary_range_upper')" />
                     </div>
 
                     <script>
                         function validateForm() {
 
-                            var salary_lower = parseInt(document.getElementById('salary_lower').value);
-                            var salary_upper = parseInt(document.getElementById('salary_upper').value);
+                            var salary_lower_string = document.getElementById('salary_lower').value;
+                            var salary_upper_string = document.getElementById('salary_upper').value;
+
+                            console.log(salary_lower_string);
+                            console.log(salary_upper_string);
+
+                            // Check if 'e' is in the string
+                            if (salary_lower_string.includes('e') || salary_upper_string.includes('e')) {
+                                alert("Invalid salary range. Please make sure that the salary range is a normal number.");
+                                // return false;
+                            }
+
+                            var salary_lower = parseInt(salary_lower_string);
+                            var salary_upper = parseInt(salary_upper_string);
+
+                            // var salary_lower = parseInt(document.getElementById('salary_lower').value);
+                            // var salary_upper = parseInt(document.getElementById('salary_upper').value);
 
                             console.log(salary_lower);
                             console.log(salary_upper);
