@@ -13,7 +13,7 @@ class CreateVacanciesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
+       // Schema::disableForeignKeyConstraints();
 
         Schema::create('vacancies', function (Blueprint $table) {
             $category = array('MAMMAL', 'REPTILE', 'AMPHIBIAN', 'AVIAN', 'FISH');
@@ -38,6 +38,9 @@ class CreateVacanciesTable extends Migration
             $table->enum('size_requirement', $size);
             $table->enum('speed_requirement', $speed);
             $table->enum('num_appendages_requirement', $num_appendages);
+
+            $table->integer('skill_name')->unsigned();
+            $table->foreign('skill_name')->references('skill_name')->on('skills');
         });
 
         Schema::enableForeignKeyConstraints();

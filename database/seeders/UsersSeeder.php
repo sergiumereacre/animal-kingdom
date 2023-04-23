@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Connection;
 use App\Models\Organisation;
+use App\Models\QualificationsUser;
+use App\Models\QualificationsVacancy;
 use App\Models\SkillsUser;
+use App\Models\SkillsVacancy;
 use App\Models\User;
 use App\Models\Vacancy;
 use Database\Factories\OrganisationFactory;
@@ -20,8 +23,14 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()
-        ->has(Organisation::factory()->count(3), 'organisations')
-        ->has(SkillsUser::factory()->count(8), 'skillsUsers')
+        ->has(Organisation::factory()->count(2) 
+        ->has(Vacancy::factory()->count(5)
+        ->has(SkillsVacancy::factory()->count(2), 'skillsVacancy')
+        ->has(QualificationsVacancy::factory()->count(2), 'qualificationsVacancy')
+            , 'vacancies')
+            , 'organisations')
+        ->has(SkillsUser::factory()->count(5), 'skillsUsers')
+        ->has(QualificationsUser::factory()->count(2), 'qualificationsUsers')
         ->create([
             'username' => 'test',
             'email' => 'test@test.com',
@@ -32,19 +41,28 @@ class UsersSeeder extends Seeder
             'last_name' => 'test'
         ]);
 
-        \App\Models\User::factory(20)
+        \App\Models\User::factory(1)
         ->has(Organisation::factory()->count(1)
-        ->has(Vacancy::factory()->count(1), 'vacancies')
+            ->has(Vacancy::factory()->count(1)
+                ->has(SkillsVacancy::factory()->count(2), 'skillsVacancy')
+                ->has(QualificationsVacancy::factory()->count(2), 'qualificationsVacancy')
+        , 'vacancies')
         , 'organisations')
         ->has(SkillsUser::factory()->count(3), 'skillsUsers')
+        ->has(QualificationsUser::factory()->count(2), 'qualificationsUsers')
         ->create([
             'password' => Hash::make('test'),
         ]);
 
-        \App\Models\User::factory(10)
+        User::factory(10)
         ->has(Organisation::factory()->count(3)
-        ->has(Vacancy::factory()->count(4), 'vacancies'), 'organisations')
+            ->has(Vacancy::factory()->count(3)
+                ->has(SkillsVacancy::factory()->count(3), 'skillsVacancy')
+                ->has(QualificationsVacancy::factory()->count(3), 'qualificationsVacancy')
+        , 'vacancies'), 
+        'organisations')
         ->has(SkillsUser::factory()->count(3), 'skillsUsers')
+        ->has(QualificationsUser::factory()->count(3), 'qualificationsUsers')
         ->create([
             'password' => Hash::make('test'),
         ]);
@@ -75,5 +93,7 @@ class UsersSeeder extends Seeder
                 'second_user_id' => $third_group[$key]->id,
             ]);
         }
+
+
     }
 }

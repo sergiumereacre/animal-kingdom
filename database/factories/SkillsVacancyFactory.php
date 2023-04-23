@@ -10,6 +10,7 @@ use App\Models\Vacancy;
 
 class SkillsVacancyFactory extends Factory
 {
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -23,10 +24,11 @@ class SkillsVacancyFactory extends Factory
     public function definition(): array
     {
         return [
-            'skills_vacancies_id' => $this->faker->numberBetween(-10000, 10000),
+            //'skills_vacancies_id' => $this->faker->numberBetween(-10000, 10000),
+            //'skill_id' => Skill::factory()->create()->skill_id,
             'skill_id' => Skill::factory()->create()->skill_id,
             'vacancy_id' => Vacancy::factory()->create()->vacancy_id,
-            'skill_level' => $this->faker->randomElement(/** enum_attributes **/),
+            'skill_level' => $this->faker->randomElement(['BEGINNER', 'INTERMEDIATE', 'EXPERT']),
         ];
     }
 }

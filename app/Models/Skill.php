@@ -11,7 +11,9 @@ class Skill extends Model
 
     use HasFactory;
 
+    protected $table = 'skills';
     protected $primaryKey = 'skill_id';
+    protected $guarded = [];
     public $timestamps = false;
 
 
@@ -29,4 +31,12 @@ class Skill extends Model
     public function skillsUsers(): HasMany{
         return $this->hasMany(SkillsUser::class, 'skill_id');
     }
+
+    public function skillsVacancies(): HasMany{
+        return $this->hasMany(SkillsUser::class, 'skill_id');
+    }
+
+    // public function vacancies(): belongsToMany {
+    //     return $this->belongsToMany(Vacancy::class);
+    // }
 }
