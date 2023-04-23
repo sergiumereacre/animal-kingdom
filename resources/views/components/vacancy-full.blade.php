@@ -47,7 +47,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->category_requirement;
-                        
+
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -61,7 +61,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->can_fly_requirement;
-                        
+
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -79,7 +79,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->can_swim_requirement;
-                        
+
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -97,7 +97,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->can_climb_requirement;
-                        
+
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -115,7 +115,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->produces_toxins_requirement;
-                        
+
                         if (!is_null($var)) {
                             if ($var == true) {
                                 echo 'Yes';
@@ -133,7 +133,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->eating_style_requirement;
-                        
+
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -147,7 +147,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->size_requirement;
-                        
+
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -161,7 +161,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->speed_requirement;
-                        
+
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -176,7 +176,7 @@
                 <p class="md:px-0 text-sm text-gray-700">
                     @php
                         $var = $vacancy->num_appendages_requirement;
-                        
+
                         if (!is_null($var)) {
                             echo ucfirst(strtolower($var));
                         } else {
@@ -198,7 +198,7 @@
                             ->where('vacancy_id', '=', $vacancy->vacancy_id)
                             ->pluck('skill_id'),
                     );
-                    
+
                     $quals = App\Models\Qualification::all()->whereIn(
                         'qualification_id',
                         Illuminate\Support\Facades\DB::table('qualifications_vacancies')
@@ -262,7 +262,7 @@
             @php
                 $user_vacancy = App\Models\UsersVacancy::where([['user_id', '=', auth()->id()], ['vacancy_id', '=', $vacancy->vacancy_id]])->first();
             @endphp
-            @if ($organisation->owner_id == auth()->id())
+            @if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin)
 
                 <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
                     @csrf
@@ -319,7 +319,7 @@
                         Not Eligible
                     </x-primary-button>
                 @endif
-                
+
 
             @endif
 

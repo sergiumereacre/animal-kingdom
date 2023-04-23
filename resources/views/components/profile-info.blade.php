@@ -1,6 +1,6 @@
 @props(['user', 'species', 'connections_num'])
 
-<x-card-base class="max-w-md w-full h-max md:max-w-md">
+<x-card-base class="max-w-md w-full h-max md:max-w-sm">
     <div class="py-10 px-16 flex flex-col items-center gap-5">
         <!-- User avatar and name -->
         <div class="flex flex-col items-center">
@@ -29,9 +29,6 @@
 
         {{-- Check if connection exists --}}
         @php
-            // $connections = Illuminate\Support\Facades\DB::table('connections')
-            // ->where(['first_user_id' => auth()->id(), 'second_user_id' => $user->id])
-            // ->orWhere(['first_user_id' => $user->id, 'second_user_id' => auth()->id()])->get();
             
             // Check if connection exists
             $connection = App\Models\Connection::where([['first_user_id', '=', auth()->id()], ['second_user_id', '=', $user->id]])
@@ -40,7 +37,8 @@
             
         @endphp
 
-        <div>
+        <div class="flex flex-col gap-2 items-center">
+            {{-- You can't connect to yourself --}}
             @if ($user->id != auth()->id())
                 @if ($connection)
                     <form method="POST" action="/users/{{ $user->id }}/toggleConnect">
@@ -60,6 +58,15 @@
                             </span>{{ __('Connect') }}</x-primary-button>
                     </form>
                 @endif
+
+                {{-- Admins can only edit non admins --}}
+                @if (auth()->user()->is_admin && !$user->is_admin)
+                    <a href="/profile/{{ $user->id }}/edit">
+                        <x-secondary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
+                                edit
+                            </span>{{ __('Edit Profile') }}</x-secondary-button>
+                    </a>
+                @endif
             @else
                 <a href="/profile/edit">
                     <x-secondary-button class="flex items-center gap-2"><span class="material-symbols-rounded">
@@ -67,6 +74,8 @@
                         </span>{{ __('Edit Profile') }}</x-secondary-button>
                 </a>
             @endif
+
+
         </div>
         <!-- Profile info section -->
         <div class="bg-appBackground rounded-2xl w-full p-10">

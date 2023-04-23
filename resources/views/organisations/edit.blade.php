@@ -1,9 +1,10 @@
 <x-app-layout>
     <div class="py-12 flex flex-col items-center max-w-2xl mx-auto">
         <x-card-base>
-            <form method="POST" action="/organisations{{$organisation->oragnisation_id}}" enctype="multipart/form-data" class="p-10 flex flex-col items-center gap-5">
+            <form method="POST" action="/organisations/{{$organisation->organisation_id}}" enctype="multipart/form-data" class="p-10 flex flex-col items-center gap-5">
                 @csrf
-                @method_field('PUT')
+                @method('PUT')
+                {{-- @method_field('PUT') --}}
                 <!-- Form Title -->
                 <div>
                     <p class="font-bold text-2xl md:text-3xl">Edit {{$organisation -> organisation_name}}</p>

@@ -19,15 +19,6 @@ class OrganisationController extends Controller
         ]);
     }
 
-    // Showing individual organisation
-    // public function show(Organisation $organisation){
-    //     // return view('organisations.show');
-
-    //     return view('organisation.show', [
-    //         'organisation' => $organisation
-    //     ]);
-    // }
-
     // REMEMBER TO SWITCH ALL REQUESTS TO ORGANISATIONS FOR DEPENDENCY INJECTION
 
     public function show(Organisation $organisation)
@@ -68,78 +59,75 @@ class OrganisationController extends Controller
 
 
 
-        return redirect('/home')->with('success','Organisation created successfully!');
-
-
-        // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
+        return redirect('/home')->with('success', 'Organisation created successfully!');
     }
 
     public function edit(Request $request, Organisation $organisation)
     {
         //dd($organisation->email);
-        return view('organisations.edit',['organisation' => $organisation]);
-        // return view('organisations.edit', ['organisation' => $organisation]);
+        return view('organisations.edit', ['organisation' => $organisation]);
     }
 
     // Attempt to update organisation
     public function update(Request $request, Organisation $organisation)
     {
+        // dd($organisation->organisation_id);
+        // Make sure logged in user is owner or admin
+        if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
+            // Deleting custom picture from organisation
+            if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
+                Storage::disk('public')->delete($organisation->picture);
+            }
+
+            $formFields = $request->validate([
+                'organisation_name' => 'required'
+            ]);
+
+            // Stores in the logo folder in public
+            if ($request->hasFile('picture')) {
+                $formFields['picture'] = $request->file('picture')->store('logos', 'public');
+            }
+
+            // $formFields['owner_id'] = auth()->id();
+            $formFields['address'] = $request->address;
+            $formFields['email'] = $request->email;
+            $formFields['contact_number'] = $request->contact_number;
+            $formFields['description'] = $request->description;
 
 
-        
-        $formFields = $request->validate([
-            'organisation_name' => 'required'
-        ]);
+            $organisation->update($formFields);
 
-        // Stores in the logo folder in public
-        if ($request->hasFile('picture')) {
-            $formFields['picture'] = $request->file('picture')->store('logos', 'public');
+
+            // $organisation->delete();
+        } else {
+            abort(403, 'Can\'t update organisation');
         }
 
-        $formFields['owner_id'] = auth()->id();
-        $formFields['address'] = $request->address;
-        $formFields['email'] = $request->email;
-        $formFields['contact_number'] = $request->contact_number;
-        $formFields['description'] = $request->description;
+        return back()->with('message', 'Organisation updated successfully!');
 
 
-        $organisation->create($formFields);
-
-        return back()->with('message','Organisation updated successfully!');
-
+        // return view('organisations.manage')->with('message', 'Organisation updated successfully!');
         // CODE FOR VALIDATING, STORING IN DATABASE, ETC.
     }
 
     // Attempt to delete organisation
     public function destroy(Organisation $organisation)
     {
-        // Make sure logged in user is owner
-        if ($organisation->owner_id != auth()->id()) {
-            abort(403, 'Unauthorized Action, you\'re not the owner!!');
+        // Make sure logged in user is owner or admin
+        if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
+            // Deleting custom picture from organisation
+            if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
+                Storage::disk('public')->delete($organisation->picture);
+            }
+
+            $organisation->delete();
+        } else {
+            abort(403, deleteError);
         }
 
-        // Deleting custom picture from organisation
-        if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
-            Storage::disk('public')->delete($organisation->picture);
-        }
-
-        $organisation->delete();
         // return redirect('/users/'.auth()->id());
         return redirect()->route('home');
     }
 
 
-    // Redirect to manage page
-    public function manage()
-    {
-        return view('organisations.manage');
-
-        // Eventually, we should be able to map a user's organisations to the organisations variable
-        return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
-
-
-
-        // Eventually, we should be able to map a user's organisations to the organisations variable
-        return view('organisations.manage', ['organisations' => auth()->user()->organisations()->get()]);
-    }
 }

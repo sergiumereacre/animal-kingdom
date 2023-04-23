@@ -24,7 +24,7 @@
                         <p class="mt-4 font-thin text-4xl lg:text-6xl text-center">Welcome to</p>
                         <p class="font-black text-5xl lg:text-6xl text-center">Animal Kingdom</p>
                     </div>
-                
+
                     <!-- Any content here.-->
                     <div class="w-full sm:max-w-md mt-6 px-6 py-4 overflow-hidden sm:rounded-lg">
                         {{ $slot }}
@@ -40,3 +40,13 @@
         </div>
     </body>
 </html>
+
+<script>
+    function limit(element) {
+        var max_chars = 100;
+
+        if (element.value.length > max_chars) {
+            element.value = element.value.substr(0, max_chars);
+        }
+    }
+</script>

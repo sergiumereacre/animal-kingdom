@@ -16,12 +16,13 @@ use App\Models\Vacancy;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+
 use Illuminate\Database\Query\Builder;
 
 class ProfileController extends Controller
@@ -34,6 +35,18 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
+    }
+
+    public function editOther(Request $request, User $user): View
+    {
+        // dd('hi');
+        if (auth()->user()->is_admin) {
+            return view('profile.edit', [
+                'user' => $user,
+            ]);
+        } else {
+            abort(403);
+        }
     }
 
     public function index()
@@ -108,21 +121,60 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's profile information such as name, email, etc.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
         // dd($request);
+        ProfileController::updateHelper($request, auth()->user());
 
-        if ($request->user()->id != auth()->id()) {
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updateOther(Request $request, User $user): RedirectResponse
+    {
+        // dd('Updating other...');
+        ProfileController::updateHelper($request, $user);
+
+        return Redirect::route('profile.editOther', $user->id)->with('status', 'profile-updated');
+    }
+
+    // Updates bio and skills and qualifications
+    public function updatePersonal(Request $request): RedirectResponse
+    {
+
+
+        ProfileController::updatePersonalHelper($request, auth()->user());
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    public function updateOtherPersonal(Request $request, User $user): RedirectResponse
+    {
+// dd('Updating other');
+        ProfileController::updatePersonalHelper($request, $user);
+
+        return Redirect::route('profile.editOther', $user->id)->with('status', 'profile-updated');
+    }
+
+    public static function updateHelper(Request $request, User $user)
+    {
+        // check if user is admin or if user is editing their own profile
+        if (!(auth()->user()->is_admin || $user->id == auth()->id())) {
             abort(403, 'Unauthorized Action,you\'re not the right user!!');
         }
 
-        $formFields = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', 'email'],
-        ]);
+
+        // dd($request);
+
+        // Check if request's email is the same as the user's email
+        $formFields = $request->validate(
+            [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => ['required', 'email', Rule::unique(User::class)->ignore($user->id)]
+            ],
+        );
 
         $formFields['address'] = $request->address;
         $formFields['contact_number'] = $request->contact_number;
@@ -131,33 +183,48 @@ class ProfileController extends Controller
             $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
         }
 
-
-        $request->user()->update($formFields);
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->update($formFields);
     }
 
-    public function updatePersonal(ProfileUpdateRequest $request): RedirectResponse
+    public static function updatePersonalHelper(Request $request, User $user)
     {
         // dd($request);
 
-        if ($request->user()->id != auth()->id()) {
+          // check if user is admin or if user is editing their own profile
+          if (!(auth()->user()->is_admin || $user->id == auth()->id())) {
             abort(403, 'Unauthorized Action,you\'re not the right user!!');
         }
 
-        $formFields = $request->validate([
-            'bio' => 'required',
-        ]);
+        // $formFields = $request->validate([
+        //     // 'bio' => 'required',
+        // ]);
 
-        $all_skills_users = SkillsUser::all()->where('user_id', '=', auth()->id());
+        $formFields['bio'] = $request->bio;
+
+        $all_skills_users = SkillsUser::all()->where('user_id', '=', $user->id);
 
         foreach ($all_skills_users as $skill_user) {
             $skill_user->delete();
         }
 
-        // dd($all_skills_users);
 
-        $all_skills_unproc = array_filter(explode(",", $request->skills));
+        $all_quals_users = QualificationsUser::all()->where('user_id', '=', $user->id);
+
+        foreach ($all_quals_users as $qual_user) {
+            $qual_user->delete();
+        }
+
+        ProfileController::addSkillsAndQualifications($request->skills, $request->qualifications, $user);
+
+        $user->update($formFields);
+    }
+
+    public static function addSkillsAndQualifications($skills, $qualifications, $user)
+    {
+        // Processing qualifications
+        $all_quals = array_filter(explode(",", $qualifications));
+
+        $all_skills_unproc = array_filter(explode(",", $skills));
 
         $all_skills = [];
 
@@ -184,24 +251,24 @@ class ProfileController extends Controller
 
 
         foreach ($all_skills as $skill_name => $skill_level) {
-            $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
+            // $skill_id = Skill::all()->where('skill_name', '=', $skill_name)->first()->skill_id;
 
-            $skill_user = SkillsUser::create([
-                'user_id' => auth()->id(),
-                'skill_id' => $skill_id,
-                'skill_level' => $skill_level,
-            ]);
+            $skill = Skill::all()->where('skill_name', '=', $skill_name);
+
+            // dd($skill);
+
+            if (count($skill) > 0) {
+                $skill_id = $skill->first()->skill_id;
+
+                $skill_user = SkillsUser::create([
+                    'user_id' => $user->id,
+                    'skill_id' => $skill_id,
+                    'skill_level' => $skill_level,
+                ]);
+            }
         }
 
-        // Processing qualifications
-        $all_quals = array_filter(explode(",", $request->qualifications));
-
-
-        $all_quals_users = QualificationsUser::all()->where('user_id', '=', auth()->id());
-
-        foreach ($all_quals_users as $qual_user) {
-            $qual_user->delete();
-        }
+        // dd($all_quals);
 
         foreach ($all_quals as $qual_name) {
             $qual_id = Qualification::all()->where('qualification_name', '=', $qual_name);
@@ -209,17 +276,13 @@ class ProfileController extends Controller
             if (count($qual_id) != 0) {
                 $qual_id = $qual_id->first()->qualification_id;
                 $qual_user = QualificationsUser::create([
-                    'user_id' => auth()->id(),
+                    'user_id' => $user->id,
                     'qualification_id' => $qual_id,
                     // Date picker here?
                     'date_obtained' => Carbon::now(),
                 ]);
             }
         }
-
-        $request->user()->update($formFields);
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -271,7 +334,8 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    public function filter(Request $request){
+    public function filter(Request $request)
+    {
 
         // Category requirement. Going through each user. For each user, get their species. After that, check against category
 
@@ -279,14 +343,14 @@ class ProfileController extends Controller
 
         $users = User::where(function (Builder $query) {
             $query->select('category')
-            ->from('animal_species')
-            ->whereColumn('animal_species.species_id', 'users.species_id');
+                ->from('animal_species')
+                ->whereColumn('animal_species.species_id', 'users.species_id');
         }, $request->category_requirement)
-        ->where(function (Builder $query) {
-            $query->select('category')
-            ->from('animal_species')
-            ->whereColumn('animal_species.species_id', 'users.species_id');
-        }, $request->category_requirement)->get();
+            ->where(function (Builder $query) {
+                $query->select('category')
+                    ->from('animal_species')
+                    ->whereColumn('animal_species.species_id', 'users.species_id');
+            }, $request->category_requirement)->get();
 
         // dd($users);
 

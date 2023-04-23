@@ -9,7 +9,13 @@
         </p>
     </header>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('password.update', $user->id) }}" class="mt-6 space-y-6">
+
+        @if (auth()->user()->id != $user->id)
+            <form method="post" action="{{ route('password.update', $user->id) }}" class="mt-6 space-y-6">
+            @else
+                <form method="post" action="{{ route('password.update', auth()->id()) }}" class="mt-6 space-y-6">
+        @endif
         @csrf
         @method('put')
 

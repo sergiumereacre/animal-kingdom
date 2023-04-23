@@ -42,7 +42,7 @@ Route::get('/home', function () {
 
     $past_organisations = array();
 
-    foreach ($past_vacancies as $vacancy){
+    foreach ($past_vacancies as $vacancy) {
         $past_organisations[] = Organisation::all()->find($vacancy->organisation_id);
     }
 
@@ -63,25 +63,14 @@ Route::get('/home', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile')->middleware('auth');
+    Route::get('/profile/{user}/edit', [ProfileController::class, 'editOther'])->name('profile.editOther')->middleware('auth');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+    Route::patch('/profile/{user}/personal', [ProfileController::class, 'updateOtherPersonal'])->name('profile.updateOtherPersonal')->middleware('auth');
     Route::patch('/profile/personal', [ProfileController::class, 'updatePersonal'])->name('profile.updatePersonal')->middleware('auth');
+    Route::patch('/profile/{user}', [ProfileController::class, 'updateOther'])->name('profile.updateOther')->middleware('auth');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
     Route::delete('/users/{user}', [ProfileController::class, 'destroyOther'])->middleware('auth');
-
-    // For viewing other users, possibly some exclusive to admins
-    // Route::get('/users/index', [ProfileController::class, 'index']);
-
-    // Route::get('/users/{organisation}/edit', [ProfileController::class, 'edit'])->middleware('auth');
-
-    // Route::put('/users/{organisation}', [ProfileController::class, 'update'])->middleware('auth');
-
-    // Route::delete('/users/{organisation}', [ProfileController::class, 'destroy'])->middleware('auth');
-
-    // Route::get('/users/manage', [ProfileController::class, 'manage'])->middleware('auth');
-
-    // Route::get('/organisations/{organisation}', [ProfileController::class, 'show']);
-
 });
 
 require __DIR__ . '/auth.php';
@@ -113,8 +102,6 @@ Route::put('/vacancies/{vacancy}', [VacancyController::class, 'update'])->name('
 // Deletes vacancies
 Route::delete('/vacancies/{vacancy}', [VacancyController::class, 'destroy'])->middleware('auth');
 
-// Manage vacancies
-Route::get('/vacancies/manage', [VacancyController::class, 'manage'])->middleware('auth');
 
 // Make sure {vacancy} and Vacancy $vacancy match up
 // Make sure to put this towards the bottom if you plan to do other stuff with vacancies
@@ -136,10 +123,8 @@ Route::get('/organisations/{organisation}/edit', [OrganisationController::class,
 
 // Update organisation
 
-Route::put('/organisations', [OrganisationController::class, 'update'])->name('organisation.update');
+Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->name('organisation.update');
 
-
-Route::get('/organisations/manage', [OrganisationController::class, 'manage'])->middleware('auth');
 
 Route::get('/organisations/{organisation}', [OrganisationController::class, 'show'])->middleware('auth');
 
@@ -168,4 +153,3 @@ Route::get('/settings', function () {
 Route::get('/search', [SearchController::class, 'query'])->name('search');
 
 // ========== SEARCH ==========
-

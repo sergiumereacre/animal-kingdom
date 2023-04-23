@@ -163,7 +163,7 @@
         </script>
     </div>
 
-    <!-- Filter List Button -->
+    <!-- Filter Dropdown -->
     <div class="flex items-center justify-center md:pt-10">
         <!-- Dropdown button-->
         <button type="button" id="filter-dropdown-button" data-dropdown-toggle="filter-dropdown-filter-type"
@@ -174,207 +174,244 @@
         </button>
         <!-- Dropdown content -->
         <div id="filter-dropdown-filter-type"
-            class="hidden absolute w-fit mt-2 origin-top-right bg-white border divide-y divide-gray-100 md:rounded-2xl focus:outline-none"
+            class="hidden absolute z-10 w-fit mt-2 origin-top-right bg-white border shadow-xl divide-y divide-gray-100 lg:rounded-3xl focus:outline-none"
             role="menu" aria-orientation="vertical" aria-labelledby="filter-dropdown-button">
             <div class="p-10 flex flex-col items-center gap-5">
-                <div class="flex flex-col gap-5 md:w-full">
+                <div class="flex flex-col gap-5">
 
-                    <div>
-                        <x-input-label for="category_requirement">Category</x-input-label>
-                        <x-select onchange="updateQuery()" name="category_requirement" id="category_requirement"
-                            class="mt-1 block w-full">
-                            <option value="NULL">None</option>
-                            <option value="MAMMAL">Mammal</option>
-                            <option value="REPTILE">Reptile</option>
-                            <option value="AMPHIBIAN">Amphibian</option>
-                            <option value="AVIAN">Avian</option>
-                            <option value="FISH">Fish</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('category_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="can_fly_requirement">Should applicants be able to fly?</x-input-label>
-                        <x-select onchange="updateQuery()" name="can_fly_requirement" id="can_fly_requirement"
-                            class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('can_fly_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="can_swim_requirement">Should applicants be able to swim?</x-input-label>
-                        <x-select onchange="updateQuery()" name="can_swim_requirement" id="can_swim_requirement"
-                            class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('can_swim_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="can_climb_requirement">Should applicants be able to climb?</x-input-label>
-                        <x-select onchange="updateQuery()" name="can_climb_requirement" id="can_climb_requirement"
-                            class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('can_climb_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="eating_style_requirement">Eating Style Requirement</x-input-label>
-                        <x-select onchange="updateQuery()" name="eating_style_requirement"
-                            id="eating_style_requirement" class="mt-1 block w-full">
-                            <option value="NULL">None</option>
-                            <option value="HERBIVORE">Herbivore</option>
-                            <option value="CARNIVORE">Carnivore</option>
-                            <option value="OMNIVORE">Omnivore</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('eating_style_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="produces_toxins_requirement">Should applicants be able to produce toxins?
-                        </x-input-label>
-                        <x-select onchange="updateQuery()" name="produces_toxins_requirement"
-                            id="produces_toxins_requirement" class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('produces_toxins_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="size_requirement">Size Requirement</x-input-label>
-                        <x-select onchange="updateQuery()" name="size_requirement" id="size_requirement"
-                            class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="SMALL">Small</option>
-                            <option value="MEDIUM">Medium</option>
-                            <option value="LARGE">Large</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('size_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="speed_requirement">Speed Requirement</x-input-label>
-                        <x-select onchange="updateQuery()" name="speed_requirement" id="speed_requirement"
-                            class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="SLOW">Slow</option>
-                            <option value="MEDIUM">Medium</option>
-                            <option value="FAST">Fast</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('speed_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="num_appendages_requirement">How many appendages should applicants have?
-                        </x-input-label>
-                        <x-select onchange="updateQuery()" name="num_appendages_requirement"
-                            id="num_appendages_requirement" class="mt-1 block w-full">
-                            <option value="NULL">Doesn't matter</option>
-                            <option value="NONE">No Appendages</option>
-                            <option value="FEW">Few Appendages, e.g., 4</option>
-                            <option value="MANY">Many Appendages</option>
-                        </x-select>
-                        <x-input-error class="mt-2" :messages="$errors->get('num_appendages_requirement')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="skills">All skills applicants should have. Please specify skill level
-                            with colon and
-                            separate with commas.</x-input-label>
-                        <x-text-input id="skills_list" type="text" name="skills" class="mt-1 block w-full"
-                            placeholder="" value="{{ old('skills') }}"></x-text-input>
-                    </div>
-
-                    <div class="flex flex-col gap-5">
-                        @php
-                            $skills = App\Models\Skill::all();
-                        @endphp
-
+                    <div class="grid md:grid-cols-2 gap-5">
                         <div>
-                            <x-input-label for="skills_select">Select specific skill.</x-input-label>
-                            <x-select id="skill_name" name="skills_select" class="mt-1 block w-full">
-                                @foreach ($skills as $skill)
-                                    <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
-                                @endforeach
+                            <x-input-label for="category_requirement">Category</x-input-label>
+                            <x-select onchange="updateQuery()" name="category_requirement" id="category_requirement"
+                                class="mt-1 block w-full">
+                                <option value="NULL">None</option>
+                                <option value="MAMMAL">Mammal</option>
+                                <option value="REPTILE">Reptile</option>
+                                <option value="AMPHIBIAN">Amphibian</option>
+                                <option value="AVIAN">Avian</option>
+                                <option value="FISH">Fish</option>
                             </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('category_requirement')" />
                         </div>
-
                         <div>
-                            <x-input-label for="skills_level_select">Select skill level.</x-input-label>
-                            <x-select id="skill_level" name="skills_level_select" class="mt-1 block w-full">
-                                <option value="BEGINNER">Beginner</option>
-                                <option value="INTERMEDIATE">Intermediate</option>
-                                <option value="EXPERT">Expert</option>
+                            <x-input-label for="can_fly_requirement">Should applicants be able to fly?</x-input-label>
+                            <x-select onchange="updateQuery()" name="can_fly_requirement" id="can_fly_requirement"
+                                class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                             </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('can_fly_requirement')" />
                         </div>
-
-                        <div class="flex flex-col items-center">
-                            <p id="skills_error" hidden
-                                class="text-center text-white bg-redButtons w-max px-2 rounded-lg">
-                                Can't have duplicate
-                                skills.</p>
-                        </div>
-
-                        <div class="flex flex-col items-center">
-                            <x-primary-button class="w-max" onclick="addSkill()" type="button">Add Skill
-                            </x-primary-button>
-                        </div>
-                    </div>
-
-                    @error('skills')
-                        <p>{{ $message }}</p>
-                    @enderror
-
-                    <div>
-                        <x-input-label for="qualifications">All qualifications applicants should have. Please separate
-                            with
-                            commas.</x-input-label>
-                        <x-text-input id="qualifications_list" type="text" name="qualifications"
-                            class="mt-1 block w-full" placeholder="" value="{{ old('qualifications') }}">
-                        </x-text-input>
-                    </div>
-                    <div class="flex flex-col gap-5">
-
-                        @php
-                            $qualifications = App\Models\Qualification::all();
-                        @endphp
-
                         <div>
-                            <x-input-label for="qualifications_select">Select qualifications here</x-input-label>
-                            <x-select id="qualification_name" name="qualifications_select" class="mt-1 block w-full">
-                                @foreach ($qualifications as $qualification)
-                                    <option value="{{ $qualification->qualification_name }}">
-                                        {{ $qualification->qualification_name }}
-                                    </option>
-                                @endforeach
+                            <x-input-label for="can_swim_requirement">Should applicants be able to swim?
+                            </x-input-label>
+                            <x-select onchange="updateQuery()" name="can_swim_requirement" id="can_swim_requirement"
+                                class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                             </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('can_swim_requirement')" />
                         </div>
-
-                        <div class="flex flex-col items-center">
-                            <p id="qualifications_error" hidden
-                                class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't have duplicate
-                                qualifications.</p>
+                        <div>
+                            <x-input-label for="can_climb_requirement">Should applicants be able to climb?
+                            </x-input-label>
+                            <x-select onchange="updateQuery()" name="can_climb_requirement"
+                                id="can_climb_requirement" class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('can_climb_requirement')" />
                         </div>
-
-                        <div class="flex flex-col items-center">
-                            <x-primary-button onclick="addQualification()" type="button">Add Qualification
-                            </x-primary-button>
+                        <div>
+                            <x-input-label for="eating_style_requirement">Eating Style Requirement</x-input-label>
+                            <x-select onchange="updateQuery()" name="eating_style_requirement"
+                                id="eating_style_requirement" class="mt-1 block w-full">
+                                <option value="NULL">None</option>
+                                <option value="HERBIVORE">Herbivore</option>
+                                <option value="CARNIVORE">Carnivore</option>
+                                <option value="OMNIVORE">Omnivore</option>
+                            </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('eating_style_requirement')" />
+                        </div>
+                        <div>
+                            <x-input-label for="produces_toxins_requirement">Should applicants be able to produce
+                                toxins?
+                            </x-input-label>
+                            <x-select onchange="updateQuery()" name="produces_toxins_requirement"
+                                id="produces_toxins_requirement" class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('produces_toxins_requirement')" />
+                        </div>
+                        <div>
+                            <x-input-label for="size_requirement">Size Requirement</x-input-label>
+                            <x-select onchange="updateQuery()" name="size_requirement" id="size_requirement"
+                                class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="SMALL">Small</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="LARGE">Large</option>
+                            </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('size_requirement')" />
+                        </div>
+                        <div>
+                            <x-input-label for="speed_requirement">Speed Requirement</x-input-label>
+                            <x-select onchange="updateQuery()" name="speed_requirement" id="speed_requirement"
+                                class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="SLOW">Slow</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="FAST">Fast</option>
+                            </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('speed_requirement')" />
+                        </div>
+                        <div>
+                            <x-input-label for="num_appendages_requirement">How many appendages should applicants have?
+                            </x-input-label>
+                            <x-select onchange="updateQuery()" name="num_appendages_requirement"
+                                id="num_appendages_requirement" class="mt-1 block w-full">
+                                <option value="NULL">Doesn't matter</option>
+                                <option value="NONE">No Appendages</option>
+                                <option value="FEW">Few Appendages, e.g., 4</option>
+                                <option value="MANY">Many Appendages</option>
+                            </x-select>
+                            <x-input-error class="mt-2" :messages="$errors->get('num_appendages_requirement')" />
                         </div>
                     </div>
 
-                    @error('qualifications')
-                        <p>{{ $message }}</p>
-                    @enderror
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <div class="pb-5">
+                                <x-input-label for="skills">All skills users should have. Please specify skill
+                                    level
+                                    with colon and
+                                    separate with commas.</x-input-label>
+                                <x-text-input id="skills_list" type="text" name="skills"
+                                    class="mt-1 block w-full" placeholder="" value="{{ old('skills') }}">
+                                </x-text-input>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                @php
+                                    $skills = App\Models\Skill::all();
+                                @endphp
+                                <div>
+                                    <x-input-label for="skills_select">Select specific skill.</x-input-label>
+                                    <x-select id="skill_name" name="skills_select" class="mt-1 block w-full">
+                                        @foreach ($skills as $skill)
+                                            <option value="{{ $skill->skill_name }}">{{ $skill->skill_name }}</option>
+                                        @endforeach
+                                    </x-select>
+                                </div>
+                                <div>
+                                    <x-input-label for="skills_level_select">Select skill level.</x-input-label>
+                                    <ul
+                                        id="skill_level" name="skills_level_select" value="BEGINNER"
+                                        class="items-center w-full text-sm font-medium text-gray-900 bg-white border flex shadow-sm border-gray-300 rounded-lg">
+                                        <li
+                                            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                            <div class="flex flex-row items-center pl-3">
+                                                <input id="horizontal-list-radio-beginner" type="radio" checked
+                                                    value="BEGINNER" name="list-radio"
+                                                    class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
+                                                <label for="horizontal-list-radio-beginner"
+                                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Beginner</label>
+                                            </div>
+                                        </li>
+                                        <li
+                                            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                            <div class="flex items-center pl-3">
+                                                <input id="horizontal-list-radio-intermediate" type="radio" value="INTERMEDIATE"
+                                                    name="list-radio"
+                                                    class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
+                                                <label for="horizontal-list-radio-intermediate"
+                                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Intermediate</label>
+                                            </div>
+                                        </li>
+                                        <li
+                                            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                            <div class="flex items-center pl-3">
+                                                <input id="horizontal-list-radio-expert" type="radio"
+                                                    value="EXPERT" name="list-radio"
+                                                    class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
+                                                <label for="horizontal-list-radio-expert"
+                                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Expert</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <script>
+                                        // Make default value of skill level BEGINNER
+                                        document.getElementById('skill_level').value = 'BEGINNER';
+                                        // If radio button is clicked, update the value of skill level
+                                        document.querySelectorAll('input[name="list-radio"]').forEach((el) => {
+                                            el.addEventListener('click', (e) => {
+                                                document.getElementById('skill_level').value = e.target.value;
+                                            });
+                                        });
+                                    </script>
+
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <p id="skills_error" hidden
+                                        class="text-center text-white bg-redButtons w-max px-2 rounded-lg">
+                                        Can't have duplicate
+                                        skills.</p>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <x-secondary-button class="w-max" onclick="addSkill()" type="button">Add Skill
+                                    </x-secondary-button>
+                                </div>
+                            </div>
+                            @error('skills')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <div class="pb-5">
+                                <x-input-label for="qualifications">All qualifications users should have. Please
+                                    separate
+                                    with
+                                    commas.</x-input-label>
+                                <x-text-input id="qualifications_list" type="text" name="qualifications"
+                                    class="mt-1 block w-full" placeholder="" value="{{ old('qualifications') }}">
+                                </x-text-input>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                @php
+                                    $qualifications = App\Models\Qualification::all();
+                                @endphp
+                                <div>
+                                    <x-input-label for="qualifications_select">Select qualifications here
+                                    </x-input-label>
+                                    <x-select id="qualification_name" name="qualifications_select"
+                                        class="mt-1 block w-full">
+                                        @foreach ($qualifications as $qualification)
+                                            <option value="{{ $qualification->qualification_name }}">
+                                                {{ $qualification->qualification_name }}
+                                            </option>
+                                        @endforeach
+                                    </x-select>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <p id="qualifications_error" hidden
+                                        class="text-center text-white bg-redButtons w-max px-2 rounded-lg">Can't have
+                                        duplicate
+                                        qualifications.</p>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <x-secondary-button onclick="addQualification()" type="button">Add Qualification
+                                    </x-secondary-button>
+                                </div>
+                            </div>
+                            @error('qualifications')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
 
 
                     <div class="flex justify-center gap-2 md:gap-5">
@@ -382,12 +419,11 @@
                         <a id="final_query" href="/users/index/?=">
                             <x-primary-button class="flex flex-row gap-2 items-center">
                                 <span class="material-symbols-rounded">
-                                    work
+                                    filter_alt
                                 </span>
                                 Search with filters
                             </x-primary-button>
                         </a>
-
                     </div>
                 </div>
 
@@ -447,7 +483,6 @@
                             final_query.href += "skills=" + skills.value + "&";
                         }
 
-                        
                         var quals = document.getElementById("qualifications_list");
                         console.log("Value: " + quals.value);
                         if (quals.value != "NULL") {
@@ -488,7 +523,6 @@
 
                     }
                 </script>
-
             </div>
         </div>
     </div>

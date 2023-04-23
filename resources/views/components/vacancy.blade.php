@@ -32,9 +32,9 @@
                         ->where('vacancy_id', '=', $vacancy->vacancy_id)
                         ->pluck('skill_id'),
                 );
-                
+
                 // dd($skills);
-                
+
                 $quals = App\Models\Qualification::all()->whereIn(
                     'qualification_id',
                     Illuminate\Support\Facades\DB::table('qualifications_vacancies')
@@ -115,7 +115,7 @@
         </div>
         <!-- Remove and Apply Buttons -->
         <div class="flex flex-row items-center justify-center pb-4 gap-3 md:justify-end md:mr-5">
-            @if ($organisation->owner_id == auth()->id())
+            @if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin)
                 <form action="/vacancies/{{ $vacancy->vacancy_id }}" method="post">
                     @csrf
                     @method('DELETE')

@@ -17,51 +17,31 @@ class QualificationsSeeder extends Seeder
 
         $data = [
             [
-                'qualification_name' => 'Bachelor',
+                'qualification_name' => 'Licensed Forklifter',
+                'qualification_description' => 'A license issued by the National Forklift Administration.'
             ],
             [
-                'qualification_name' => 'Master',
+                'qualification_name' => 'BSc Computer Science',
+                'qualification_description' => 'A Bachelor\'s degree in Computer Science.'
             ],
             [
-                'qualification_name' => 'PhD',
-
+                'qualification_name' => 'MSc Computer Science',
+                'qualification_description' => 'A Master\'s degree in Computer Science.'
             ],
-            ['qualification_name' => 'Diploma',
-        ],
-        [
-            'qualification_name' => 'Certificate',
-        ],
-        [
-            'qualification_name' => 'First Aid Certificate',
-        ],
-        [
-            'qualification_name' => 'CPR Certificate',
-        ],
-        [
-            'qualification_name' => 'Food Safety Certificate',
-        ],
-        [
-            'qualification_name' => 'Driver\'s License',
-        ],
-        [
-            'qualification_name' => 'Work Permit',
-        ],
-        [
-            'qualification_name' => 'Work Visa',
-        ],
-        [
-            'qualification_name' => 'Language Certificate',
-        ],
-        [
-            'qualification_name' => 'Other',
-        ],
-        [
-            'qualification_name' => 'Manual Handling Certificate',
-        ],
-        [
-            'qualification_name' => 'Garda Vetting',
-        ]
+            [
+                'qualification_name' => 'BSc Computer Science',
+                'qualification_description' => 'A Bachelor\'s degree in Computer Science.'
+            ],
+            [
+                'qualification_name' => 'Certified Scrum Master',
+                'qualification_description' => 'A certification issued by the Scrum Alliance.'
+            ],
+            [
+                'qualification_name' => 'Certified Windows Server Administrator',
+                'qualification_description' => 'A certification issued by Microsoft.'
+            ]
         ];
+
         Qualification::insert($data);
     }
 }

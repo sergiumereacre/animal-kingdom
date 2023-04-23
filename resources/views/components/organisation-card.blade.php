@@ -52,7 +52,7 @@
                 </div>
             </div>
             <!-- Remove or Edit Button -->
-            @if ($owner->id == auth()->id())
+            @if ($owner->id == auth()->id()  || auth()->user()->is_admin)
                 <div class="px-5 pb-5 flex flex-row items-center justify-center gap-3 md:items-end md:justify-end">
                     <form action="/organisations/{{ $organisation->organisation_id }}" method="post">
                         @csrf

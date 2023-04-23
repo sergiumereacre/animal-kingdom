@@ -50,7 +50,7 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </button>
-                        @else
+                        @elseif (request()->routeIs('home'))
                             <!-- Search Type Input That is Hidden -->
                             <input type="hidden" id="search-type" name="category" value="Vacancies">
                             <!-- Dropdown Main -->
@@ -65,11 +65,38 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </button>
+                        @else
+                            <!-- Search Type Input That is Hidden -->
+                            <input type="hidden" id="search-type" name="category" value="All">
+                            <!-- Dropdown Main -->
+                            <button id="dropdown-button" data-dropdown-toggle="dropdown-search-type"
+                                class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                                type="button">
+                                <span class="material-symbols-rounded text-greenButtons">pets</span>
+                                All <svg aria-hidden="true" class="w-4 h-4" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
                         @endif
                         <!-- Dropdown Contents -->
                         <div id="dropdown-search-type"
                             class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40">
                             <ul id="list" class="py-2 text-sm text-gray-700" aria-labelledby="dropdown-button">
+                                <li>
+                                    <button type="button" id="All"
+                                        class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                        role="menuitem">
+                                        <div class="inline-flex items-center gap-2">
+                                            <span class="material-symbols-rounded text-greenButtons">
+                                                pets
+                                            </span>
+                                            All
+                                        </div>
+                                    </button>
+                                </li>
                                 <li>
                                     <button type="button"
                                         class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -120,11 +147,16 @@
                                 <input type="search" id="navbar-search" name="search"
                                     class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                                     placeholder="Search in Users" required>
-                            @else
+                            @elseif (request()->routeIs('home'))
                                 <!-- Search Input -->
                                 <input type="search" id="navbar-search" name="search"
                                     class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                                     placeholder="Search in Vacancies" required>
+                            @else
+                                <!-- Search Input -->
+                                <input type="search" id="navbar-search" name="search"
+                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                                    placeholder="Search" required>
                             @endif
                             <!-- Search Buttons -->
                             <button type="submit"
