@@ -68,11 +68,23 @@
 </html>
 
 <script>
+    function limitTextArea(element, maxChars) {
+        var max_chars = maxChars;
+
+        if (element.value.length > max_chars) {
+            element.value = element.value.substr(0, max_chars);
+        }
+
+        // console.log('Hi');
+    }
+
     function limit(element) {
         var max_chars = 100;
 
         if (element.value.length > max_chars) {
             element.value = element.value.substr(0, max_chars);
         }
+        console.log('Hi');
+
     }
 </script>

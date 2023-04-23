@@ -29,7 +29,7 @@
         {{-- <textarea name="bio" id="bio" rows="6" type="text"
                 class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
                 autocomplete="bio">{{ old('bio', $user->bio) }}</textarea> --}}
-        <textarea name="bio" id="bio" rows="6" type="text"
+        <textarea onkeydown="limitTextArea(this, 200)" onkeyup="limitTextArea(this, 200)" name="bio" id="bio" rows="6" type="text"
             class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
             autocomplete="bio">{{ $user->bio }}</textarea>
         <x-input-error class="mt-2" :messages="$errors->get('bio')" />

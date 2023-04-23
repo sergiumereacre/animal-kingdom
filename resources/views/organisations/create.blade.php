@@ -51,7 +51,7 @@
         
                     <div>
                         <x-input-label for="description">Organisation Description</x-input-label>
-                        <textarea name="description" id="description" rows="8" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" placeholder="Organisation Description...">{{old('description')}}</textarea>
+                        <textarea limitTextArea(this, 200)" onkeyup="limitTextArea(this, 200) name="description" id="description" rows="8" class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md" placeholder="Organisation Description...">{{old('description')}}</textarea>
                         <x-input-error class="mt-2" :messages="$errors->get('description')" />
                     </div>
         
