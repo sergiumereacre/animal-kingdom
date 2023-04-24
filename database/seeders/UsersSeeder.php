@@ -115,6 +115,8 @@ class UsersSeeder extends Seeder
         // SETTING UP SKILLS AND QUALS
         $skills = Skill::all();
         $qualifications = Qualification::all();
+        // $skills_count = $skills->count() / 5;
+        // $quals_count = $qualifications->count() / 5;
 
         $skill_levels = ['BEGINNER', 'INTERMEDIATE', 'EXPERT'];
 
@@ -124,20 +126,17 @@ class UsersSeeder extends Seeder
         // Give every user a random list of skills and qualifications
         foreach ($users as $user) {
             // Get random, unique skills and qualifications
-            $random_skills = $skills->random(rand(0, $skills->count()))->unique();
-            $random_quals = $qualifications->random(rand(0, $qualifications->count()))->unique();
+            $random_skills = $skills->random(rand(0, 5))->unique();
+            $random_quals = $qualifications->random(rand(0, 3))->unique();
 
-// Iterate through random skills and qualifications and attach them to the user
+            // Iterate through random skills and qualifications and attach them to the user
             foreach ($random_skills as $skill) {
 
-                // $user->skills()->attach($skill->skill_id, ['skill_level' => $skill_levels[rand(0, 2)]]);
+                $user->skills()->attach($skill->skill_id, ['skill_level' => $skill_levels[rand(0, 2)]]);
+            }
 
-
-                // SkillsUser::factory()->create([
-                //     'user_id' => $user->id,
-                //     'skill_id' => $skill->skill_id,
-                //     'skill_level' => $skill_levels[rand(0, 2)],
-                // ]);
+            foreach ($random_quals as $qual) {
+                $user->qualifications()->attach($qual->qualification_id, ['date_obtained' => now()]);
             }
         }
 
