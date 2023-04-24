@@ -74,10 +74,7 @@ class OrganisationController extends Controller
         // dd($organisation->organisation_id);
         // Make sure logged in user is owner or admin
         if ($organisation->owner_id == auth()->id() || auth()->user()->is_admin) {
-            // Deleting custom picture from organisation
-            if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
-                Storage::disk('public')->delete($organisation->picture);
-            }
+
 
             $formFields = $request->validate([
                 'organisation_name' => 'required'
@@ -85,6 +82,10 @@ class OrganisationController extends Controller
 
             // Stores in the logo folder in public
             if ($request->hasFile('picture')) {
+                // Deleting custom picture from organisation
+                if ($organisation->picture && Storage::disk('public')->exists($organisation->picture)) {
+                    Storage::disk('public')->delete($organisation->picture);
+                }
                 $formFields['picture'] = $request->file('picture')->store('logos', 'public');
             }
 
@@ -128,6 +129,4 @@ class OrganisationController extends Controller
         // return redirect('/users/'.auth()->id());
         return redirect()->route('home');
     }
-
-
 }

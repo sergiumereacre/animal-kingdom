@@ -179,6 +179,10 @@ class ProfileController extends Controller
         $formFields['contact_number'] = $request->contact_number;
 
         if ($request->hasFile('profile_pic')) {
+              // Deleting custom picture from organisation
+              if ($user->profile_pic && Storage::disk('public')->exists($user->profile_pic)) {
+                Storage::disk('public')->delete($user->profile_pic);
+            }
             $formFields['profile_pic'] = $request->file('profile_pic')->store('profile_pic', 'public');
         }
 
