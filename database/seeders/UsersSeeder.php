@@ -23,14 +23,14 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()
-        ->has(Organisation::factory()->count(2) 
-        ->has(Vacancy::factory()->count(5)
-        ->has(SkillsVacancy::factory()->count(2), 'skillsVacancy')
-        ->has(QualificationsVacancy::factory()->count(2), 'qualificationsVacancy')
-            , 'vacancies')
-            , 'organisations')
-        ->has(SkillsUser::factory()->count(5), 'skillsUsers')
-        ->has(QualificationsUser::factory()->count(2), 'qualificationsUsers')
+        ->has(Organisation::factory()->count(2) )
+        // ->has(Vacancy::factory()->count(5))
+        // ->has(SkillsVacancy::factory()->count(2), 'skillsVacancy')
+        // ->has(QualificationsVacancy::factory()->count(2), 'qualificationsVacancy')
+        //     , 'vacancies')
+        //     , 'organisations')
+        // ->has(SkillsUser::factory()->count(5), 'skillsUsers')
+        // ->has(QualificationsUser::factory()->count(2), 'qualificationsUsers')
         ->create([
             'username' => 'test',
             'email' => 'test@test.com',
@@ -54,18 +54,18 @@ class UsersSeeder extends Seeder
             'password' => Hash::make('test'),
         ]);
 
-        User::factory(10)
-        ->has(Organisation::factory()->count(3)
-            ->has(Vacancy::factory()->count(3)
-                ->has(SkillsVacancy::factory()->count(3), 'skillsVacancy')
-                ->has(QualificationsVacancy::factory()->count(3), 'qualificationsVacancy')
-        , 'vacancies'), 
-        'organisations')
-        ->has(SkillsUser::factory()->count(3), 'skillsUsers')
-        ->has(QualificationsUser::factory()->count(3), 'qualificationsUsers')
-        ->create([
-            'password' => Hash::make('test'),
-        ]);
+        // User::factory(10)
+        // ->has(Organisation::factory()->count(3)
+        //     ->has(Vacancy::factory()->count(3)
+        //         ->has(SkillsVacancy::factory()->count(3), 'skillsVacancy')
+        //         ->has(QualificationsVacancy::factory()->count(3), 'qualificationsVacancy')
+        // , 'vacancies'), 
+        // 'organisations')
+        // ->has(SkillsUser::factory()->count(3), 'skillsUsers')
+        // ->has(QualificationsUser::factory()->count(3), 'qualificationsUsers')
+        // ->create([
+        //     'password' => Hash::make('test'),
+        // ]);
 
         // Testing connections
         $first_group = User::factory(5)->create([

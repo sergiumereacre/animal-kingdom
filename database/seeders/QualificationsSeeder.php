@@ -13,7 +13,7 @@ class QualificationsSeeder extends Seeder
      */
     public function run(): void
     {
-        Qualification::factory(10)->create();
+        // Qualification::factory(10)->create();
 
         $data = [
             [
@@ -39,7 +39,48 @@ class QualificationsSeeder extends Seeder
             [
                 'qualification_name' => 'Certified Windows Server Administrator',
                 'qualification_description' => 'A certification issued by Microsoft.'
-            ]
+            ],
+            [
+                'qualification_name' => 'Bachelor\'s',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Master\'s',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Doctorate',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Diploma',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'First Aid Certificate',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Food Safety Certificate',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Driver\'s License',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Garda Vetting',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Manual Handling Certificate',
+                'qualification_description' => ''
+            ],
+            [
+                'qualification_name' => 'Language Certificate',
+                'qualification_description' => ''
+            ],
+            
         ];
 
         Qualification::insert($data);
