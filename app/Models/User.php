@@ -90,6 +90,16 @@ class User extends Authenticatable
         return $this->hasMany(QualificationsUser::class, 'user_id');
     }
 
+    public function skills(): BelongsToMany
+    {
+        return $this->BelongsToMany(Skill::class, 'skills_users', 'user_id', 'skill_id');
+    }
+
+    public function qualifications(): BelongsToMany
+    {
+        return $this->BelongsToMany(Qualification::class, 'qualifications_users', 'user_id', 'qualification_id');
+    }
+
     public function connections(): HasMany
     {
         return $this->hasMany(Connection::class, 'first_user_id');

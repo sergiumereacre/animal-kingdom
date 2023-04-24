@@ -260,78 +260,11 @@ class SkillsSeeder extends Seeder
                 'skill_name' => 'XSL-FO',
             ],
             [
-                'skill_name' => 'XHTML',
-            ],
-            [
                 'skill_name' => 'XQuery',
-            ],
-            [
-                'skill_name' => 'XSLT',
-            ],
-            [
-                'skill_name' => 'XSL-FO',
             ],
             [
                 'skill_name' => 'XHTML',
             ],
-            [
-                'skill_name' => 'XQuery',
-            ],
-            [
-                'skill_name' => 'XSLT',
-            ],
-            [
-                'skill_name' => 'XSL-FO',
-            ],
-            [
-                'skill_name' => 'XHTML',
-            ],
-            [
-                'skill_name' => 'XQuery',
-            ],
-            [
-                'skill_name' => 'XSLT',
-            ],
-            [
-                'skill_name' => 'XSL-FO',
-            ],
-            [
-                'skill_name' => 'XHTML',
-            ],
-            [
-                'skill_name' => 'XQuery',
-            ],
-            [
-                'skill_name' => 'XSLT',
-            ],
-            [
-                'skill_name' => 'XSL-FO',
-            ],
-            [
-                'skill_name' => 'XHTML',
-            ],
-            [
-                'skill_name' => 'XQuery',
-            ],
-            [
-                'skill_name' => 'XSLT',
-            ],
-            [
-                'skill_name' => 'XSL-FO',
-            ],
-            [
-                'skill_name' => 'XHTML',
-            ],
-            [
-                'skill_name' => 'XQuery',
-            ],
-            [
-                'skill_name' => 'XSLT',
-            ],
-            [
-                'skill_name' => 'XSL-FO',
-            ]
-
         ];
         Skill::insert($data);
     }
