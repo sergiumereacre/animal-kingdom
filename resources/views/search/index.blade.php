@@ -1,7 +1,7 @@
 
 <x-app-layout>
     <div class="p-5 flex flex-col gap-10">
-        <div class="flex items-center min-w-full max-w-none">
+        <div class="flex items-center min-w-full max-w-none md:hidden">
             <form class="w-full" method="GET" action="{{ route('search') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="flex flex-row items-center">
