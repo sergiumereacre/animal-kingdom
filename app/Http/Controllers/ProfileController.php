@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\AnimalSpecies;
 use App\Models\Connection;
 use App\Models\Organisation;

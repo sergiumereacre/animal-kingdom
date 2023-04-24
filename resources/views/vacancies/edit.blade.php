@@ -421,8 +421,11 @@
                     </script>
 
                     <div>
+                        @php
+                            // dd($vacancy->vacancy_description);
+                        @endphp
                         <x-input-label for="vacancy_description">Vacancy Description</x-input-label>
-                        <textarea limitTextArea(this, 200)" onkeyup="limitTextArea(this, 200) name="vacancy_description" id="vacancy_description" rows="10"
+                        <textarea onkeydown="limitTextArea(this, 200)" onkeyup="limitTextArea(this, 200)" name="vacancy_description" id="vacancy_description" rows="10"
                             class="mt-1 block w-full border-gray-300 focus:border-greenButtons focus:ring-greenButtons rounded-lg shadow-md"
                             placeholder="Description Details.">{{ $vacancy->vacancy_description }}</textarea>
                         <x-input-error class="mt-2" :messages="$errors->get('vacancy_description')" />

@@ -126,6 +126,8 @@ class VacancyController extends Controller
 
         $formFields = $request->all();
 
+        // dd($formFields);
+
         // dd($request->input('category_requirement', 1));
 
         // dd($formFields['salary_range_lower']);
@@ -194,7 +196,20 @@ class VacancyController extends Controller
             $skill_name = $skill_attr[0];
             $skill_level = $skill_attr[1];
 
-            $all_skills[$skill_name] = $skill_level;
+            // $all_skills[$skill_name] = $skill_level;
+
+            if (count($skill_attr) == 2) {
+                $skill_name = $skill_attr[0];
+                $skill_level = $skill_attr[1];
+            }
+
+
+            $name_exists = Skill::all()->where('skill_name', '=', $skill_name);
+            $level_exists = in_array($skill_level, ['BEGINNER', 'INTERMEDIATE', 'EXPERT']);
+
+            if ($level_exists && $name_exists) {
+                $all_skills[$skill_name] = $skill_level;
+            }
         }
 
 
