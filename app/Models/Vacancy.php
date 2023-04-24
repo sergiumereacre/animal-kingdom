@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 
 class Vacancy extends Model
 {
-    use HasFactory, HasEagerLimit;
+    use HasFactory;
 
     protected $primaryKey = 'vacancy_id';
     public $timestamps = false;

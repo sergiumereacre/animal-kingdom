@@ -33,7 +33,7 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </button>
-                @else
+                @elseif (request()->routeIs('home'))
                     <!-- Search Type Input That is Hidden -->
                     <input type="hidden" id="main-search-type" name="category" value="Vacancies">
                     <!-- Dropdown Main -->
@@ -48,11 +48,38 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </button>
+                @else
+                    <!-- Search Type Input That is Hidden -->
+                    <input type="hidden" id="main-search-type" name="category" value="All">
+                    <!-- Dropdown Main -->
+                    <button id="main-dropdown-button" data-dropdown-toggle="main-dropdown-search-type"
+                        class="gap-2 flex-shrink-0 z-10 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100"
+                        type="button">
+                        <span class="material-symbols-rounded text-greenButtons">public</span>
+                        All <svg aria-hidden="true" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
                 @endif
                 <!-- Dropdown Contents -->
                 <div id="main-dropdown-search-type"
                     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-40">
                     <ul id="main-list" class="py-2 text-sm text-gray-700" aria-labelledby="main-dropdown-button">
+                        <li>
+                            <button type="button" id="All"
+                                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem">
+                                <div class="inline-flex items-center gap-2">
+                                    <span class="material-symbols-rounded text-greenButtons">
+                                        public
+                                    </span>
+                                    All
+                                </div>
+                            </button>
+                        </li>
                         <li>
                             <button type="button"
                                 class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -103,11 +130,16 @@
                         <input type="search" id="main-navbar-search" name="search"
                             class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search in Users" required>
-                    @else
+                    @elseif (request()->routeIs('home'))
                         <!-- Search Input -->
                         <input type="search" id="main-navbar-search" name="search"
                             class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-white rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
                             placeholder="Search in Vacancies" required>
+                    @else
+                        <!-- Search Input -->
+                        <input type="search" id="main-navbar-search" name="search"
+                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-green-500 focus:border-green-500"
+                            placeholder="Search in All" required>
                     @endif
                     <!-- Search Buttons -->
                     <button type="submit"
@@ -308,11 +340,9 @@
                                 </div>
                                 <div>
                                     <x-input-label for="skills_level_select">Select skill level.</x-input-label>
-                                    <ul
-                                        id="skill_level" name="skills_level_select" value="BEGINNER"
+                                    <ul id="skill_level" name="skills_level_select" value="BEGINNER"
                                         class="items-center w-full text-sm font-medium text-gray-900 bg-white border flex shadow-sm border-gray-300 rounded-lg">
-                                        <li
-                                            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                             <div class="flex flex-row items-center pl-3">
                                                 <input id="horizontal-list-radio-beginner" type="radio" checked
                                                     value="BEGINNER" name="list-radio"
@@ -321,18 +351,16 @@
                                                     class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Beginner</label>
                                             </div>
                                         </li>
-                                        <li
-                                            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                             <div class="flex items-center pl-3">
-                                                <input id="horizontal-list-radio-intermediate" type="radio" value="INTERMEDIATE"
-                                                    name="list-radio"
+                                                <input id="horizontal-list-radio-intermediate" type="radio"
+                                                    value="INTERMEDIATE" name="list-radio"
                                                     class="w-4 h-4 text-blue-700 bg-gray-100 border-gray-300 focus:ring-green-500">
                                                 <label for="horizontal-list-radio-intermediate"
                                                     class="w-full py-3 ml-2 text-sm font-medium text-gray-900">Intermediate</label>
                                             </div>
                                         </li>
-                                        <li
-                                            class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                                        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
                                             <div class="flex items-center pl-3">
                                                 <input id="horizontal-list-radio-expert" type="radio"
                                                     value="EXPERT" name="list-radio"

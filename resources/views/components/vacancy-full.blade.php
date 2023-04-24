@@ -209,7 +209,7 @@
 
                 <p class="font-medium text-black md:p-5 md:w-44">Skills Needed: </p>
                 <!-- Automated Skills List -->
-                <div class="flex gap-3 text-xs">
+                <div class="flex flex-wrap gap-3 text-xs">
                     @if (count($skills) != 0)
                         @foreach ($skills as $skill)
                             @php

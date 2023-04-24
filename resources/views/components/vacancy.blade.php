@@ -24,7 +24,7 @@
             <p class="px-5 md:px-0 text-sm text-gray-700">{{ $vacancy->vacancy_description }}</p>
         </div>
         <!-- Skills -->
-        <div class="pb-5 flex flex-col items-center justify-center gap-3 md:flex-row md:flex-wrap">
+        <div class="pb-5 flex flex-col items-center justify-center gap-3 md:flex-row md:flex-wrap mr-5 ml-5 md:ml-0">
             @php
                 $skills = App\Models\Skill::all()->whereIn(
                     'skill_id',
@@ -42,14 +42,14 @@
                         ->pluck('qualification_id'),
                 );
             @endphp
-            <div class="flex items-center gap-3 flex-row text-md md:pb-0">
+            <div class="flex items-center gap-3 flex-row text-sm md:text-base md:pb-0">
                 <p class="font-medium text-black">Skills Needed: </p>
                 @php
                     $skillIterations = 0;
                 @endphp
                 @if (count($skills) != 0)
                     @foreach ($skills as $skill)
-                        @if ($skillIterations < 2)
+                        @if ($skillIterations < 1)
                             @php
                                 $skill_level = App\Models\SkillsVacancy::all()
                                     ->whereIn(
@@ -82,14 +82,14 @@
                     <x-skill>None</x-skill>
                 @endif
             </div>
-            <div class="flex items-center gap-3 flex-row text-md md:pb-0">
+            <div class="flex items-center gap-3 flex-row text-sm md:text-base md:pb-0">
                 <p class="font-medium text-black">Qualifications Needed: </p>
                 @php
                     $qualIterations = 0;
                 @endphp
                 @if (count($quals) != 0)
                     @foreach ($quals as $qual)
-                        @if ($qualIterations < 2)
+                        @if ($qualIterations < 1)
                             <x-qualification>{{ $qual->qualification_name }}</x-qualification>
                             @php
                                 $qualIterations++;
