@@ -69,7 +69,15 @@ class Vacancy extends Model
         return $this->hasMany(QualificationsVacancy::class, 'vacancy_id');
     }
 
+    public function skills(): BelongsToMany
+    {
+        return $this->BelongsToMany(Skill::class, 'skills_vacancies', 'vacancy_id', 'skill_id');
+    }
 
+    public function qualifications(): BelongsToMany
+    {
+        return $this->BelongsToMany(Qualification::class, 'qualifications_vacancies', 'vacancy_id', 'qualification_id');
+    }
     public function scopeCategory($query, $category)
     {
         if ($category ?? false) {
@@ -83,7 +91,6 @@ class Vacancy extends Model
         if ($can_fly != null) {
 
             $query->where('can_fly_requirement', '=', request('can_fly'));
-
         }
     }
 
@@ -95,7 +102,6 @@ class Vacancy extends Model
         if ($can_swim != null) {
 
             $query->where('can_swim_requirement', '=', request('can_swim'));
-
         }
     }
 
@@ -103,7 +109,6 @@ class Vacancy extends Model
     {
         if ($can_climb != null) {
             $query->where('can_climb_requirement', '=', request('can_climb'));
-
         }
     }
 
@@ -111,7 +116,6 @@ class Vacancy extends Model
     {
         if ($eating_style ?? false) {
             $query->where('eating_style_requirement', '=', request('eating_style'));
-
         }
     }
 
@@ -119,7 +123,6 @@ class Vacancy extends Model
     {
         if ($produces_toxins != null) {
             $query->where('produces_toxins_requirement', '=', request('produces_toxins'));
-
         }
     }
 
@@ -134,7 +137,6 @@ class Vacancy extends Model
     {
         if ($speed ?? false) {
             $query->where('speed_requirement', '=', request('speed'));
-
         }
     }
 
@@ -142,7 +144,6 @@ class Vacancy extends Model
     {
         if ($num_appendages ?? false) {
             $query->where('num_appendages_requirement', '=', request('num_appendages'));
-
         }
     }
 
@@ -213,7 +214,7 @@ class Vacancy extends Model
         }
     }
 
-    
+
 
     public function scopeQualifications($query, $quals)
     {
@@ -260,7 +261,6 @@ class Vacancy extends Model
             }
             // dd($eligible_vacancies);
             $query->whereIn('vacancy_id', $eligible_vacancies);
-
         }
     }
 }

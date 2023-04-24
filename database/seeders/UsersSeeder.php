@@ -143,5 +143,22 @@ class UsersSeeder extends Seeder
 
         // SETTING UP VACANCY SKILLS AND QUALS
         $vacancies = Vacancy::all();
+
+        // Give every vacancy a random list of skills and qualifications
+        foreach ($vacancies as $vacancy) {
+            // Get random, unique skills and qualifications
+            $random_skills = $skills->random(rand(0, 5))->unique();
+            $random_quals = $qualifications->random(rand(0, 3))->unique();
+
+            // Iterate through random skills and qualifications and attach them to the vacancy
+            foreach ($random_skills as $skill) {
+
+                $vacancy->skills()->attach($skill->skill_id, ['skill_level' => $skill_levels[rand(0, 2)]]);
+            }
+
+            foreach ($random_quals as $qual) {
+                $vacancy->qualifications()->attach($qual->qualification_id);
+            }
+        }
     }
 }

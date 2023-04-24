@@ -38,4 +38,9 @@ class Qualification extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function vacancies(): BelongsToMany
+    {
+        return $this->belongsToMany(Vacancy::class);
+    }
 }

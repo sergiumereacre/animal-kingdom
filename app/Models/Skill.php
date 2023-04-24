@@ -42,6 +42,11 @@ class Skill extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function vacancies(): BelongsToMany
+    {
+        return $this->belongsToMany(Vacancy::class);
+    }
+
     // public function vacancies(): belongsToMany {
     //     return $this->belongsToMany(Vacancy::class);
     // }
