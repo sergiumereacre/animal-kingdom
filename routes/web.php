@@ -119,11 +119,11 @@ Route::delete('/organisations/{organisation}', [OrganisationController::class, '
 
 
 // Edit organisation
-Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->name('organisations.update');
+Route::get('/organisations/{organisation}/edit', [OrganisationController::class, 'edit'])->name('organisations.update')->middleware('auth');
 
 // Update organisation
 
-Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->name('organisation.update');
+Route::put('/organisations/{organisation}', [OrganisationController::class, 'update'])->name('organisation.update')->middleware('auth');
 
 
 Route::get('/organisations/{organisation}', [OrganisationController::class, 'show'])->middleware('auth');
@@ -150,6 +150,6 @@ Route::get('/settings', function () {
 
 // ========== SEARCH ==========
 
-Route::get('/search', [SearchController::class, 'query'])->name('search');
+Route::get('/search', [SearchController::class, 'query'])->name('search')->middleware('auth');
 
 // ========== SEARCH ==========
