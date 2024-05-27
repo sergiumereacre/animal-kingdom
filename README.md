@@ -152,3 +152,10 @@ sail artisan storage:link
 
 When in doubt, dump-autoload!!
 sail composer dump-autoload
+
+## Screenshots
+![AK1](https://github.com/sergiumereacre/animal-kingdom/assets/48417081/e4d113ec-71d3-44c3-9ba1-169bf158c25e)
+![AK2](https://github.com/sergiumereacre/animal-kingdom/assets/48417081/28203679-cb3e-451c-ad86-7090ecf1db79)
+![AK3](https://github.com/sergiumereacre/animal-kingdom/assets/48417081/d7c49fb6-ba12-43dd-9e9a-831066d6ad36)
+![AK4](https://github.com/sergiumereacre/animal-kingdom/assets/48417081/94dfc412-5787-492b-a3d0-94c2c8d5e476)
+![AK5](https://github.com/sergiumereacre/animal-kingdom/assets/48417081/9f75b20e-5632-47e3-ad5a-419951e266ed)
